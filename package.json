@@ -1,0 +1,68 @@
+{
+  "name": "mhrs-charms-manager-app",
+  "version": "0.1.0",
+  "description": "A charms manager for Monster Hunter Rise Sunbreak",
+  "productName": "MHRS Charms Manager",
+  "author": "mbailleux <max.bailleux.13@gmail.com>",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.ts,.vue ./",
+    "lint:ci": "eslint-output",
+    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
+    "test:unit:ui": "majestic",
+    "test:unit": "jest --updateSnapshot",
+    "test:unit:ci": "jest --ci --reporters=jest-junit",
+    "test:unit:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch",
+    "test:unit:watchAll": "jest --watchAll",
+    "serve:test:coverage": "quasar serve test/jest/coverage/lcov-report/ --port 8788",
+    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\""
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "quasar": "^2.6.0",
+    "vue": "^3.0.0",
+    "vue-i18n": "^9.0.0",
+    "vue-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app-webpack": "^3.0.0",
+    "@quasar/quasar-app-extension-testing": "^2.0.4",
+    "@quasar/quasar-app-extension-testing-unit-jest": "^3.0.0-alpha.10",
+    "@types/node": "^12.20.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-output": "^3.0.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-vue": "^8.5.0",
+    "jest-junit": "^13.2.0",
+    "majestic": "^1.7.0"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 12.22.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
+  "eslint-junit": {
+    "output": "eslint-report.xml"
+  },
+  "jest-junit": {
+    "outputName": "jest-report.xml"
+  }
+}

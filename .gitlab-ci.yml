@@ -1,0 +1,35 @@
+image: node:16.15-alpine3.14
+
+stages: [qa, test]
+
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml
+
+qa:jest:
+  when: always
+  stage: test
+  script:
+    - yarn install
+    - yarn lint:ci
+  artifacts:
+    when: always
+    reports:
+      junit: eslint-report.xml
+  only:
+    - merge_requests
+
+test:jest:
+  when: always
+  stage: test
+  script:
+    - yarn install
+    - yarn test:unit:ci
+  artifacts:
+    when: always
+    reports:
+      junit: jest-report.xml
+  only:
+    - main
+    - merge_requests

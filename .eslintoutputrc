@@ -1,0 +1,18 @@
+{
+  "files": ["src", "test"],
+  "formats": [
+    {
+      "name": "stylish",
+      "output": "console"
+    },
+    {
+      "name": "junit",
+      "output": "file",
+      "path": "eslint-report.xml",
+      "id": "myJunit"
+    }
+  ],
+  "eslintConfig": {
+    "extensions": [".js", ".ts", ".vue"]
+  }
+}
