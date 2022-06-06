@@ -31,7 +31,7 @@ module.exports = {
     '<rootDir>/src/**/*.jsx',
     '<rootDir>/src/**/*.tsx',
   ],
-  coveragePathIgnorePatterns: ['/node_modules/', '.d.ts$'],
+  coveragePathIgnorePatterns: ['/node_modules/', '.d.ts$', '/src/[boot|i18n|router|stores]/*', '/src/App.vue'],
   coverageThreshold: {
     global: {
       //  branches: 50,
@@ -43,8 +43,8 @@ module.exports = {
   testMatch: [
     // Matches tests in any subfolder of 'src' or into 'test/jest/__tests__'
     // Matches all files with extension 'js', 'jsx', 'ts' and 'tsx'
-    '<rootDir>/test/jest/__tests__/**/*.(spec|test).+(ts|js)?(x)',
-    '<rootDir>/src/**/*.jest.(spec|test).+(ts|js)?(x)',
+    // '<rootDir>/test/**/*.(spec|test).+(ts|js)?(x)', // TODO: temporary disabled until 0.2.0, uncomment then
+    '<rootDir>/test/composables/*.(spec|test).+(ts|js)?(x)',
   ],
   // Extension-less imports of components are resolved to .ts files by TS,
   //  grating correct type-checking in test files.
@@ -62,8 +62,10 @@ module.exports = {
     '^components/(.*)$': '<rootDir>/src/components/$1',
     '^layouts/(.*)$': '<rootDir>/src/layouts/$1',
     '^pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^stores/(.*)$': '<rootDir>/src/stores/$1',
     '^assets/(.*)$': '<rootDir>/src/assets/$1',
     '^boot/(.*)$': '<rootDir>/src/boot/$1',
+    '^test/(.*)$': '<rootDir>/test/$1',
     '.*css$': '@quasar/quasar-app-extension-testing-unit-jest/stub.css',
   },
   transform: {

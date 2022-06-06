@@ -1,13 +1,16 @@
 {
-  "name": "mhrs-charms-manager-app",
-  "version": "0.1.0",
-  "description": "A charms manager for Monster Hunter Rise Sunbreak",
-  "productName": "MHRS Charms Manager",
-  "author": "mbailleux <max.bailleux.13@gmail.com>",
+  "name": "mhrs-talismans-manager",
+  "description": "A tool to manage talismans for Monster Hunter Rise/Sunbreak",
+  "productName": "Monster Hunter Rise/Sunbreak - Talismans manager",
+  "author": "Maxime Bailleux <max.bailleux.13@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "quasar dev --port 9002",
+    "build": "quasar build",
+    "build:debug": "quasar build --debug",
     "lint": "eslint --ext .js,.ts,.vue ./",
-    "lint:ci": "eslint-output",
+    "lint:fix": "eslint --ext .js,.ts,.vue ./ --fix",
+    "lint:ci": "eslint --ext .js,.ts,.vue --format junit ./ > eslint-report.xml",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "test:unit:ui": "majestic",
     "test:unit": "jest --updateSnapshot",
@@ -16,51 +19,52 @@
     "test:unit:watch": "jest --watch",
     "test:unit:watchAll": "jest --watchAll",
     "serve:test:coverage": "quasar serve test/jest/coverage/lcov-report/ --port 8788",
-    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\""
+    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\"",
+    "release:major": "release-it major",
+    "release:minor": "release-it minor",
+    "release:patch": "release-it patch"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "axios": "^0.21.1",
-    "core-js": "^3.6.5",
+    "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
+    "papaparse": "^5.3.2",
+    "pinia": "^2.0.11",
     "quasar": "^2.6.0",
+    "vite-plugin-package-version": "^1.0.2",
     "vue": "^3.0.0",
     "vue-i18n": "^9.0.0",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
-    "@quasar/app-webpack": "^3.0.0",
+    "@babel/preset-env": "^7.18.2",
+    "@intlify/vite-plugin-vue-i18n": "^3.3.1",
+    "@pinia/testing": "^0.0.12",
+    "@quasar/app-vite": "^1.0.0",
+    "@quasar/babel-preset-app": "^2.0.1",
     "@quasar/quasar-app-extension-testing": "^2.0.4",
     "@quasar/quasar-app-extension-testing-unit-jest": "^3.0.0-alpha.10",
+    "@release-it/keep-a-changelog": "^3.0.0",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^12.20.21",
+    "@types/papaparse": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
+    "autoprefixer": "^10.4.2",
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-output": "^3.0.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jest": "^25.2.2",
     "eslint-plugin-vue": "^8.5.0",
     "jest-junit": "^13.2.0",
-    "majestic": "^1.7.0"
+    "majestic": "^1.7.0",
+    "release-it": "^15.2.0",
+    "typescript": "^4.5.4"
   },
-  "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
-  ],
   "engines": {
-    "node": ">= 12.22.1",
+    "node": "^18 || ^16 || ^14.19",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  },
-  "eslint-junit": {
-    "output": "eslint-report.xml"
   },
   "jest-junit": {
     "outputName": "jest-report.xml"
