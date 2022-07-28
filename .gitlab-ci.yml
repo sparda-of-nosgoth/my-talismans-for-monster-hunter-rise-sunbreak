@@ -1,21 +1,31 @@
 image: node:16.15-alpine3.14
 
-stages: [qa, test, publish]
+stages: [build, qa, test, publish]
 
 sast:
   stage: test
 include:
   - template: Security/SAST.gitlab-ci.yml
 
-.job_template: &job_configuration
-  before_script:
+build:
+  stage: build
+  script:
     - yarn install
   cache:
     paths:
       - node_modules/
+  artifacts:
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - node_modules/
+  only:
+    - merge_requests
+    - main
 
-qa:eslint:
-  <<: *job_configuration
+qa-eslint:
+  dependencies:
+    - build
   when: always
   stage: qa
   script:
@@ -27,23 +37,29 @@ qa:eslint:
   only:
     - merge_requests
 
-test:jest:
-  <<: *job_configuration
+test-jest:
+  dependencies:
+    - build
   when: always
   stage: test
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   script:
     - yarn test:unit:ci
   artifacts:
     when: always
     reports:
       junit: jest-report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: .coverage/cobertura-coverage.xml
   only:
     - merge_requests
+    - main
 
 pages:
-  <<: *job_configuration
   stage: publish
   script:
+    - yarn install
     - yarn build
     - rm -rf public
     - mkdir public
