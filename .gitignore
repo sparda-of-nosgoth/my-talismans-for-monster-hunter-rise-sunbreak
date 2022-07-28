@@ -33,4 +33,5 @@ yarn-error.log*
 *.sln
 
 # CI files
+/.coverage
 *-report.xml

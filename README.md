@@ -1,7 +1,8 @@
 # Monster Hunter Rise Sunbreak - Talismans Manager
 
-[![pipeline status](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/pipeline.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/commits/main)
 [![Latest Release](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/badges/release.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/releases)
+[![pipeline status](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/pipeline.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/commits/main)
+[![coverage](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/coverage.svg?job=test-jest)]()
 
 This repository generates [Talismans Manager](https://sparda-of-nosgoth.gitlab.io/mhrs-talismans-manager).
 
