@@ -5,7 +5,7 @@ import _pull from 'lodash/pull';
 
 export const useTalismanStore = defineStore('talisman', {
   state: () => ({
-    // @TODO: rename data or list ?
+    // TODO: rename data or list ?
     talismans: [] as Talisman[],
   }),
 
@@ -19,12 +19,12 @@ export const useTalismanStore = defineStore('talisman', {
     toggleFavorite(talisman: Talisman) {
       const index = _findIndex(this.talismans, talisman);
       this.talismans[index].favorite = !talisman.favorite;
-      this.talismans[index].forMelting = !this.talismans[index].favorite;
+      this.talismans[index].forMelting = this.talismans[index].favorite ? false : this.talismans[index].forMelting;
     },
     toggleForMelting(talisman: Talisman) {
       const index = _findIndex(this.talismans, talisman);
       this.talismans[index].forMelting = !talisman.forMelting;
-      this.talismans[index].favorite = !this.talismans[index].forMelting;
+      this.talismans[index].favorite = this.talismans[index].forMelting ? false : this.talismans[index].favorite;
     },
   },
 });

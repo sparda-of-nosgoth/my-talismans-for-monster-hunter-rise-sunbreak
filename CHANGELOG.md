@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Some unit tests for **Talisman** store.
+
 ### Changed
 
-- Improve **README** with some highlighting.
+- Improve **README** with some highlighting, and coverage badge.
+
+### Fixed
+
+- Fixed a bug that prevent to remove **favorite** or **to melting** to be marked.
 
 ## [0.1.0] - 2022-07-28
 

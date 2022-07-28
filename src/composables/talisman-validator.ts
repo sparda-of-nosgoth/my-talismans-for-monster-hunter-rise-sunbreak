@@ -115,7 +115,7 @@ export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> |
   const { findSkillByName } = useSkill();
   const { findSlotsBySlot } = useSlots();
 
-  // @TODO change name with IsValid, errorsFromTalisman
+  // TODO change name with IsValid, errorsFromTalisman
   const talismanIsValid = ref(true);
   const errorsFromTalisman = ref<TalismanValidator>(_cloneDeep(defaultErrors));
 

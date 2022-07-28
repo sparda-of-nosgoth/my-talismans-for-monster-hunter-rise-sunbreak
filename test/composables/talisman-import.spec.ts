@@ -36,7 +36,7 @@ jest
   .useFakeTimers('modern')
   .setSystemTime(new Date('2022-07-26').getTime());
 
-describe('talisman-import', () => {
+describe('composables/talisman-import', () => {
   const csv = ref('');
   const { talismansToImport, errorsFromImport } = useTalismanImport(csv);
 

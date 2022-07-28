@@ -34,7 +34,7 @@ jest
   .useFakeTimers('modern')
   .setSystemTime(new Date('2022-07-26').getTime());
 
-describe('talisman-export', () => {
+describe('composables/talisman-export', () => {
   it('export an empty talisman list', () => {
     const { exportedTalismans } = useTalismanExport([]);
     expect(exportedTalismans.value).toBe('');

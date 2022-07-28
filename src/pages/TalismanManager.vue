@@ -7,7 +7,7 @@ import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n({ useScope: 'global' });
-const talismans = useTalismanStore();
+const talismanStore = useTalismanStore();
 const { filterTalismans } = useTalisman();
 
 const columns = [
@@ -53,7 +53,7 @@ function openDialog() {
           grid
           grid-header
           :title="$t('talisman.manager.table.label')"
-          :rows="talismans.talismans"
+          :rows="talismanStore.talismans"
           :columns="columns"
           row-key="id"
           :filter="filter"
@@ -77,7 +77,7 @@ function openDialog() {
             <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
               <q-card>
                 <q-card-section horizontal>
-                  <!--            @TODO : MOVE STYLE ELSEWHERE-->
+                  <!--            TODO : MOVE STYLE ELSEWHERE-->
                   <q-card-section
                     vertical
                     style="min-height: 138px;"
@@ -110,13 +110,13 @@ function openDialog() {
                       flat
                       :color="item.row.favorite === true ? 'pink-8' : 'grey'"
                       icon="favorite"
-                      @click="() => talismans.toggleFavorite(item.row)"
+                      @click="() => talismanStore.toggleFavorite(item.row)"
                     />
                     <q-btn
                       flat
                       :color="item.row.forMelting === true ? 'green-10' : 'grey'"
                       icon="recycling"
-                      @click="() => talismans.toggleForMelting(item.row)"
+                      @click="() => talismanStore.toggleForMelting(item.row)"
                     />
                   </q-btn-group>
                   <q-space />
@@ -124,7 +124,7 @@ function openDialog() {
                     outline
                     color="red"
                     icon="delete"
-                    @click="() => talismans.deleteTalisman(item.row)"
+                    @click="() => talismanStore.deleteTalisman(item.row)"
                   />
                 </q-card-actions>
               </q-card>
@@ -148,7 +148,7 @@ function openDialog() {
         >
           <q-card style="width: 350px">
             <q-card-section class="row items-center no-wrap">
-              <talisman-list-form-add @created="talismans.addTalisman" />
+              <talisman-list-form-add @created="talismanStore.addTalisman" />
             </q-card-section>
           </q-card>
         </q-dialog>
