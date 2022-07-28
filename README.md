@@ -2,7 +2,7 @@
 
 [![Latest Release](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/badges/release.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/releases)
 [![pipeline status](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/pipeline.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/commits/main)
-[![coverage](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/coverage.svg?job=test-jest)]()
+[![coverage](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/coverage.svg?job=test-jest)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/tree/main)
 
 This repository generates [Talismans Manager](https://sparda-of-nosgoth.gitlab.io/mhrs-talismans-manager).
 
@@ -60,7 +60,7 @@ yarn build:debug # for debugging purpose
 ```
 
 ## Support
-If you encounter a bug, or had a problem with the tool, do not hesitate to open an [issue](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/issues) to discuss or solve it.
+If you encounter a bug, or had a problem with the tool, do not hesitate to send a mail, or open an [issue](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/issues), to discuss or solve it.
 
 ## Contributing
 If you want to contribute to this project, please feel free to open an [issue](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/issues) or directly submit a merge request.

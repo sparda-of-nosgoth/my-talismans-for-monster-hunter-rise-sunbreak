@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Improve **README** with some highlighting, and coverage badge.
+- Improve **README** with some highlighting, coverage badge, and minor changes on **Support** section.
 
 ### Fixed
 
