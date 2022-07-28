@@ -68,5 +68,6 @@
   },
   "jest-junit": {
     "outputName": "jest-report.xml"
-  }
+  },
+  "version": "0.1.0"
 }
