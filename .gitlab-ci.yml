@@ -1,17 +1,24 @@
 image: node:16.15-alpine3.14
 
-stages: [qa, test]
+stages: [qa, test, publish]
 
 sast:
   stage: test
 include:
-- template: Security/SAST.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
 
-qa:jest:
-  when: always
-  stage: test
-  script:
+.job_template: &job_configuration
+  before_script:
     - yarn install
+  cache:
+    paths:
+      - node_modules/
+
+qa:eslint:
+  <<: *job_configuration
+  when: always
+  stage: qa
+  script:
     - yarn lint:ci
   artifacts:
     when: always
@@ -21,15 +28,28 @@ qa:jest:
     - merge_requests
 
 test:jest:
+  <<: *job_configuration
   when: always
   stage: test
   script:
-    - yarn install
     - yarn test:unit:ci
   artifacts:
     when: always
     reports:
       junit: jest-report.xml
   only:
-    - main
     - merge_requests
+
+pages:
+  <<: *job_configuration
+  stage: publish
+  script:
+    - yarn build
+    - rm -rf public
+    - mkdir public
+    - cp -r dist/spa/* public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_TAG

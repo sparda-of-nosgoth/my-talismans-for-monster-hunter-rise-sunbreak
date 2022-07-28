@@ -1,0 +1,31 @@
+# Changelog
+
+## 0.X.0
+- [ ] Voir pour le badge test coverage.
+- [ ] Supprimer doc/csv/test_import.csv
+- [ ] Traduction EN.
+- [ ] Ajout du badge sur le code coverage dans le README.
+- Tests :
+  - components :
+    - [ ] AppLocaleSelector.
+    - [ ] AppVersion.
+    - [ ] TalismanManagerFormErrorCaption.
+  - composables :
+    - [ ] skill.
+    - [ ] slots.
+    - [ ] talisman.
+  - [ ] stores ?
+- [ ] Changelog dans l'application ? (lien depuis le numero de version)
+- components :
+  - talismanExport :
+    - [ ] Sauvegarder l'export dans un fichier ?
+  - talismanImport :
+    - [ ] Ajouter un texte explicatif sur les possibilités d'imports ?
+- conposables :
+  - talisman-validator :
+    - [ ] Ajouter une contrainte si les skill 1 et 2 sont identiques.
+- pages :
+  - talismanManager :
+    - [ ] Filtrer la vue du manager :
+      - [ ] Voir uniquement les favoris.
+      - [ ] Voir uniquement les À recycler.

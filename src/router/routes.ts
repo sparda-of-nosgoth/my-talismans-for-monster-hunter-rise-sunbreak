@@ -3,8 +3,20 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    redirect: () => ({ path: '/talismans/manager' }),
+  },
+  {
+    path: '/talismans/',
+    component: () => import('layouts/AppLayout.vue'),
+    children: [
+      { path: 'manager', component: () => import('pages/TalismanManager.vue') },
+      { path: 'import_export', component: () => import('pages/TalismanImportExport.vue') },
+    ],
+  },
+  {
+    path: '/translations/skill',
+    component: () => import('layouts/AppLayout.vue'),
+    children: [{ path: '', component: () => import('pages/TranslationSkill.vue') }],
   },
 
   // Always leave this as last one,
