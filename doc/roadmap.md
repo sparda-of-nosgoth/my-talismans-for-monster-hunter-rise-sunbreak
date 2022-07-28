@@ -1,31 +1,31 @@
 # Changelog
 
 ## 0.X.0
-- [ ] Voir pour le badge test coverage.
 - [ ] Supprimer doc/csv/test_import.csv
 - [ ] Traduction EN.
-- [ ] Ajout du badge sur le code coverage dans le README.
+- [ ] Ajouter le melting filter.
+- [ ] Donner une meilleure identité visuelle.
+- [ ] Formulaire d'ajout, voir pour améliorer le choix du slots.
 - Tests :
   - components :
-    - [ ] AppLocaleSelector.
-    - [ ] AppVersion.
+    - [ ] AppEssentialLink ?
+    - [ ] AppMenu.
+    - [ ] TalismanManagerForm -> voir TODO.
     - [ ] TalismanManagerFormErrorCaption.
-  - composables :
-    - [ ] skill.
-    - [ ] slots.
-    - [ ] talisman.
-  - [ ] stores ?
+  - pages :
+    - [ ] TalismanManager -> voir TODO.
 - [ ] Changelog dans l'application ? (lien depuis le numero de version)
 - components :
   - talismanExport :
     - [ ] Sauvegarder l'export dans un fichier ?
   - talismanImport :
     - [ ] Ajouter un texte explicatif sur les possibilités d'imports ?
-- conposables :
+- composables :
   - talisman-validator :
     - [ ] Ajouter une contrainte si les skill 1 et 2 sont identiques.
 - pages :
   - talismanManager :
+    - [ ] Refacto de l'utilisation de QDialog ?
     - [ ] Filtrer la vue du manager :
       - [ ] Voir uniquement les favoris.
       - [ ] Voir uniquement les À recycler.

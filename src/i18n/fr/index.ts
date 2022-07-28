@@ -28,6 +28,7 @@ export default {
         },
         skill2: {
           not_found: 'Le talent secondaire n\'existe pas pour le talisman suivant : | Le talent secondaire n\'existe pas pour les talismans suivants :',
+          is_empty: 'Le talent secondaire ne peut être vide (son niveau étant renseigné) pour le talisman suivant :',
         },
         skill1Level: {
           is_empty: 'Le niveau du talent principal ne peut être vide ou zéro pour le talisman suivant : | Le niveau du talent principal ne peut être vide ou zéro pour les talismans suivants :',

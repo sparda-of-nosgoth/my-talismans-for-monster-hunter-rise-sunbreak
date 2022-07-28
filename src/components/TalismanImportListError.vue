@@ -24,7 +24,7 @@ defineProps<{
           >
             <q-item-section>
               <q-item-label>
-                {{ `${talisman.skill1},${talisman.skill1Level},${talisman.skill2},${talisman.skill2Level},${talisman.slot1},${talisman.slot2},${talisman.slot3}` }}
+                {{ `${talisman.skill1 ?? ''},${talisman.skill1Level ?? ''},${talisman.skill2 ?? ''},${talisman.skill2Level ?? ''},${talisman.slot1 ?? ''},${talisman.slot2 ?? ''},${talisman.slot3 ?? ''}` }}
               </q-item-label>
             </q-item-section>
           </q-item>

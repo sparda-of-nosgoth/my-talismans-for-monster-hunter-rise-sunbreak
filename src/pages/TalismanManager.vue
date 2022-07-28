@@ -40,6 +40,7 @@ const columns = [
 ];
 const filter = ref('');
 const dialog = ref(false);
+
 function openDialog() {
   dialog.value = true;
 }

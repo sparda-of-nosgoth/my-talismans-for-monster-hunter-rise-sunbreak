@@ -27,7 +27,7 @@ export function useTalisman() {
       .then((value) => {
         talismanStore.talismans = JSON.parse(value ?? '[]');
       })
-      .catch(/* TODO catch error, use notify ? */);
+      .catch(() => (null)/* TODO catch error, use notify ? */);
   });
 
   talismanStore.$onAction(({ after }) => {
@@ -36,7 +36,7 @@ export function useTalisman() {
         .then((value) => {
           talismanStore.talismans = JSON.parse(value);
         })
-        .catch(/* TODO catch error, use notify ? */);
+        .catch(() => (null)/* TODO catch error, use notify ? */);
     });
   });
 

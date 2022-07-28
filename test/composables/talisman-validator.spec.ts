@@ -12,6 +12,7 @@ import { Skill } from 'src/composables/skill';
 import { Slots } from 'src/composables/slots';
 import { TranslateOptions } from '@intlify/core-base';
 import type { TemporaryTalisman } from 'src/composables/talisman-import';
+import { i18nMocked } from 'app/test/mocks/i18n';
 
 interface UpdateTalisman {
   skill1?: Skill | null
@@ -35,16 +36,7 @@ jest.mock('boot/i18n', () => ({
     global: {
       locale: 'fr',
       availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => {
-        switch (key) {
-          case 'capture-master':
-            return options.locale === 'fr' ? 'Maître capture' : 'Capture Master';
-          case 'hunger-resistance':
-            return options.locale === 'fr' ? 'Spartiate' : 'Hunger Resistance';
-          default:
-            return defaultMsg;
-        }
-      }),
+      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
     },
   },
 }));

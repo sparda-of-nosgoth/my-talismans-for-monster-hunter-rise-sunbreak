@@ -1,10 +1,15 @@
 git:
+  changelog: false
   requireBranch: main
   requireCleanWorkingDir: false
   requireUpstream: false
-  commitMessage: 'Release ${version}'
+  commitMessage: 'Prepare ${version}'
   tagName: '${version}'
-  tagMatch: '[0-9]*\.[0-9]*\.[0-9]*'
+  tagAnnotation: 'Release v${version}'
+  tagMatch: '[0-9].[0-9].[0-9]*'
+#gitlab:
+#  skipChecks: true
+#  release: true
 npm:
   publish: false
 plugins:
@@ -12,9 +17,9 @@ plugins:
     filename: CHANGELOG.md
     head: main
     strictLatest: false
-    keepUnreleased: false
+    addVersionUrl: true
     versionUrlFormats:
-      repositoryUrl: 'https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/'
-      unreleasedUrl: '{repositoryUrl}/-/compare/{head}...{tagName}'
+      repositoryUrl: 'https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager'
+      unreleasedUrl: '{repositoryUrl}/-/compare/{tagName}...{head}'
       versionUrl: '{repositoryUrl}/-/compare/{previousTag}...{tagName}'
       firstVersionUrl: '{repositoryUrl}/-/tags/{tagName}'

@@ -18,7 +18,7 @@ const { errorsFromImport, talismansToImport } = useTalismanImport(talismanList);
 
 const submitDisabled = computed(() => talismansToImport.value.length <= 0);
 
-async function onSubmit() {
+function submitImport() {
   try {
     _each(talismansToImport.value, (talisman) => {
       talismanStore.addTalisman(talisman);
@@ -55,7 +55,7 @@ async function onSubmit() {
           :label="$t('talisman.import.submit')"
           type="submit"
           :disable="submitDisabled"
-          @click="onSubmit"
+          @click="submitImport"
         />
         <span class="q-pl-md">
           {{ $t('talisman.import.talismans_to_import', talismansToImport.length, { count: talismansToImport.length }) }}

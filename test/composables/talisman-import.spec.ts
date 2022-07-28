@@ -6,28 +6,14 @@ import { TranslateOptions } from '@intlify/core-base';
 import _now from 'lodash/now';
 import { useTalismanImport } from 'src/composables/talisman-import';
 import { ref } from 'vue';
+import { i18nMocked } from 'app/test/mocks/i18n';
 
 jest.mock('boot/i18n', () => ({
   i18n: {
     global: {
       locale: 'fr',
       availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => {
-        switch (key) {
-          case 'agitator':
-            return options.locale === 'fr' ? 'Témérité' : 'Agitator';
-          case 'master-mounter':
-            return options.locale === 'fr' ? 'Maître-cavalier' : 'Master Mounter';
-          case 'slugger':
-            return options.locale === 'fr' ? 'Cogneur' : 'Slugger';
-          case 'weakness-exploit':
-            return options.locale === 'fr' ? 'Mise à mort' : 'Weakness Exploit';
-          case 'speed-sharpening':
-            return options.locale === 'fr' ? 'Maître capture' : 'Speed Sharpening';
-          default:
-            return defaultMsg;
-        }
-      }),
+      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
     },
   },
 }));
