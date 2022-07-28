@@ -8,7 +8,7 @@ import { useTalisman } from 'src/composables/talisman';
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
 
-// @TODO-post-v1.0: find a better way to exploit the onMounted and subscriber from this composable
+// TODO-post-v1.0: find a better way to exploit the onMounted and subscriber from this composable
 useTalisman();
 const { notify } = useQuasar();
 const { t } = useI18n({ useScope: 'global' });
@@ -31,7 +31,7 @@ async function onSubmit() {
     });
   } catch (e) {
     const error = e as Error;
-    // @TODO-post-v1.0: find a better error message to display
+    // TODO-post-v1.0: find a better error message to display
     notify({
       color: 'negative',
       position: 'bottom',

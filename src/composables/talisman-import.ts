@@ -120,7 +120,7 @@ export function useTalismanImport(csvData: Ref<string> | string) {
         }
       });
     } catch (e) {
-      // @TODO-post-v1.0: find a better error to throw
+      // TODO-post-v1.0: find a better error to throw
       throw new Error('An error occured during import');
     }
   }

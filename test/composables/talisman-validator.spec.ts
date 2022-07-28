@@ -49,7 +49,7 @@ jest.mock('boot/i18n', () => ({
   },
 }));
 
-describe('talisman-validator', () => {
+describe('composables/talisman-validator', () => {
   describe('useTalismanValidator', () => {
     const talisman = ref<Talisman>({
       id: now(),

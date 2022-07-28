@@ -20,23 +20,23 @@ export interface Talisman {
 }
 
 export function useTalisman() {
-  const store = useTalismanStore();
+  const talismanStore = useTalismanStore();
 
   onMounted(() => {
     localforage.getItem<string>('mhrs-talismans')
       .then((value) => {
-        store.talismans = JSON.parse(value ?? '[]');
+        talismanStore.talismans = JSON.parse(value ?? '[]');
       })
-      .catch(/* @TODO catch error, use notify ? */);
+      .catch(/* TODO catch error, use notify ? */);
   });
 
-  store.$onAction(({ after }) => {
+  talismanStore.$onAction(({ after }) => {
     after(() => {
-      localforage.setItem('mhrs-talismans', JSON.stringify(store.talismans))
+      localforage.setItem('mhrs-talismans', JSON.stringify(talismanStore.talismans))
         .then((value) => {
-          store.talismans = JSON.parse(value);
+          talismanStore.talismans = JSON.parse(value);
         })
-        .catch(/* @TODO catch error, use notify ? */);
+        .catch(/* TODO catch error, use notify ? */);
     });
   });
 
@@ -77,7 +77,7 @@ export function useTalisman() {
 
   return {
     newTalisman,
-    talismans: store.talismans,
+    talismans: talismanStore.talismans,
     filterTalismans,
   };
 }
