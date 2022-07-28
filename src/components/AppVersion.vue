@@ -1,8 +1,5 @@
-<script setup lang="ts">
-
-const version = import.meta.env.PACKAGE_VERSION;
-</script>
+<script setup lang="ts" />
 
 <template>
-  <div>v{{ version }}</div>
+  <div>v{{ $appVersion }}</div>
 </template>
