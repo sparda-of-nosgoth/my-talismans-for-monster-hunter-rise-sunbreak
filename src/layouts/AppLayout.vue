@@ -49,12 +49,3 @@ function toggleLeftDrawer() {
     </q-page-container>
   </q-layout>
 </template>
-
-<style>
-/*body {*/
-/*  !*background-color: #000; !*Default bg, similar to the background's base color*!*!*/
-/*  background-image: url('src/assets/images/mhrs-stamp-2.png');*/
-/*  background-position: right bottom; !*Positioning*!*/
-/*  background-repeat: no-repeat; !*Prevent showing multiple background images*!*/
-/*}*/
-</style>

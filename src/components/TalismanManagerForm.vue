@@ -8,7 +8,7 @@ import TalismanManagerFormErrorCaption from 'components/TalismanManagerFormError
 
 const { newTalisman } = useTalisman();
 
-const emits = defineEmits<{(e: 'created', talisman: Talisman): void}>();
+const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
 const talisman = ref(newTalisman);
 const { skills } = useSkill();
@@ -17,7 +17,7 @@ const { errors, isValid } = useTalismanValidator(talisman);
 function onSubmit() {
   // If there is no errors
   if (isValid.value) {
-    emits('created', _cloneDeep(talisman.value));
+    emit('created', _cloneDeep(talisman.value));
   }
 }
 </script>

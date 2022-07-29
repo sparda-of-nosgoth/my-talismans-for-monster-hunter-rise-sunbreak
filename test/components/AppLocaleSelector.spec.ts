@@ -1,31 +1,31 @@
-// import { describe, expect, it } from '@jest/globals';
-// import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
-// import { mount, shallowMount } from '@vue/test-utils';
-// import { QSelect } from 'quasar';
-// import AppLocaleSelector from 'components/AppLocaleSelector.vue';
-// import { useMockI18n } from '../mocks/i18n';
-//
-// installQuasarPlugin();
-//
-// describe('components/AppLocaleSelector', () => {
-//   const { i18n } = useMockI18n();
-//
-//   it('sets the correct default data', () => {
-//     const { vm } = mount(AppLocaleSelector);
-//
-//     expect(vm.locale).toStrictEqual('fr-FR');
-//     expect(vm.locales).toStrictEqual(['en-US', 'fr-FR']);
-//   });
-//
-//   it('can change i18n locale when a value is selected', async () => {
-//     const wrapper = shallowMount(AppLocaleSelector);
-//     const { vm } = wrapper;
-//
-//     expect(i18n.global.locale).toBe('fr-FR');
-//     expect(vm.locale).toStrictEqual('fr-FR');
-//     const select = wrapper.getComponent(QSelect);
-//     await select.setValue('en-US');
-//     expect(i18n.global.locale).toBe('en-US');
-//     expect(vm.locale).toStrictEqual('en-US');
-//   });
-// });
+import { describe, expect, it } from '@jest/globals';
+import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
+import { config, mount, shallowMount } from '@vue/test-utils';
+import { QSelect } from 'quasar';
+import AppLocaleSelector from 'components/AppLocaleSelector.vue';
+import { i18nMocked } from '../mocks/i18n';
+
+installQuasarPlugin();
+
+describe('components/AppLocaleSelector', () => {
+  config.global.plugins = [...config.global.plugins, i18nMocked];
+
+  it('sets the correct default data', () => {
+    const { vm } = mount(AppLocaleSelector);
+
+    expect(vm.locale).toBe('fr');
+    expect(vm.availableLocales).toStrictEqual(['en', 'fr']);
+  });
+
+  it('can change i18n locale when a value is selected', async () => {
+    const wrapper = shallowMount(AppLocaleSelector);
+    const { vm } = wrapper;
+
+    expect(i18nMocked.global.locale.value).toBe('fr');
+    expect(vm.locale).toBe('fr');
+    const select = wrapper.getComponent(QSelect);
+    await select.setValue('en');
+    expect(i18nMocked.global.locale.value).toBe('en');
+    expect(vm.locale).toBe('en');
+  });
+});

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- A new boot file **config**, to add a global properties **$appVersion** with the package version.
+- More unit tests for components, composables, layout and pages.
+
+### Fixed
+
+- Fixed missing translations.
+- Fixed a bug that display null instead of an empty string in **import**.
+- Fixed some minor bugs.
+
 ## [0.1.1] - 2022-07-28
 
 ### Added
@@ -12,7 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Improve **README** with some highlighting, coverage badge, and minor changes on **Support** section.
+- Minor adjustments to release-it configuration.
+- Improved **README** with some highlighting, coverage badge, and minor changes on **Support** section.
 
 ### Fixed
 

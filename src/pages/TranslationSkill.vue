@@ -34,7 +34,7 @@ const { filterSkillsByType } = useSkill();
             </q-item-section>
             <q-item-section>
               <q-item-label>
-                {{ $t(skill.name, skill.name, { locale: 'en-US' }) }}
+                {{ $t(skill.name, skill.name, { locale: 'en' }) }}
               </q-item-label>
             </q-item-section>
           </q-item>
