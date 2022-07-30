@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Options** section in menu, with locale selector, and display app current version.
 - More unit tests for components, composables, layout and pages.
 
+### Changed
+
+- Skills select now display a list in alphabetical order.
+
 ### Fixed
 
 - Fixed missing translations.

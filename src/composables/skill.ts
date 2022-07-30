@@ -1,15 +1,16 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { SkillType } from 'src/composables/skillType';
 import _filter from 'lodash/filter';
 import _find from 'lodash/find';
-import { searchInLocales } from 'src/utils/translation';
+import _sortBy from 'lodash/sortBy';
+import { searchInLocales, translate } from 'src/utils/translation';
 
 export interface Skill {
-  id: number;
-  name: string;
-  type: number;
-  levelMaximum: number;
-  foundOnTalismans: boolean;
+  id: number
+  name: string
+  type: number
+  levelMaximum: number
+  foundOnTalismans: boolean
 }
 
 export function useSkill() {
@@ -801,5 +802,9 @@ export function useSkill() {
     return _find(skills.value, (skill: Skill) => searchInLocales(skill.name, skillName));
   }
 
-  return { skills, filterSkillsByType, findSkillByName };
+  const sortedSkills = computed(() => _sortBy(skills.value, [(skill) => translate(skill.name)]));
+
+  return {
+    skills, sortedSkills, filterSkillsByType, findSkillByName,
+  };
 }
