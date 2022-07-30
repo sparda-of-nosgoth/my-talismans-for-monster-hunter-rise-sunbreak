@@ -11,7 +11,7 @@ const { newTalisman } = useTalisman();
 const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
 const talisman = ref(newTalisman);
-const { skills } = useSkill();
+const { sortedSkills } = useSkill();
 const { errors, isValid } = useTalismanValidator(talisman);
 
 function onSubmit() {
@@ -33,7 +33,7 @@ function onSubmit() {
       <div>
         <q-select
           v-model="talisman.skill1"
-          :options="skills"
+          :options="sortedSkills"
           :option-label="(skill) => $t(skill.name)"
           :label="$t('talisman.manager.form_add.skill1.label')"
           class="q-pa-sm"
@@ -54,7 +54,7 @@ function onSubmit() {
         />
         <q-select
           v-model="talisman.skill2"
-          :options="skills"
+          :options="sortedSkills"
           :option-label="(skill) => $t(skill.name)"
           :label="$t('talisman.manager.form_add.skill2.label')"
           class="q-pa-sm"
