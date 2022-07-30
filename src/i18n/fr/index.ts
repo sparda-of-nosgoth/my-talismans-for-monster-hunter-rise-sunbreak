@@ -14,6 +14,18 @@ export default {
     skill_type_translation: {
       label: 'Traduction des talents',
     },
+    options: 'Options',
+  },
+  options: {
+    language: {
+      label: 'Langue',
+      en: {
+        label: 'Anglais',
+      },
+      fr: {
+        label: 'Français',
+      },
+    },
   },
   talisman: {
     export: {

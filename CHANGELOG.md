@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - A new boot file **config**, to add a global properties **$appVersion** with the package version.
+- **Options** section in menu, with locale selector, and display app current version.
 - More unit tests for components, composables, layout and pages.
 
 ### Fixed
