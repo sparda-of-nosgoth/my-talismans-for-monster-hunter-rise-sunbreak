@@ -7,13 +7,13 @@ const { locale, availableLocales } = useI18n({ useScope: 'global' });
 <template>
   <q-select
     v-model="locale"
+    :label="$t('options.language.label')"
     :options="availableLocales"
+    :option-label="(item) => {
+      return $t(`options.language.${item}.label`);
+    }"
     option-value="value"
     class="text-white"
     borderless
-  >
-    <template #selected-item="item">
-      {{ item.opt }}
-    </template>
-  </q-select>
+  />
 </template>

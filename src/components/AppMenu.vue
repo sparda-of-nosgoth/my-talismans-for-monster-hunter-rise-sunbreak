@@ -38,8 +38,18 @@ const essentialLinks = [
   </q-list>
 
   <div class="q-pa-md fixed-bottom">
+    <q-list>
+      <q-item-label header>
+        {{ $t('menu.options') }}
+      </q-item-label>
+      <q-item>
+        <q-item-section>
+          <app-locale-selector />
+        </q-item-section>
+      </q-item>
+      <q-separator />
+    </q-list>
     <div class="row items-center no-wrap">
-      <app-locale-selector />
       <q-space />
       <app-version />
     </div>
