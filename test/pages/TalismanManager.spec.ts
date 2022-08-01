@@ -162,7 +162,9 @@ describe('pages/TalismanManager', () => {
   // TODO: test for QPageStick and QDialog
 
   // TODO: Test this with cypress ?
+  // eslint-disable-next-line jest/no-commented-out-tests
   // describe('on small screen', () => {
+  // eslint-disable-next-line jest/no-commented-out-tests
   //   it('has a favorite toggle button on a Talisman card', async () => {
   //     resizeScreen();
   //
@@ -188,6 +190,7 @@ describe('pages/TalismanManager', () => {
   //     expect(btn[0].props().color).toBe('pink-8');
   //   });
   //
+  // eslint-disable-next-line jest/no-commented-out-tests
   //   it('has a recycling toggle button on a Talisman card', async () => {
   //     const wrapper = mount(TalismanManager, {
   //       global: {
@@ -211,6 +214,7 @@ describe('pages/TalismanManager', () => {
   //     expect(btn[1].props().color).toBe('green-10');
   //   });
   //
+  // eslint-disable-next-line jest/no-commented-out-tests
   //   it('has a delete button on a Talisman card', async () => {
   //     const wrapper = mount(TalismanManager, {
   //       global: {
