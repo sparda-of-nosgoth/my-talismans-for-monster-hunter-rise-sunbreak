@@ -9,7 +9,6 @@ import TalismanImport from 'components/TalismanImport.vue';
 import TalismanExport from 'components/TalismanExport.vue';
 import TalismanImportExport from 'pages/TalismanImportExport.vue';
 import { QTabPanel } from 'quasar';
-import { nextTick } from 'vue';
 import { i18nMocked } from 'app/test/mocks/i18n';
 import { TranslateOptions } from '@intlify/core-base';
 import { piniaMocked } from '../mocks/pinia';
@@ -50,7 +49,7 @@ describe('pages/TalismanImportExport', () => {
     });
     const { vm } = wrapper;
     vm.currentTab = 'import';
-    await nextTick();
+    await vm.$nextTick();
     const talismanImport = wrapper.getComponent(TalismanImport);
     expect(talismanImport)
       .toBeTruthy();
@@ -65,7 +64,7 @@ describe('pages/TalismanImportExport', () => {
     });
     const { vm } = wrapper;
     vm.currentTab = 'export';
-    await nextTick();
+    await vm.$nextTick();
     const talismanExport = wrapper.getComponent(TalismanExport);
     expect(talismanExport).toBeTruthy();
   });
@@ -80,13 +79,13 @@ describe('pages/TalismanImportExport', () => {
     const { vm } = wrapper;
 
     vm.currentTab = 'import';
-    await nextTick();
+    await vm.$nextTick();
     expect(vm.currentTab).toStrictEqual('import');
     const importTabPanel = wrapper.findComponent(QTabPanel);
     expect(importTabPanel.vm.name).toBe('import');
 
     vm.currentTab = 'export';
-    await nextTick();
+    await vm.$nextTick();
     expect(vm.currentTab).toStrictEqual('export');
     const exportTabPanel = wrapper.findComponent(QTabPanel);
     expect(exportTabPanel.vm.name).toBe('export');

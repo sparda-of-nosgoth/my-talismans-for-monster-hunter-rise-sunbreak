@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - A new boot file **config**, to add a global properties **$appVersion** with the package version.
 - **Options** section in menu, with locale selector, and display app current version.
+- **Talismans** are now displayed on **rows** when screen size is more than sm.
 - More unit tests for components, composables, layout and pages.
 
 ### Changed
 
-- Skills select now display a list in alphabetical order.
+- **Talismans** are displayed on **cards** when screen size is xs or sm.
+- **Skills** select now display a list in alphabetical order.
 
 ### Fixed
 

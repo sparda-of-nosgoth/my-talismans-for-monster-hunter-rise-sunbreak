@@ -19,7 +19,7 @@ function toggleLeftDrawer() {
           dense
           round
           icon="menu"
-          :aria-label="$t('header.main_menu')"
+          :aria-label="$t('menu.header')"
           @click="toggleLeftDrawer"
         />
         <q-separator
