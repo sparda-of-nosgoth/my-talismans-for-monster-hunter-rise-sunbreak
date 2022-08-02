@@ -57,6 +57,29 @@ describe('components/TalismanManagerForm', () => {
     });
   });
 
+  it('has a function to filter skills', async () => {
+    const { vm } = shallowMount(TalismanManagerForm, {
+      global: {
+        plugins: [piniaMocked()],
+      },
+    });
+
+    expect(typeof vm.filterSkills).toBe('function');
+    const updateMock = jest.fn((callback: () => void) => callback());
+    await vm.filterSkills('Cha', updateMock);
+    await vm.$nextTick();
+    expect(updateMock).toHaveBeenCalledTimes(1);
+    expect(vm.sortedSkills).toStrictEqual([{
+      id: 107, levelMaximum: 4, name: 'chameleos-blessing', type: 9, foundOnTalismans: false,
+    }, {
+      id: 7, levelMaximum: 3, name: 'good-luck', type: 1, foundOnTalismans: true,
+    }, {
+      id: 87, levelMaximum: 2, name: 'load-shells', type: 7, foundOnTalismans: true,
+    }, {
+      id: 100, levelMaximum: 3, name: 'reload-speed', type: 8, foundOnTalismans: true,
+    }]);
+  });
+
   it('has a function to submit Talisman', () => {
     const { vm } = shallowMount(TalismanManagerForm, {
       global: {
@@ -66,6 +89,11 @@ describe('components/TalismanManagerForm', () => {
 
     expect(typeof vm.onSubmit).toBe('function');
   });
+
+  // eslint-disable-next-line jest/no-commented-out-tests
+  // it('filter skills list when a needle is typed in q-select', async () => {
+  //   // TODO: Test with cypress
+  // });
 
 //  TODO: test emit created, and errors display
 });

@@ -11,8 +11,14 @@ const { newTalisman } = useTalisman();
 const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
 const talisman = ref(newTalisman);
-const { sortedSkills } = useSkill();
+const { sortedSkills, filterSkillByName } = useSkill();
 const { errors, isValid } = useTalismanValidator(talisman);
+
+function filterSkills(needle: string, update: (callback: () => void) => void): void {
+  update(() => {
+    filterSkillByName(needle);
+  });
+}
 
 function onSubmit() {
   // If there is no errors
@@ -44,6 +50,9 @@ function onSubmit() {
             () => !errors.skill1Level.isEmpty || $t('talisman.validation.skill1Level.is_empty'),
             () => !errors.skill1Level.exceedsMaximum || $t('talisman.validation.skill1Level.exceeds_maximum', { level: talisman.skill1Level, level_maximum: talisman.skill1?.levelMaximum }),
           ]"
+          input-debounce="0"
+          use-input
+          @filter="filterSkills"
         />
         <q-slider
           v-model="talisman.skill1Level"
@@ -64,6 +73,9 @@ function onSubmit() {
             () => !errors.skill2Level.isEmpty || $t('talisman.validation.skill2Level.is_empty'),
             () => !errors.skill2Level.exceedsMaximum || $t('talisman.validation.skill2Level.exceeds_maximum', { level: talisman.skill2Level, level_maximum: talisman.skill2?.levelMaximum }),
           ]"
+          input-debounce="0"
+          use-input
+          @filter="filterSkills"
         />
         <q-slider
           v-model="talisman.skill2Level"

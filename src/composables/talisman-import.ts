@@ -45,7 +45,7 @@ const defaultImportErrors = {
 };
 
 export function useTalismanImport(csvData: Ref<string> | string) {
-  const { findSkillByName } = useSkill();
+  const { getSkillByName } = useSkill();
   const { findSlotsBySlot } = useSlots();
   const errorsFromImport = ref<ImportErrors>(defaultImportErrors);
   const talismansToImport = ref<Talisman[]>([]);
@@ -58,9 +58,9 @@ export function useTalismanImport(csvData: Ref<string> | string) {
   function createTalisman(importedTalisman: TemporaryTalisman): Talisman {
     return {
       id: now(),
-      skill1: findSkillByName(importedTalisman.skill1 ?? '') ?? null,
+      skill1: getSkillByName(importedTalisman.skill1 ?? '') ?? null,
       skill1Level: importedTalisman.skill1Level,
-      skill2: findSkillByName(importedTalisman.skill2 ?? '') ?? null,
+      skill2: getSkillByName(importedTalisman.skill2 ?? '') ?? null,
       skill2Level: importedTalisman.skill2Level ?? null,
       slots: findSlotsBySlot(importedTalisman.slot1, importedTalisman.slot2, importedTalisman.slot3) ?? { slot1: 0, slot2: 0, slot3: 0 },
       favorite: false,
