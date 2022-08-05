@@ -46,7 +46,11 @@ describe('pages/TalismanManager', () => {
       },
     });
 
-    expect(vm.filter).toBe('');
+    expect(vm.filter).toStrictEqual({
+      filterFavorite: false,
+      filterForMelting: false,
+      search: '',
+    });
     expect(vm.dialog).toBe(false);
   });
 
@@ -69,7 +73,7 @@ describe('pages/TalismanManager', () => {
     });
 
     const rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(2);
+    expect(rows.length).toBe(4);
   });
 
   it('has a favorite toggle button on a Talisman row', async () => {
@@ -129,14 +133,14 @@ describe('pages/TalismanManager', () => {
     await vm.$nextTick();
 
     let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(2);
+    expect(rows.length).toBe(4);
     const btn = rows[0].findAllComponents(QBtn);
     expect(btn[2].exists()).toBeTruthy();
     expect(btn[2].props().icon).toBe('delete');
     await btn[2].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(1);
+    expect(rows.length).toBe(3);
   });
 
   it('has a search filter', async () => {
@@ -150,7 +154,7 @@ describe('pages/TalismanManager', () => {
     await vm.$nextTick();
 
     let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(2);
+    expect(rows.length).toBe(4);
     const input = wrapper.getComponent(QInput);
     await input.setValue('2-1-0');
     await vm.$nextTick();

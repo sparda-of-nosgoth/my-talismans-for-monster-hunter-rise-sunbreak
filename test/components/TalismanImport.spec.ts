@@ -9,6 +9,7 @@ import { Notify, QBtn, QInput } from 'quasar';
 import { TranslateOptions } from '@intlify/core-base';
 import { piniaMocked } from 'app/test/mocks/pinia';
 import _now from 'lodash/now';
+import { talismans } from 'app/test/mocks/models';
 import { i18nMocked } from '../mocks/i18n';
 
 installQuasarPlugin({ plugins: { Notify } });
@@ -183,12 +184,12 @@ describe('components/TalismanImport', () => {
     });
     const { vm } = wrapper;
 
-    expect(vm.talismanStore.talismans.length).toBe(2);
+    expect(vm.talismanStore.talismans.length).toBe(4);
     const textarea = wrapper.getComponent(QInput);
     await textarea.setValue(''
-      + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
-      + 'Master Mounter,1,Slugger,1,1,1,0\r\n'
-      + 'Agitator,2,,,2,1,0');
+      + 'Speed Sharpening,1,Slugger,1,0,0,0\r\n'
+      + 'Agitator,2,Weakness Exploit,1,1,1,0\r\n'
+      + 'Master Mounter,1,,,2,1,0');
     const submit = wrapper.getComponent(QBtn);
     await submit.trigger('click');
     expect(vm.talismansToImport).toStrictEqual([
@@ -199,7 +200,7 @@ describe('components/TalismanImport', () => {
         },
         skill1Level: 1,
         skill2: {
-          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
+          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
         },
         skill2Level: 1,
         slots: {
@@ -211,11 +212,11 @@ describe('components/TalismanImport', () => {
       {
         id: _now(),
         skill1: {
-          id: 73, name: 'master-mounter', type: 6, levelMaximum: 1, foundOnTalismans: true,
+          id: 60, name: 'agitator', type: 6, levelMaximum: 5, foundOnTalismans: true,
         },
-        skill1Level: 1,
+        skill1Level: 2,
         skill2: {
-          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
+          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
         },
         skill2Level: 1,
         slots: {
@@ -227,9 +228,9 @@ describe('components/TalismanImport', () => {
       {
         id: _now(),
         skill1: {
-          id: 60, name: 'agitator', type: 6, levelMaximum: 5, foundOnTalismans: true,
+          id: 73, name: 'master-mounter', type: 6, levelMaximum: 1, foundOnTalismans: true,
         },
-        skill1Level: 2,
+        skill1Level: 1,
         skill2: null,
         skill2Level: null,
         slots: {
@@ -239,38 +240,9 @@ describe('components/TalismanImport', () => {
         forMelting: false,
       },
     ]);
-    expect(vm.talismanStore.talismans.length).toBe(5);
+    expect(vm.talismanStore.talismans.length).toBe(7);
     expect(vm.talismanStore.talismans).toStrictEqual([
-      {
-        id: _now(),
-        skill1: {
-          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
-        },
-        skill1Level: 2,
-        skill2: null,
-        skill2Level: null,
-        slots: {
-          id: 6, slot1: 2, slot2: 1, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 36, name: 'attack-boost', type: 3, levelMaximum: 7, foundOnTalismans: true,
-        },
-        skill1Level: 2,
-        skill2: {
-          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
-        },
-        skill2Level: 1,
-        slots: {
-          id: 3, slot1: 1, slot2: 1, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
+      ...talismans.allTalismans,
       {
         id: _now(),
         skill1: {
@@ -278,7 +250,7 @@ describe('components/TalismanImport', () => {
         },
         skill1Level: 1,
         skill2: {
-          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
+          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
         },
         skill2Level: 1,
         slots: {
@@ -290,11 +262,11 @@ describe('components/TalismanImport', () => {
       {
         id: _now(),
         skill1: {
-          id: 73, name: 'master-mounter', type: 6, levelMaximum: 1, foundOnTalismans: true,
+          id: 60, name: 'agitator', type: 6, levelMaximum: 5, foundOnTalismans: true,
         },
-        skill1Level: 1,
+        skill1Level: 2,
         skill2: {
-          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
+          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
         },
         skill2Level: 1,
         slots: {
@@ -306,9 +278,9 @@ describe('components/TalismanImport', () => {
       {
         id: _now(),
         skill1: {
-          id: 60, name: 'agitator', type: 6, levelMaximum: 5, foundOnTalismans: true,
+          id: 73, name: 'master-mounter', type: 6, levelMaximum: 1, foundOnTalismans: true,
         },
-        skill1Level: 2,
+        skill1Level: 1,
         skill2: null,
         skill2Level: null,
         slots: {

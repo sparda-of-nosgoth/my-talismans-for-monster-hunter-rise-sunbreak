@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Options** section in menu, with locale selector, and display app current version.
 - **Talismans** are now displayed on **rows** when screen size is more than sm.
 - In **Talisman**'s form, a filter to easily find skill's was added to selectors.
+- **Talisman**'s list can be filtered by favorite or for melting, combined with search.
 - More unit tests for components, composables, layout and pages.
 
 ### Changed

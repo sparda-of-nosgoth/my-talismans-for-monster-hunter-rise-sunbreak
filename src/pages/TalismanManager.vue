@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, Slots } from 'vue';
 import TalismanListFormAdd from 'components/TalismanManagerForm.vue';
-import { Talisman, useTalisman } from 'src/composables/talisman';
+import { Talisman, TalismanFilter, useTalisman } from 'src/composables/talisman';
 import { Skill } from 'src/composables/skill';
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
@@ -52,7 +52,11 @@ const columns = [
     sortable: false,
   },
 ];
-const filter = ref('');
+const filter = ref<TalismanFilter>({
+  filterFavorite: false,
+  filterForMelting: false,
+  search: '',
+});
 const dialog = ref(false);
 
 function openDialog() {
@@ -77,8 +81,16 @@ function openDialog() {
           :pagination="{rowsPerPage: 0}"
         >
           <template #top-right>
+            <q-toggle
+              v-model="filter.filterFavorite"
+              icon="favorite"
+            />
+            <q-toggle
+              v-model="filter.filterForMelting"
+              icon="recycling"
+            />
             <q-input
-              v-model="filter"
+              v-model="filter.search"
               dense
               debounce="300"
               :placeholder="$t('talisman.manager.table.search')"

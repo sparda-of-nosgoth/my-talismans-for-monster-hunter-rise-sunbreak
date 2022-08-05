@@ -36,6 +36,8 @@ describe('components/TalismanExport', () => {
     const input = wrapper.getComponent(QInput);
     expect(input.vm.modelValue).toStrictEqual(''
       + 'Weakness Exploit,2,,,2,1,0\r\n'
-      + 'Attack Boost,2,Slugger,1,1,1,0');
+      + 'Attack Boost,2,Slugger,1,1,1,0\r\n'
+      + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
+      + 'Master Mounter,1,Slugger,1,1,1,0');
   });
 });
