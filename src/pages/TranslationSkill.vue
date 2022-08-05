@@ -3,7 +3,7 @@ import { useSkill } from 'src/composables/skill';
 import { useSkillType } from 'src/composables/skillType';
 
 const { skillTypes } = useSkillType();
-const { filterSkillsByType } = useSkill();
+const { getSkillsByType } = useSkill();
 
 </script>
 
@@ -24,7 +24,7 @@ const { filterSkillsByType } = useSkill();
       <q-card-section>
         <q-list separator>
           <q-item
-            v-for="skill in filterSkillsByType(skillType)"
+            v-for="skill in getSkillsByType(skillType)"
             :key="skill.id"
           >
             <q-item-section>

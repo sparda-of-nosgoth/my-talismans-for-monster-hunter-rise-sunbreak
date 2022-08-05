@@ -112,7 +112,7 @@ export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
 }
 
 export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> | TemporaryTalisman) {
-  const { findSkillByName } = useSkill();
+  const { getSkillByName } = useSkill();
   const { findSlotsBySlot } = useSlots();
 
   // TODO change name with IsValid, errorsFromTalisman
@@ -135,7 +135,7 @@ export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> |
       errorsFromTalisman.value.skill1.isEmpty = true;
       talismanIsValid.value = false;
     } else {
-      skill1.value = findSkillByName(talismanValue.skill1);
+      skill1.value = getSkillByName(talismanValue.skill1);
       if (!skill1.value) {
         // Not valid if skill1 is not found during import
         errorsFromTalisman.value.skill1.notFound = true;
@@ -157,7 +157,7 @@ export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> |
     }
 
     if (talismanValue.skill2) {
-      skill2.value = findSkillByName(talismanValue.skill2);
+      skill2.value = getSkillByName(talismanValue.skill2);
       if (!skill2.value) {
         // Not valid if skill2 is not found during import
         errorsFromTalisman.value.skill2.notFound = true;
