@@ -19,27 +19,36 @@ export interface Talisman {
   favorite: boolean
 }
 
+export interface TalismanFilter {
+  filterFavorite: boolean
+  filterForMelting: boolean
+  search: string
+}
+
 export function useTalisman() {
   const talismanStore = useTalismanStore();
 
+  // Load cache for Talisman's list
   onMounted(() => {
     localforage.getItem<string>('mhrs-talismans')
       .then((value) => {
         talismanStore.talismans = JSON.parse(value ?? '[]');
       })
-      .catch(() => (null)/* TODO catch error, use notify ? */);
+      .catch(() => null/* TODO catch error, use notify ? */);
   });
 
+  // Store subscriber to save each modification in cache
   talismanStore.$onAction(({ after }) => {
     after(() => {
       localforage.setItem('mhrs-talismans', JSON.stringify(talismanStore.talismans))
         .then((value) => {
           talismanStore.talismans = JSON.parse(value);
         })
-        .catch(() => (null)/* TODO catch error, use notify ? */);
+        .catch(() => null/* TODO catch error, use notify ? */);
     });
   });
 
+  // Initial state for a new Talisman
   const newTalisman: Talisman = {
     id: _now(),
     skill1: null,
@@ -55,7 +64,13 @@ export function useTalisman() {
     forMelting: false,
   };
 
-  function findTalismanBySkill(talisman: Talisman, terms: string): boolean {
+  /**
+   * Comparison function to find terms in skill1 or skill2 name of a talisman
+   * Mostly used on Talisman's filter
+   * @param talisman Talisman used for comparison
+   * @param terms Terms to find
+   */
+  function compareTalismanBySkill(talisman: Talisman, terms: string): boolean {
     const skill1Name = talisman.skill1?.name ?? '';
     const skill2Name = talisman.skill2?.name ?? '';
 
@@ -67,12 +82,24 @@ export function useTalisman() {
       || _lowercase(translateInEn(skill2Name)).includes(_lowercase(terms));
   }
 
-  function findTalismanBySlots(talisman: Talisman, terms: string): boolean {
+  /**
+   * Comparison function to find terms in slots of a talisman
+   * Mostly used on Talisman's filter
+   * @param talisman Talisman used for comparison
+   * @param terms Terms to find
+   */
+  function compareBySlots(talisman: Talisman, terms: string): boolean {
     return _lowercase(`${talisman.slots?.slot1}-${talisman.slots?.slot2}-${talisman.slots?.slot3}`).includes(_lowercase(terms));
   }
 
-  function filterTalismans(talismans: Talisman[], terms: string) {
-    return _filter(talismans, (talisman: Talisman) => findTalismanBySkill(talisman, terms) || findTalismanBySlots(talisman, terms));
+  /**
+   * Filter Talisman's list
+   * @param talismans Talisman's list to apply filters
+   * @param filter TalismanFilter options
+   */
+  function filterTalismans(talismans: Talisman[], filter: TalismanFilter) {
+    return _filter(talismans, (talisman: Talisman) => ((compareTalismanBySkill(talisman, filter.search) || compareBySlots(talisman, filter.search))
+        && ((filter.filterFavorite ? talisman.favorite : true) && (filter.filterForMelting ? talisman.forMelting : true))));
   }
 
   return {
