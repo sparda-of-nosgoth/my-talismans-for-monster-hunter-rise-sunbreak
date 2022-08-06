@@ -32,13 +32,13 @@ module.exports = {
     '<rootDir>/src/**/*.tsx',
   ],
   coveragePathIgnorePatterns: ['/node_modules/', '.d.ts$', '/src/[boot|router]/*', '/src/App.vue', '/src/stores/index.ts'],
-  coverageReporters: ['text', 'text-summary', 'cobertura'],
+  coverageReporters: ['text', 'text-summary', 'cobertura', 'html'],
   coverageThreshold: {
     global: {
-      //  branches: 50,
-      //  functions: 50,
-      //  lines: 50,
-      //  statements: 50
+      branches: 80,
+      functions: 80,
+      lines: 95,
+      statements: 95,
     },
   },
   testMatch: [

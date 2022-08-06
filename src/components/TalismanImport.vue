@@ -44,6 +44,9 @@ function submitImport() {
 
 <template>
   <div>
+    <h2 class="text-h6">
+      {{ $t('talisman.import.title') }}
+    </h2>
     <q-form>
       <q-input
         v-model="talismanList"
