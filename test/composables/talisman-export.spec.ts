@@ -103,11 +103,27 @@ describe('composables/talisman-export', () => {
         favorite: false,
         forMelting: false,
       },
+      {
+        id: _now(),
+        skill1: null,
+        skill1Level: 2,
+        skill2: null,
+        skill2Level: 2,
+        slots: {
+          id: 6,
+          slot1: 2,
+          slot2: 1,
+          slot3: 0,
+        },
+        favorite: false,
+        forMelting: false,
+      },
     ]);
 
     expect(exportedTalismans.value).toBe(''
       + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
       + 'Master Mounter,1,Slugger,1,1,1,0\r\n'
-      + 'Agitator,2,,,2,1,0');
+      + 'Agitator,2,,,2,1,0\r\n'
+      + ',2,,2,2,1,0');
   });
 });

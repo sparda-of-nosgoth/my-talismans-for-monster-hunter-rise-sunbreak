@@ -8,20 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- A new boot file **config**, to add a global properties **$appVersion** with the package version.
+
+#### Global
+
 - **Options** section in menu, with locale selector, and display app current version.
+
+#### Talismans manager
+
 - **Talismans** are now displayed on **rows** when screen size is more than sm.
-- In **Talisman**'s form, a filter to easily find skill's was added to selectors.
 - **Talisman**'s list can be filtered by favorite or for melting, combined with search.
+- On **Talisman**'s form, a filter to easily find skill's was added to selectors.
+
+#### Talismans Import/Export
+
+- A button to export **Talismans** on CSV file.
+
+#### Misc
+
+- A new boot file **config**, to add a global properties **$appVersion** with the package version.
 - More unit tests for components, composables, layout and pages.
 
 ### Changed
 
-- **Talismans** are displayed on **cards** when screen size is xs or sm.
-- **Skills** select now display a list in alphabetical order.
+#### Talismans manager
+- **Talismans** are displayed on **cards** when screen size is **xs** or **sm**.
+- On **Talisman**'s form, **Skills** select now display a list in alphabetical order.
+
+#### Misc
+- Improved **CHANGELOG** with some subsections to be easily read where modifications happen.
 
 ### Fixed
 
+#### Misc
 - Fixed missing translations.
 - Fixed a bug that display null instead of an empty string in **import**.
 - Fixed some minor bugs.
@@ -29,14 +47,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1] - 2022-07-28
 
 ### Added
+
+#### Misc
 - Some unit tests for **Talisman** store.
 
 ### Changed
 
+#### Misc
 - Minor adjustments to release-it configuration.
 - Improved **README** with some highlighting, coverage badge, and minor changes on **Support** section.
 
 ### Fixed
+
+#### Talismans manager
 
 - Fixed a bug that prevent to remove **favorite** or **to melting** to be marked.
 
@@ -44,8 +67,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **README** for usage, install and contributing.
-- **CHANGELOG** based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+#### Global
+ - Main layout, and menu to select app sections.
+
+#### Talismans manager
 - A new page to manage **Talismans**, where users can :
   - add a new **Talisman**, with some validations.
   - delete a **Talisman**.
@@ -53,8 +78,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - mark a **Talisman** has **to melting**.
   - search for **Talisman** based on **Skills** names, or by **Slots**.
   - sort **Talismans** by primary **skill**, secondary **Skill** or **Slots**.
+
+#### Talismans Import/Export
 - A new page to exports **Talismans** and to import **Talismans**, with some validations.
+
+#### Skills Translation
 - A new page to display **Skills** translation, based on current locale to english.
+
+#### Misc
+
+- **README** for usage, install and contributing.
+- **CHANGELOG** based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **French** translation.
 - QA, CI, scripts and others.
 - Some unit tests for **Talisman** export, import and validation.

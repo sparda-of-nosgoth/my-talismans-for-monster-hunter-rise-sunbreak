@@ -59,6 +59,9 @@ yarn build
 yarn build:debug # for debugging purpose
 ```
 
+## Sources
+- [Material Icons](https://fonts.google.com/icons)
+
 ## Support
 If you encounter a bug, or had a problem with the tool, do not hesitate to send a mail, or open an [issue](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/issues), to discuss or solve it.
 

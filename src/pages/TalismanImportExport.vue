@@ -36,15 +36,9 @@ const currentTab = ref('import');
           animated
         >
           <q-tab-panel name="import">
-            <h2 class="text-h6">
-              {{ $t('talisman.import.title') }}
-            </h2>
             <talisman-import />
           </q-tab-panel>
           <q-tab-panel name="export">
-            <h2 class="text-h6">
-              {{ $t('talisman.export.title') }}
-            </h2>
             <talisman-export />
           </q-tab-panel>
         </q-tab-panels>

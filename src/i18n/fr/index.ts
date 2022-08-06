@@ -31,6 +31,10 @@ export default {
     export: {
       label: 'Export',
       title: 'Talismans exportées',
+      to_file: {
+        label: 'Exporter en CSV',
+        error: 'Le navigateur a refusé le téléchargement du fichier.',
+      },
     },
     import: {
       errors: {
