@@ -1,11 +1,12 @@
 import {
   isRef, Ref, ref, unref, watchEffect,
 } from 'vue';
-import { Talisman } from 'src/composables/talisman';
-import { Skill, useSkill } from 'src/composables/skill';
-import { useSlots } from 'src/composables/slots';
 import { TemporaryTalisman } from 'src/composables/talisman-import';
 import _cloneDeep from 'lodash/cloneDeep';
+import { Talisman } from 'src/models/talisman';
+import { useSlotsStore } from 'stores/slots';
+import { useSkillStore } from 'stores/skills';
+import { Skill } from 'src/models/skill';
 
 export interface TalismanValidator {
   skill1: {
@@ -52,7 +53,7 @@ const defaultErrors = {
 };
 
 export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
-  const { findSlotsBySlot } = useSlots();
+  const { getSlotsById } = useSlotsStore();
   const isValid = ref(true);
   const errors = ref<TalismanValidator>(defaultErrors);
 
@@ -95,7 +96,7 @@ export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
       isValid.value = false;
     }
 
-    if (!findSlotsBySlot(talismanValue.slots.slot1, talismanValue.slots.slot2, talismanValue.slots.slot3)) {
+    if (!getSlotsById(`${talismanValue.slots.slot1}-${talismanValue.slots.slot2}-${talismanValue.slots.slot3}`)) {
       // Not valid if slots doesn't exist
       errors.value.slots.notFound = true;
       isValid.value = false;
@@ -112,8 +113,8 @@ export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
 }
 
 export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> | TemporaryTalisman) {
-  const { getSkillByName } = useSkill();
-  const { findSlotsBySlot } = useSlots();
+  const { getSkillByName } = useSkillStore();
+  const { getSlotsById } = useSlotsStore();
 
   // TODO change name with IsValid, errorsFromTalisman
   const talismanIsValid = ref(true);
@@ -181,7 +182,7 @@ export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> |
       talismanIsValid.value = false;
     }
 
-    if (!findSlotsBySlot(talismanValue.slot1, talismanValue.slot2, talismanValue.slot3)) {
+    if (!getSlotsById(`${talismanValue.slot1}-${talismanValue.slot2}-${talismanValue.slot3}`)) {
       // Not valid if slots doesn't exist
       errorsFromTalisman.value.slots.notFound = true;
       talismanIsValid.value = false;

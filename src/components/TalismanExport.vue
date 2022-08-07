@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useTalismanExport } from 'src/composables/talisman-export';
-import { useTalisman } from 'src/composables/talisman';
 import { exportFile, useQuasar } from 'quasar';
 import _now from 'lodash/now';
 import { useI18n } from 'vue-i18n';
+import { useTalismanStore } from 'stores/talismans';
+import { useLocalStorage } from 'src/composables/local-storage';
 
+useLocalStorage();
 const { notify } = useQuasar();
 const { t } = useI18n({ useScope: 'global' });
-const { talismans } = useTalisman();
+const { talismans } = useTalismanStore();
 const { exportedTalismans } = useTalismanExport(talismans);
 
 function exportTable() {

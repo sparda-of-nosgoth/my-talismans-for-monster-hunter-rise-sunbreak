@@ -1,15 +1,19 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+  describe, expect, it, jest,
+} from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, mount, shallowMount } from '@vue/test-utils';
 import AppLayout from 'layouts/AppLayout.vue';
 import { QBtn, QToolbarTitle } from 'quasar';
-import { i18nMocked } from 'app/test/mocks/i18n';
+import { i18n } from 'boot/i18n';
 
 installQuasarPlugin();
 
+jest.mock('boot/i18n');
+
 describe('layouts/AppLayout', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
-  config.global.plugins = [...config.global.plugins, i18nMocked];
+  config.global.mocks.$t = i18n.global.t;
+  config.global.plugins = [...config.global.plugins, i18n];
 
   it('sets the correct default data', () => {
     const { vm } = shallowMount(AppLayout);

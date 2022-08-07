@@ -1,14 +1,13 @@
 import {
   isRef, Ref, ref, unref, watchEffect,
 } from 'vue';
-import { useSkill } from 'src/composables/skill';
 import { parse } from 'papaparse';
-import { now } from 'lodash';
-import { Talisman } from 'src/composables/talisman';
-import { useSlots } from 'src/composables/slots';
 import { useTemporaryTalismanValidator } from 'src/composables/talisman-validator';
 import _each from 'lodash/each';
 import _cloneDeep from 'lodash/cloneDeep';
+import { Talisman, TalismanConstructor } from 'src/models/talisman';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
 
 export interface TemporaryTalisman {
   skill1: string | null
@@ -45,8 +44,8 @@ const defaultImportErrors = {
 };
 
 export function useTalismanImport(csvData: Ref<string> | string) {
-  const { getSkillByName } = useSkill();
-  const { findSlotsBySlot } = useSlots();
+  const { getSkillByName } = useSkillStore();
+  const { getSlotsBySlot } = useSlotsStore();
   const errorsFromImport = ref<ImportErrors>(defaultImportErrors);
   const talismansToImport = ref<Talisman[]>([]);
 
@@ -56,16 +55,24 @@ export function useTalismanImport(csvData: Ref<string> | string) {
   }
 
   function createTalisman(importedTalisman: TemporaryTalisman): Talisman {
-    return {
-      id: now(),
-      skill1: getSkillByName(importedTalisman.skill1 ?? '') ?? null,
-      skill1Level: importedTalisman.skill1Level,
-      skill2: getSkillByName(importedTalisman.skill2 ?? '') ?? null,
-      skill2Level: importedTalisman.skill2Level ?? null,
-      slots: findSlotsBySlot(importedTalisman.slot1, importedTalisman.slot2, importedTalisman.slot3) ?? { slot1: 0, slot2: 0, slot3: 0 },
-      favorite: false,
-      forMelting: false,
-    };
+    const values: TalismanConstructor = {};
+    if (importedTalisman.skill1) {
+      values.skill1 = getSkillByName(importedTalisman.skill1);
+    }
+    if (importedTalisman.skill1Level) {
+      values.skill1Level = importedTalisman.skill1Level;
+    }
+    if (importedTalisman.skill2) {
+      values.skill2 = getSkillByName(importedTalisman.skill2);
+    }
+    if (importedTalisman.skill2Level) {
+      values.skill2Level = importedTalisman.skill2Level;
+    }
+    const slots = getSlotsBySlot(importedTalisman.slot1, importedTalisman.slot2, importedTalisman.slot3);
+    if (slots) {
+      values.slots = slots;
+    }
+    return new Talisman(values);
   }
 
   function importTalismans() {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Talisman } from 'src/composables/talisman';
+
+import { Talisman } from 'src/models/talisman';
 
 defineProps<{
   talisman: Talisman

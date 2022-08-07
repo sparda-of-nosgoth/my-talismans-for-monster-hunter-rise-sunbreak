@@ -6,41 +6,33 @@ import { config, mount, shallowMount } from '@vue/test-utils';
 import TalismanImport from 'components/TalismanImport.vue';
 import TalismanImportListError from 'components/TalismanImportListError.vue';
 import { Notify, QBtn, QInput } from 'quasar';
-import { TranslateOptions } from '@intlify/core-base';
-import { piniaMocked } from 'app/test/mocks/pinia';
-import _now from 'lodash/now';
-import { talismans } from 'app/test/mocks/models';
-import { i18nMocked } from '../mocks/i18n';
+import { i18n } from 'boot/i18n';
+import { initFakeTimers } from 'app/test/mocks';
+import { createTestingPinia } from '@pinia/testing';
+import { Talisman } from 'src/models/talisman';
+import { createPinia, setActivePinia } from 'pinia';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
 
 installQuasarPlugin({ plugins: { Notify } });
+initFakeTimers();
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
+jest.mock('boot/i18n');
 
-jest.mock('localforage', () => ({
-  getItem: jest.fn(() => new Promise((resolve, reject) => { reject(null); })),
-  setItem: jest.fn((key, value) => new Promise((resolve) => { resolve(value); })),
-}));
-
-jest
-  .useFakeTimers('modern')
-  .setSystemTime(new Date('2022-07-26').getTime());
+jest.mock('localforage');
 
 describe('components/TalismanImport', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
-  config.global.plugins = [...config.global.plugins, i18nMocked];
+  config.global.mocks.$t = i18n.global.t;
+  config.global.plugins = [...config.global.plugins, i18n];
+
+  setActivePinia(createPinia());
+  const { getSkillById } = useSkillStore();
+  const { getSlotsById } = useSlotsStore();
 
   it('sets the correct default data', () => {
     const { vm } = shallowMount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
 
@@ -51,7 +43,7 @@ describe('components/TalismanImport', () => {
   it('has a function to submitImport', () => {
     const { vm } = shallowMount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
 
@@ -61,7 +53,7 @@ describe('components/TalismanImport', () => {
   it('update talismanList when input change', () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -74,7 +66,7 @@ describe('components/TalismanImport', () => {
   it('can\'t submit with empty data', async () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -90,7 +82,7 @@ describe('components/TalismanImport', () => {
   it('can\'t submit with no valid talismans to import', async () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -106,7 +98,7 @@ describe('components/TalismanImport', () => {
   it('can submit when talismanList contain valid data', async () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -122,7 +114,7 @@ describe('components/TalismanImport', () => {
   it('display number of talismans to import', async () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -138,7 +130,7 @@ describe('components/TalismanImport', () => {
   it('display errors with invalid talismans', async () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -179,116 +171,61 @@ describe('components/TalismanImport', () => {
   it('update store when form is submitted', async () => {
     const wrapper = mount(TalismanImport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({ stubActions: false })],
       },
     });
     const { vm } = wrapper;
 
-    expect(vm.talismanStore.talismans.length).toBe(4);
+    expect(vm.talismanStore.talismans.length).toBe(0);
     const textarea = wrapper.getComponent(QInput);
     await textarea.setValue(''
-      + 'Speed Sharpening,1,Slugger,1,0,0,0\r\n'
-      + 'Agitator,2,Weakness Exploit,1,1,1,0\r\n'
-      + 'Master Mounter,1,,,2,1,0');
+      + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
+      + 'Master Mounter,1,Slugger,1,1,1,0\r\n'
+      + 'Agitator,2,,,2,1,0');
     const submit = wrapper.getComponent(QBtn);
     await submit.trigger('click');
     expect(vm.talismansToImport).toStrictEqual([
-      {
-        id: _now(),
-        skill1: {
-          id: 92, name: 'speed-sharpening', type: 7, levelMaximum: 3, foundOnTalismans: true,
-        },
+      new Talisman({
+        skill1: getSkillById('speed-sharpening'),
         skill1Level: 1,
-        skill2: {
-          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
-        },
+        skill2: getSkillById('weakness-exploit'),
         skill2Level: 1,
-        slots: {
-          id: 1, slot1: 0, slot2: 0, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 60, name: 'agitator', type: 6, levelMaximum: 5, foundOnTalismans: true,
-        },
+        slots: getSlotsById('0-0-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('master-mounter'),
+        skill1Level: 1,
+        skill2: getSkillById('slugger'),
+        skill2Level: 1,
+        slots: getSlotsById('1-1-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('agitator'),
         skill1Level: 2,
-        skill2: {
-          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
-        },
-        skill2Level: 1,
-        slots: {
-          id: 3, slot1: 1, slot2: 1, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 73, name: 'master-mounter', type: 6, levelMaximum: 1, foundOnTalismans: true,
-        },
-        skill1Level: 1,
-        skill2: null,
-        skill2Level: null,
-        slots: {
-          id: 6, slot1: 2, slot2: 1, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
+        slots: getSlotsById('2-1-0'),
+      }),
     ]);
-    expect(vm.talismanStore.talismans.length).toBe(7);
+    expect(vm.talismanStore.talismans.length).toBe(3);
     expect(vm.talismanStore.talismans).toStrictEqual([
-      ...talismans.allTalismans,
-      {
-        id: _now(),
-        skill1: {
-          id: 92, name: 'speed-sharpening', type: 7, levelMaximum: 3, foundOnTalismans: true,
-        },
+      new Talisman({
+        skill1: getSkillById('speed-sharpening'),
         skill1Level: 1,
-        skill2: {
-          id: 82, name: 'slugger', type: 6, levelMaximum: 3, foundOnTalismans: true,
-        },
+        skill2: getSkillById('weakness-exploit'),
         skill2Level: 1,
-        slots: {
-          id: 1, slot1: 0, slot2: 0, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 60, name: 'agitator', type: 6, levelMaximum: 5, foundOnTalismans: true,
-        },
+        slots: getSlotsById('0-0-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('master-mounter'),
+        skill1Level: 1,
+        skill2: getSkillById('slugger'),
+        skill2Level: 1,
+        slots: getSlotsById('1-1-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('agitator'),
         skill1Level: 2,
-        skill2: {
-          id: 84, name: 'weakness-exploit', type: 6, levelMaximum: 3, foundOnTalismans: true,
-        },
-        skill2Level: 1,
-        slots: {
-          id: 3, slot1: 1, slot2: 1, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 73, name: 'master-mounter', type: 6, levelMaximum: 1, foundOnTalismans: true,
-        },
-        skill1Level: 1,
-        skill2: null,
-        skill2Level: null,
-        slots: {
-          id: 6, slot1: 2, slot2: 1, slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
+        slots: getSlotsById('2-1-0'),
+      }),
     ]);
   });
 });

@@ -6,13 +6,13 @@ import {
   useTemporaryTalismanValidator,
 } from 'src/composables/talisman-validator';
 import { ref } from 'vue';
-import { now } from 'lodash';
-import type { Talisman } from 'src/composables/talisman';
-import { Skill } from 'src/composables/skill';
-import { Slots } from 'src/composables/slots';
-import { TranslateOptions } from '@intlify/core-base';
 import type { TemporaryTalisman } from 'src/composables/talisman-import';
-import { i18nMocked } from 'app/test/mocks/i18n';
+import { createPinia, setActivePinia } from 'pinia';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
+import { Talisman } from 'src/models/talisman';
+import { Skill } from 'src/models/skill';
+import { Slots } from 'src/models/slots';
 
 interface UpdateTalisman {
   skill1?: Skill | null
@@ -31,32 +31,15 @@ interface UpdateTemporaryTalisman {
   slot3?: number
 }
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
+jest.mock('boot/i18n');
 
 describe('composables/talisman-validator', () => {
+  setActivePinia(createPinia());
+  const { getSkillById } = useSkillStore();
+  const { getSlotsById } = useSlotsStore();
+
   describe('useTalismanValidator', () => {
-    const talisman = ref<Talisman>({
-      id: now(),
-      skill1: null,
-      skill1Level: 1,
-      skill2: null,
-      skill2Level: 0,
-      slots: {
-        slot1: 0,
-        slot2: 0,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    });
+    const talisman = ref<Talisman>(new Talisman({}));
 
     async function updateTalisman({
       skill1, skill1Level, skill2, skill2Level, slots,
@@ -65,7 +48,8 @@ describe('composables/talisman-validator', () => {
       talisman.value.skill1Level = skill1Level ?? 0;
       talisman.value.skill2 = skill2 ?? null;
       talisman.value.skill2Level = skill2Level ?? 0;
-      talisman.value.slots = slots ?? { slot1: 0, slot2: 0, slot3: 0 };
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      talisman.value.slots = slots ?? getSlotsById('0-0-0')!;
     }
 
     beforeEach(() => {
@@ -73,7 +57,8 @@ describe('composables/talisman-validator', () => {
       talisman.value.skill1Level = 0;
       talisman.value.skill2 = null;
       talisman.value.skill2Level = 0;
-      talisman.value.slots = { slot1: 0, slot2: 0, slot3: 0 };
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      talisman.value.slots = getSlotsById('0-0-0')!;
     });
 
     const { isValid, errors } = useTalismanValidator(talisman);
@@ -105,13 +90,7 @@ describe('composables/talisman-validator', () => {
 
     it('can invalidate talisman with null values for skill1Level, skill2, skill2Level', async () => {
       await updateTalisman({
-        skill1: {
-          id: 3,
-          name: 'capture-master',
-          type: 1,
-          levelMaximum: 1,
-          foundOnTalismans: false,
-        },
+        skill1: getSkillById('capture-master'),
       });
       expect(isValid.value).toBeFalsy();
       expect(errors.value).toStrictEqual({
@@ -139,13 +118,7 @@ describe('composables/talisman-validator', () => {
 
     it('can validate talisman with null values for skill2, skill2Level', async () => {
       await updateTalisman({
-        skill1: {
-          id: 3,
-          name: 'capture-master',
-          type: 1,
-          levelMaximum: 1,
-          foundOnTalismans: false,
-        },
+        skill1: getSkillById('capture-master'),
         skill1Level: 1,
       });
       expect(isValid.value).toBeTruthy();
@@ -174,21 +147,9 @@ describe('composables/talisman-validator', () => {
 
     it('can invalidate talisman with null values for skill2Level', async () => {
       await updateTalisman({
-        skill1: {
-          id: 3,
-          name: 'capture-master',
-          type: 1,
-          levelMaximum: 1,
-          foundOnTalismans: false,
-        },
+        skill1: getSkillById('capture-master'),
         skill1Level: 1,
-        skill2: {
-          id: 8,
-          name: 'hunger-resistance',
-          type: 1,
-          levelMaximum: 3,
-          foundOnTalismans: true,
-        },
+        skill2: getSkillById('hunger-resistance'),
       });
       expect(isValid.value).toBeFalsy();
       expect(errors.value).toStrictEqual({
@@ -216,13 +177,7 @@ describe('composables/talisman-validator', () => {
 
     it('can invalidate talisman with null values for skill2', async () => {
       await updateTalisman({
-        skill1: {
-          id: 3,
-          name: 'capture-master',
-          type: 1,
-          levelMaximum: 1,
-          foundOnTalismans: false,
-        },
+        skill1: getSkillById('capture-master'),
         skill1Level: 1,
         skill2Level: 2,
       });
@@ -252,13 +207,7 @@ describe('composables/talisman-validator', () => {
 
     it('can invalidate talisman which skill1Level greater than skill1.levelMaximum', async () => {
       await updateTalisman({
-        skill1: {
-          id: 3,
-          name: 'capture-master',
-          type: 1,
-          levelMaximum: 1,
-          foundOnTalismans: false,
-        },
+        skill1: getSkillById('capture-master'),
         skill1Level: 2,
       });
       expect(isValid.value).toBeFalsy();
@@ -287,13 +236,7 @@ describe('composables/talisman-validator', () => {
 
     it('can invalidate talisman which skill2Level greater than skill2.levelMaximum', async () => {
       await updateTalisman({
-        skill2: {
-          id: 8,
-          name: 'hunger-resistance',
-          type: 1,
-          levelMaximum: 3,
-          foundOnTalismans: true,
-        },
+        skill2: getSkillById('hunger-resistance'),
         skill2Level: 4,
       });
       expect(isValid.value).toBeFalsy();
@@ -323,9 +266,7 @@ describe('composables/talisman-validator', () => {
     it('can invalidate talisman with unknown slots', async () => {
       await updateTalisman({
         slots: {
-          slot1: 4,
-          slot2: 4,
-          slot3: 4,
+          id: '4-4-4', slot1: 4, slot2: 4, slot3: 4,
         },
       });
       expect(isValid.value).toBeFalsy();
@@ -354,28 +295,11 @@ describe('composables/talisman-validator', () => {
 
     it('can validate talisman', async () => {
       await updateTalisman({
-        skill1: {
-          id: 3,
-          name: 'Capture Master',
-          type: 1,
-          levelMaximum: 1,
-          foundOnTalismans: false,
-        },
+        skill1: getSkillById('capture-master'),
         skill1Level: 1,
-        skill2: {
-          id: 8,
-          name: 'Spartiate',
-          type: 1,
-          levelMaximum: 3,
-          foundOnTalismans: true,
-        },
+        skill2: getSkillById('hunger-resistance'),
         skill2Level: 2,
-        slots: {
-          id: 6,
-          slot1: 2,
-          slot2: 1,
-          slot3: 0,
-        },
+        slots: getSlotsById('4-4-4'),
       });
       expect(isValid.value).toBeTruthy();
       expect(errors.value).toStrictEqual({

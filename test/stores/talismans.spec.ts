@@ -3,452 +3,155 @@ import {
 } from '@jest/globals';
 import { createPinia, setActivePinia } from 'pinia';
 import { useTalismanStore } from 'stores/talismans';
-import _now from 'lodash/now';
+import { initFakeTimers } from 'app/test/mocks';
+import { Talisman } from 'src/models/talisman';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
 
-jest
-  .useFakeTimers('modern')
-  .setSystemTime(new Date('2022-07-26').getTime());
+initFakeTimers();
+
+jest.mock('boot/i18n');
 
 describe('stores/talismans', () => {
+  let talisman: Talisman = new Talisman({});
+
   beforeEach(() => {
     setActivePinia(createPinia());
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
+    talisman = new Talisman({
+      skill1: getSkillById('capture-master'),
+      skill1Level: 1,
+      skill2: getSkillById('hunger-resistance'),
+      skill2Level: 2,
+      slots: getSlotsById('2-1-0'),
+    });
   });
 
   it('add a new Talisman', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    };
     const talismanStore = useTalismanStore();
     expect(talismanStore.talismans.length).toBe(0);
+
     talismanStore.addTalisman(talisman);
+
     expect(talismanStore.talismans.length).toBe(1);
     expect(talismanStore.talismans).toStrictEqual([talisman]);
   });
 
   it('delete a Talisman', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    };
     const talismanStore = useTalismanStore();
     talismanStore.talismans.push(talisman);
+
     expect(talismanStore.talismans).toStrictEqual([talisman]);
     expect(talismanStore.talismans.length).toBe(1);
+
     talismanStore.deleteTalisman(talismanStore.talismans[0]);
+
     expect(talismanStore.talismans).toStrictEqual([]);
     expect(talismanStore.talismans.length).toBe(0);
   });
 
   it('toggle favorite on a Talisman with favorite at false and forMelting at false', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    };
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
     talismanStore.talismans.push(talisman);
     // field favorite will be true and forMelting will be false
     talismanStore.toggleFavorite(talisman);
-    expect(talismanStore.talismans[0]).toStrictEqual({
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
+    expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
+      skill1: getSkillById('capture-master'),
       skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
+      skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
+      slots: getSlotsById('2-1-0'),
       favorite: true,
-      forMelting: false,
-    });
+    }));
   });
 
   it('toggle favorite on a Talisman with favorite at true and forMelting at false', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: true,
-      forMelting: false,
-    };
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
+    talisman.favorite = true;
     talismanStore.talismans.push(talisman);
     // field favorite will be false and forMelting will be false
     talismanStore.toggleFavorite(talisman);
-    expect(talismanStore.talismans[0]).toStrictEqual({
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
+    expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
+      skill1: getSkillById('capture-master'),
       skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
+      skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    });
+      slots: getSlotsById('2-1-0'),
+    }));
   });
 
   it('toggle favorite on a Talisman with favorite at false and forMelting at true', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: true,
-    };
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
+    talisman.forMelting = true;
     talismanStore.talismans.push(talisman);
     // field favorite will be true and forMelting will be false
     talismanStore.toggleFavorite(talisman);
-    expect(talismanStore.talismans[0]).toStrictEqual({
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
+    expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
+      skill1: getSkillById('capture-master'),
       skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
+      skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
+      slots: getSlotsById('2-1-0'),
       favorite: true,
-      forMelting: false,
-    });
+    }));
   });
 
   it('toggle forMelting on a Talisman with forMelting at false and favorite at false', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    };
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
     talismanStore.talismans.push(talisman);
     // field forMelting will be true and favorite will be false
     talismanStore.toggleForMelting(talisman);
-    expect(talismanStore.talismans[0]).toStrictEqual({
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
+    expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
+      skill1: getSkillById('capture-master'),
       skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
+      skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
+      slots: getSlotsById('2-1-0'),
       forMelting: true,
-    });
+    }));
   });
 
   it('toggle forMelting on a Talisman with forMelting at true and favorite at false', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: true,
-    };
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
+    talisman.forMelting = true;
     talismanStore.talismans.push(talisman);
     // field forMelting will be false and favorite will be false
     talismanStore.toggleForMelting(talisman);
-    expect(talismanStore.talismans[0]).toStrictEqual({
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
+    expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
+      skill1: getSkillById('capture-master'),
       skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
+      skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    });
+      slots: getSlotsById('2-1-0'),
+    }));
   });
 
   it('toggle forMelting on a Talisman with forMelting at false and favorite at true', () => {
-    const talisman = {
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
-      skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
-      skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: true,
-      forMelting: false,
-    };
+    const { getSkillById } = useSkillStore();
+    const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
+    talisman.favorite = true;
     talismanStore.talismans.push(talisman);
     // field forMelting will be true and favorite will be false
     talismanStore.toggleForMelting(talisman);
-    expect(talismanStore.talismans[0]).toStrictEqual({
-      id: _now(),
-      skill1: {
-        id: 3,
-        name: 'Capture Master',
-        type: 1,
-        levelMaximum: 1,
-        foundOnTalismans: false,
-      },
+    expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
+      skill1: getSkillById('capture-master'),
       skill1Level: 1,
-      skill2: {
-        id: 8,
-        name: 'Spartiate',
-        type: 1,
-        levelMaximum: 3,
-        foundOnTalismans: true,
-      },
+      skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
-      slots: {
-        id: 6,
-        slot1: 2,
-        slot2: 1,
-        slot3: 0,
-      },
-      favorite: false,
+      slots: getSlotsById('2-1-0'),
       forMelting: true,
-    });
+    }));
   });
 });

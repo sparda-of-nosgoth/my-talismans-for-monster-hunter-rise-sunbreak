@@ -4,63 +4,40 @@ import {
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, shallowMount } from '@vue/test-utils';
 import TalismanManagerForm from 'components/TalismanManagerForm.vue';
-import { piniaMocked } from 'app/test/mocks/pinia';
-import { TranslateOptions } from '@intlify/core-base';
-import _now from 'lodash/now';
-import { i18nMocked } from '../mocks/i18n';
+import { i18n } from 'boot/i18n';
+import { initFakeTimers } from 'app/test/mocks';
+import { Talisman } from 'src/models/talisman';
+import { createTestingPinia } from '@pinia/testing';
+import { createPinia, setActivePinia } from 'pinia';
+import { useSkillStore } from 'stores/skills';
 
 installQuasarPlugin();
+initFakeTimers();
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
-
-jest.mock('localforage', () => ({
-  getItem: jest.fn(() => new Promise((resolve, reject) => { reject(null); })),
-  setItem: jest.fn((key, value) => new Promise((resolve) => { resolve(value); })),
-}));
-
-jest
-  .useFakeTimers('modern')
-  .setSystemTime(new Date('2022-07-26').getTime());
+jest.mock('boot/i18n');
 
 describe('components/TalismanManagerForm', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
-  config.global.plugins = [...config.global.plugins, i18nMocked];
+  config.global.mocks.$t = i18n.global.t;
+  config.global.plugins = [...config.global.plugins, i18n];
+
+  setActivePinia(createPinia());
+  const { getSkillById } = useSkillStore();
 
   it('sets the correct default data', () => {
     const { vm } = shallowMount(TalismanManagerForm, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
 
-    expect(vm.talisman).toStrictEqual({
-      id: _now(),
-      skill1: null,
-      skill1Level: 1,
-      skill2: null,
-      skill2Level: 0,
-      slots: {
-        slot1: 0,
-        slot2: 0,
-        slot3: 0,
-      },
-      favorite: false,
-      forMelting: false,
-    });
+    expect(vm.talisman)
+      .toStrictEqual(new Talisman({}));
   });
 
   it('has a function to filter skills', async () => {
     const { vm } = shallowMount(TalismanManagerForm, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({ stubActions: false })],
       },
     });
 
@@ -69,21 +46,19 @@ describe('components/TalismanManagerForm', () => {
     await vm.filterSkills('Cha', updateMock);
     await vm.$nextTick();
     expect(updateMock).toHaveBeenCalledTimes(1);
-    expect(vm.sortedSkills).toStrictEqual([{
-      id: 107, levelMaximum: 4, name: 'chameleos-blessing', type: 9, foundOnTalismans: false,
-    }, {
-      id: 7, levelMaximum: 3, name: 'good-luck', type: 1, foundOnTalismans: true,
-    }, {
-      id: 87, levelMaximum: 2, name: 'load-shells', type: 7, foundOnTalismans: true,
-    }, {
-      id: 100, levelMaximum: 3, name: 'reload-speed', type: 8, foundOnTalismans: true,
-    }]);
+    expect(vm.filteredSkills).toStrictEqual([
+      getSkillById('chameleos-blessing'),
+      getSkillById('good-luck'),
+      getSkillById('charge-master'),
+      getSkillById('load-shells'),
+      getSkillById('reload-speed'),
+    ]);
   });
 
   it('has a function to submit Talisman', () => {
     const { vm } = shallowMount(TalismanManagerForm, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
 

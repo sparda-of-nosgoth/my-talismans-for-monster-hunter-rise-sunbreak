@@ -31,12 +31,12 @@ module.exports = {
     '<rootDir>/src/**/*.jsx',
     '<rootDir>/src/**/*.tsx',
   ],
-  coveragePathIgnorePatterns: ['/node_modules/', '.d.ts$', '/src/[boot|router]/*', '/src/App.vue', '/src/stores/index.ts'],
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/src/boot/', '<rootDir>/src/router/', '<rootDir>/src/stores/index.ts', '.d.ts$'],
   coverageReporters: ['text', 'text-summary', 'cobertura', 'html'],
   coverageThreshold: {
     global: {
-      branches: 80,
-      functions: 80,
+      branches: 95,
+      functions: 95,
       lines: 95,
       statements: 95,
     },

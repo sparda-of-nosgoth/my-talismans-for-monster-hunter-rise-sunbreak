@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Talismans** are now displayed on **rows** when screen size is more than sm.
 - **Talisman**'s list can be filtered by favorite or for melting, combined with search.
 - On **Talisman**'s form, a filter to easily find skill's was added to selectors.
+- On each **Skill**, **Decoration** props was added, used for melting filter for now.
+- A button to filter **Talismans** to melt.
 
 #### Talismans Import/Export
 
@@ -26,7 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Misc
 
 - A new boot file **config**, to add a global properties **$appVersion** with the package version.
-- More unit tests for components, composables, layout and pages.
+- More unit tests for components, composables, layout, pages, stores and utils.
+- Added Sunbreak data for **Skill**, **Decoration** and **Slots**.
 
 ### Changed
 
@@ -35,7 +38,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - On **Talisman**'s form, **Skills** select now display a list in alphabetical order.
 
 #### Misc
+- Improved **Talisman** object from Interface to Class, and added **weight** props for **Melting Filter**.
 - Improved **CHANGELOG** with some subsections to be easily read where modifications happen.
+- Refactoring on composables, stores, models and tests.
 
 ### Fixed
 

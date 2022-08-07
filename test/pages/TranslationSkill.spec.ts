@@ -1,64 +1,40 @@
 import {
   describe, expect, it, jest,
 } from '@jest/globals';
-import {
-  installQuasarPlugin, qLayoutInjections,
-} from '@quasar/quasar-app-extension-testing-unit-jest';
+import { installQuasarPlugin, qLayoutInjections } from '@quasar/quasar-app-extension-testing-unit-jest';
 import {
   config, flushPromises, mount, shallowMount,
 } from '@vue/test-utils';
 import TranslationSkill from 'pages/TranslationSkill.vue';
 import { QCard, QItem } from 'quasar';
-import { i18nMocked } from 'app/test/mocks/i18n';
+import { i18n } from 'boot/i18n';
+import { createTestingPinia } from '@pinia/testing';
 
 installQuasarPlugin();
 
-jest.mock('boot/i18n', () => ({ i18n: jest.fn() }));
+jest.mock('boot/i18n');
 
 describe('pages/SkillTypeList', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
+  config.global.mocks.$t = i18n.global.t;
 
   it('sets the correct default data', () => {
-    const { vm } = shallowMount(TranslationSkill);
+    const { vm } = shallowMount(TranslationSkill, {
+      global: {
+        plugins: [createTestingPinia()],
+      },
+    });
 
     expect(typeof vm.skillTypes).toBe('object');
     expect(vm.skillTypes).toStrictEqual([
-      {
-        id: 1,
-        name: 'quest',
-      },
-      {
-        id: 2,
-        name: 'item',
-      },
-      {
-        id: 3,
-        name: 'stats-offensive',
-      },
-      {
-        id: 4,
-        name: 'stats-defensive',
-      },
-      {
-        id: 5,
-        name: 'survival',
-      },
-      {
-        id: 6,
-        name: 'battle',
-      },
-      {
-        id: 7,
-        name: 'battle-swordsman',
-      },
-      {
-        id: 8,
-        name: 'battle-gunner',
-      },
-      {
-        id: 9,
-        name: 'set-bonus',
-      },
+      { id: 'quest' },
+      { id: 'item' },
+      { id: 'stats-offensive' },
+      { id: 'stats-defensive' },
+      { id: 'survival' },
+      { id: 'battle' },
+      { id: 'battle-swordsman' },
+      { id: 'battle-gunner' },
+      { id: 'set-bonus' },
     ]);
   });
 
@@ -66,6 +42,7 @@ describe('pages/SkillTypeList', () => {
     const wrapper = mount(TranslationSkill, {
       global: {
         provide: qLayoutInjections(),
+        plugins: [createTestingPinia()],
       },
     });
     const { vm } = wrapper;
@@ -75,8 +52,8 @@ describe('pages/SkillTypeList', () => {
     expect(vm.skillTypes.length).toBe(9);
     expect(cards.length).toBe(9);
     const items = wrapper.findAllComponents(QItem);
-    expect(items.length).toBe(111);
-    // display skillType name, and one skill translation by skill type
+    expect(items.length).toBe(132);
+    // display skillType id, and one skill translation by skill type
     expect(vm.$el.textContent).toContain('Quête');
     expect(vm.$el.textContent).toContain('Affinity Sliding');
     expect(vm.$el.textContent).toContain('Roi de la glisse');
