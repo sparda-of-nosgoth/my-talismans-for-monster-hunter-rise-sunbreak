@@ -11,7 +11,7 @@ export default {
     talisman_import_export: {
       label: 'Import/Export des talismans',
     },
-    skill_type_translation: {
+    skills_translation: {
       label: 'Traduction des talents',
     },
     options: 'Options',

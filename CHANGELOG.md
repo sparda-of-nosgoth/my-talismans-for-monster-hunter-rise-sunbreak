@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Global
 
 - **Options** section in menu, with locale selector, and display app current version.
+- Full support of English translation.
 
 #### Talismans manager
 
@@ -38,14 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - On **Talisman**'s form, **Skills** select now display a list in alphabetical order.
 
 #### Misc
-- Improved **Talisman** object from Interface to Class, and added **weight** props for **Melting Filter**.
 - Improved **CHANGELOG** with some subsections to be easily read where modifications happen.
+- Improved **Talisman** interface to class, with **weight** props for **Melting Filter**.
 - Refactoring on composables, stores, models and tests.
 
 ### Fixed
 
 #### Misc
-- Fixed missing translations.
+- Fixed missing **Skills** translations.
 - Fixed a bug that display null instead of an empty string in **import**.
 - Fixed some minor bugs.
 
