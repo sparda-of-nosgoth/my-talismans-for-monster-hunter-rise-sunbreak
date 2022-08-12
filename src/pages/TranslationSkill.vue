@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { useSkill } from 'src/composables/skill';
-import { useSkillType } from 'src/composables/skillType';
+import { useSkillStore } from 'stores/skills';
 
-const { skillTypes } = useSkillType();
-const { getSkillsByType } = useSkill();
-
+const { skillTypes, filterByType } = useSkillStore();
 </script>
 
 <template>
@@ -17,24 +14,24 @@ const { getSkillsByType } = useSkill();
     >
       <q-card-section>
         <div class="text-h6 text-center">
-          <span>{{ $t(skillType.name) }}</span>
+          <span>{{ $t(skillType.id) }}</span>
         </div>
       </q-card-section>
 
       <q-card-section>
         <q-list separator>
           <q-item
-            v-for="skill in getSkillsByType(skillType)"
+            v-for="skill in filterByType(skillType)"
             :key="skill.id"
           >
             <q-item-section>
               <q-item-label>
-                {{ $t(skill.name) }}
+                {{ $t(skill.id) }}
               </q-item-label>
             </q-item-section>
             <q-item-section>
               <q-item-label>
-                {{ $t(skill.name, skill.name, { locale: 'en' }) }}
+                {{ $t(skill.id, skill.id, { locale: 'en' }) }}
               </q-item-label>
             </q-item-section>
           </q-item>

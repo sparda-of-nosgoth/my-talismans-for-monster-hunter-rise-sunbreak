@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { ref, Slots } from 'vue';
+import { ref } from 'vue';
 import TalismanListFormAdd from 'components/TalismanManagerForm.vue';
-import { Talisman, TalismanFilter, useTalisman } from 'src/composables/talisman';
-import { Skill } from 'src/composables/skill';
+import { TalismanFilter, useTalismanFilter } from 'src/composables/talisman-filter';
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
 import TalismanManagerRowToggles from 'components/TalismanManagerRowToggles.vue';
+import { Skill } from 'src/models/skill';
+import { Slots } from 'src/models/slots';
+import { useLocalStorage } from 'src/composables/local-storage';
 
+useLocalStorage();
 const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();
-const { filterTalismans } = useTalisman();
+const { filterTalismans } = useTalismanFilter();
 
 const columns = [
   {
@@ -22,20 +25,18 @@ const columns = [
     style: 'width: 25em',
     required: true,
     label: t('talisman.manager.table.header.skill1'),
-    // align: 'center',
-    field: (row: Talisman) => row.skill1,
+    field: 'skill1',
     sortable: true,
-    sort: (skillA:Skill, skillB:Skill) => `${t(skillA.name)}`?.localeCompare(t(skillB.name)),
+    sort: (skillA:Skill, skillB:Skill) => t(skillA.id).localeCompare(t(skillB.id)),
   },
   {
     name: 'skill2',
     style: 'width: 25em',
     required: true,
     label: t('talisman.manager.table.header.skill2'),
-    // align: 'center',
-    field: (row: Talisman) => (row.skill2 ?? null),
+    field: 'skill2',
     sortable: true,
-    sort: (skillA:Skill, skillB:Skill) => t(skillA.name)?.localeCompare(t(skillB.name)),
+    sort: (skillA:Skill, skillB:Skill) => t(skillA.id).localeCompare(t(skillB.id)),
   },
   {
     name: 'slots',
@@ -53,9 +54,15 @@ const columns = [
   },
 ];
 const filter = ref<TalismanFilter>({
-  filterFavorite: false,
-  filterForMelting: false,
   search: '',
+  showFavorite: false,
+  showForMelting: false,
+  showMeltingFilter: false,
+  options: {
+    meltingFilter: {
+      skipFavorite: true,
+    },
+  },
 });
 const dialog = ref(false);
 
@@ -82,11 +89,15 @@ function openDialog() {
         >
           <template #top-right>
             <q-toggle
-              v-model="filter.filterFavorite"
+              v-model="filter.showMeltingFilter"
+              icon="filter_alt"
+            />
+            <q-toggle
+              v-model="filter.showFavorite"
               icon="favorite"
             />
             <q-toggle
-              v-model="filter.filterForMelting"
+              v-model="filter.showForMelting"
               icon="recycling"
             />
             <q-input
@@ -120,7 +131,7 @@ function openDialog() {
                 :props="props"
               >
                 <span>
-                  {{ `${$t(props.row.skill1.name)} ${props.row.skill1Level}` }}
+                  {{ `${$t(props.row.skill1.id)} ${props.row.skill1Level}` }}
                 </span>
               </q-td>
               <q-td
@@ -128,7 +139,7 @@ function openDialog() {
                 :props="props"
               >
                 <span v-if="props.row.skill2 != null">
-                  {{ `${$t(props.row.skill2.name)} ${props.row.skill2Level}` }}
+                  {{ `${$t(props.row.skill2.id)} ${props.row.skill2Level}` }}
                 </span>
               </q-td>
               <q-td
@@ -164,12 +175,12 @@ function openDialog() {
                   >
                     <q-card-section vertical>
                       <span>
-                        {{ `${$t(item.row.skill1.name)} ${item.row.skill1Level}` }}
+                        {{ `${$t(item.row.skill1.id)} ${item.row.skill1Level}` }}
                       </span>
                     </q-card-section>
                     <q-card-section vertical>
                       <span v-if="item.row.skill2 != null">
-                        {{ `${$t(item.row.skill2.name)} ${item.row.skill2Level}` }}
+                        {{ `${$t(item.row.skill2.id)} ${item.row.skill2Level}` }}
                       </span>
                     </q-card-section>
                   </q-card-section>

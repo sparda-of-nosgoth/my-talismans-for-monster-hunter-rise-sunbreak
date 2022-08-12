@@ -4,12 +4,11 @@ import { useTalismanImport } from 'src/composables/talisman-import';
 import TalismanImportListError from 'components/TalismanImportListError.vue';
 import { useQuasar } from 'quasar';
 import _each from 'lodash/each';
-import { useTalisman } from 'src/composables/talisman';
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
+import { useLocalStorage } from 'src/composables/local-storage';
 
-// TODO-post-v1.0: find a better way to exploit the onMounted and subscriber from this composable
-useTalisman();
+useLocalStorage();
 const { notify } = useQuasar();
 const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();

@@ -1,26 +1,22 @@
 import {
   describe, expect, it, jest,
 } from '@jest/globals';
-import { TranslateOptions } from '@intlify/core-base';
 import { useTalismanExport } from 'src/composables/talisman-export';
-import _now from 'lodash/now';
-import { i18nMocked } from 'app/test/mocks/i18n';
+import { initFakeTimers } from 'app/test/mocks';
+import { Talisman } from 'src/models/talisman';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
+import { createPinia, setActivePinia } from 'pinia';
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
+initFakeTimers();
 
-jest
-  .useFakeTimers('modern')
-  .setSystemTime(new Date('2022-07-26').getTime());
+jest.mock('boot/i18n');
 
 describe('composables/talisman-export', () => {
+  setActivePinia(createPinia());
+  const { getSkillById } = useSkillStore();
+  const { getSlotsById } = useSlotsStore();
+
   it('export an empty talisman list', () => {
     const { exportedTalismans } = useTalismanExport([]);
     expect(exportedTalismans.value).toBe('');
@@ -28,96 +24,29 @@ describe('composables/talisman-export', () => {
 
   it('export a talismans list', () => {
     const { exportedTalismans } = useTalismanExport([
-      {
-        id: _now(),
-        skill1: {
-          id: 92,
-          name: 'speed-sharpening',
-          type: 7,
-          levelMaximum: 3,
-          foundOnTalismans: true,
-        },
+      new Talisman({
+        skill1: getSkillById('speed-sharpening'),
         skill1Level: 1,
-        skill2: {
-          id: 84,
-          name: 'weakness-exploit',
-          type: 6,
-          levelMaximum: 3,
-          foundOnTalismans: true,
-        },
+        skill2: getSkillById('weakness-exploit'),
         skill2Level: 1,
-        slots: {
-          id: 1,
-          slot1: 0,
-          slot2: 0,
-          slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 73,
-          name: 'master-mounter',
-          type: 6,
-          levelMaximum: 1,
-          foundOnTalismans: true,
-        },
+      }),
+      new Talisman({
+        skill1: getSkillById('master-mounter'),
         skill1Level: 1,
-        skill2: {
-          id: 82,
-          name: 'slugger',
-          type: 6,
-          levelMaximum: 3,
-          foundOnTalismans: true,
-        },
+        skill2: getSkillById('slugger'),
         skill2Level: 1,
-        slots: {
-          id: 3,
-          slot1: 1,
-          slot2: 1,
-          slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: {
-          id: 60,
-          name: 'agitator',
-          type: 6,
-          levelMaximum: 5,
-          foundOnTalismans: true,
-        },
+        slots: getSlotsById('1-1-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('agitator'),
         skill1Level: 2,
-        skill2: null,
-        skill2Level: null,
-        slots: {
-          id: 6,
-          slot1: 2,
-          slot2: 1,
-          slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
-      {
-        id: _now(),
-        skill1: null,
+        slots: getSlotsById('2-1-0'),
+      }),
+      new Talisman({
         skill1Level: 2,
-        skill2: null,
         skill2Level: 2,
-        slots: {
-          id: 6,
-          slot1: 2,
-          slot2: 1,
-          slot3: 0,
-        },
-        favorite: false,
-        forMelting: false,
-      },
+        slots: getSlotsById('2-1-0'),
+      }),
     ]);
 
     expect(exportedTalismans.value).toBe(''

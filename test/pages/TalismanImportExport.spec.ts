@@ -9,30 +9,16 @@ import TalismanImport from 'components/TalismanImport.vue';
 import TalismanExport from 'components/TalismanExport.vue';
 import TalismanImportExport from 'pages/TalismanImportExport.vue';
 import { QTabPanel } from 'quasar';
-import { i18nMocked } from 'app/test/mocks/i18n';
-import { TranslateOptions } from '@intlify/core-base';
-import { piniaMocked } from '../mocks/pinia';
+import { i18n } from 'boot/i18n';
+import { createTestingPinia } from '@pinia/testing';
 
 installQuasarPlugin();
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
-
-jest.mock('localforage', () => ({
-  getItem: jest.fn(() => new Promise((resolve, reject) => { reject(null); })),
-  setItem: jest.fn((key, value) => new Promise((resolve) => { resolve(value); })),
-}));
+jest.mock('boot/i18n');
 
 describe('pages/TalismanImportExport', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
-  config.global.plugins = [...config.global.plugins, i18nMocked];
+  config.global.mocks.$t = i18n.global.t;
+  config.global.plugins = [...config.global.plugins, i18n];
 
   it('sets the correct default data', () => {
     const { vm } = shallowMount(TalismanImportExport);
@@ -43,7 +29,7 @@ describe('pages/TalismanImportExport', () => {
   it('has a section to import talismans', async () => {
     const wrapper = mount(TalismanImportExport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
         provide: qLayoutInjections(),
       },
     });
@@ -58,7 +44,7 @@ describe('pages/TalismanImportExport', () => {
   it('has a section to export talismans', async () => {
     const wrapper = mount(TalismanImportExport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
         provide: qLayoutInjections(),
       },
     });
@@ -72,7 +58,7 @@ describe('pages/TalismanImportExport', () => {
   it('show panel when tab change', async () => {
     const wrapper = mount(TalismanImportExport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
         provide: qLayoutInjections(),
       },
     });

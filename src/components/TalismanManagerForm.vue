@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import _cloneDeep from 'lodash/cloneDeep';
-import { useSkill } from 'src/composables/skill';
-import { Talisman, useTalisman } from 'src/composables/talisman';
+import { useSkillFilter } from 'src/composables/skill-filter';
 import { useTalismanValidator } from 'src/composables/talisman-validator';
 import TalismanManagerFormErrorCaption from 'components/TalismanManagerFormErrorCaption.vue';
-
-const { newTalisman } = useTalisman();
+import { useSkillStore } from 'stores/skills';
+import { Talisman, TalismanConstructor } from 'src/models/talisman';
 
 const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
-const talisman = ref(newTalisman);
-const { sortedSkills, filterSkillByName } = useSkill();
+const { sortedSkills } = useSkillStore();
+const talisman = ref<Talisman>(new Talisman({}));
+const form = ref<TalismanConstructor>({
+  skill1Level: 1,
+});
+const { filteredSkills, filterSkillByName } = useSkillFilter(sortedSkills);
 const { errors, isValid } = useTalismanValidator(talisman);
 
 function filterSkills(needle: string, update: (callback: () => void) => void): void {
@@ -19,6 +22,10 @@ function filterSkills(needle: string, update: (callback: () => void) => void): v
     filterSkillByName(needle);
   });
 }
+
+watch(form, (talismanData: TalismanConstructor) => {
+  talisman.value = new Talisman({ ...talismanData });
+});
 
 function onSubmit() {
   // If there is no errors
@@ -39,8 +46,8 @@ function onSubmit() {
       <div>
         <q-select
           v-model="talisman.skill1"
-          :options="sortedSkills"
-          :option-label="(skill) => $t(skill.name)"
+          :options="filteredSkills"
+          :option-label="(skill) => $t(skill.id)"
           :label="$t('talisman.manager.form_add.skill1.label')"
           class="q-pa-sm"
           lazy-rules
@@ -63,8 +70,8 @@ function onSubmit() {
         />
         <q-select
           v-model="talisman.skill2"
-          :options="sortedSkills"
-          :option-label="(skill) => $t(skill.name)"
+          :options="filteredSkills"
+          :option-label="(skill) => $t(skill.id)"
           :label="$t('talisman.manager.form_add.skill2.label')"
           class="q-pa-sm"
           lazy-rules
@@ -97,6 +104,7 @@ function onSubmit() {
             {label: '1', value: 1},
             {label: '2', value: 2},
             {label: '3', value: 3},
+            {label: '4', value: 4},
           ]"
         />
         <q-btn-toggle
@@ -112,7 +120,6 @@ function onSubmit() {
           :options="[
             {label: '0', value: 0},
             {label: '1', value: 1},
-            {label: '2', value: 2},
           ]"
         />
       </div>

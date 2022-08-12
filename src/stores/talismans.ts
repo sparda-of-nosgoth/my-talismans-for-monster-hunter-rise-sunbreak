@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
-import { Talisman } from 'src/composables/talisman';
 import _findIndex from 'lodash/findIndex';
 import _pull from 'lodash/pull';
+import { Talisman } from 'src/models/talisman';
 
-export const useTalismanStore = defineStore('talisman', {
+export const useTalismanStore = defineStore('talismans', {
   state: () => ({
-    // TODO: rename data or list ?
     talismans: [] as Talisman[],
   }),
 

@@ -1,5 +1,5 @@
 import {
-  afterEach, describe, expect, it, jest,
+  afterEach, beforeEach, describe, expect, it, jest,
 } from '@jest/globals';
 import {
   installQuasarPlugin,
@@ -7,33 +7,59 @@ import {
 } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, mount, shallowMount } from '@vue/test-utils';
 import TalismanManager from 'pages/TalismanManager.vue';
-import { i18nMocked } from 'app/test/mocks/i18n';
+import { i18n } from 'boot/i18n';
 import {
-  QBtn, QInput, QTr,
+  QBtn, QInput, QTh, QTr,
 } from 'quasar';
-import { TranslateOptions } from '@intlify/core-base';
-import { piniaMocked } from '../mocks/pinia';
+import { createTestingPinia } from '@pinia/testing';
+import { createPinia, setActivePinia } from 'pinia';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
+import { Talisman } from 'src/models/talisman';
 
 installQuasarPlugin();
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
+jest.mock('boot/i18n');
 
-jest.mock('localforage', () => ({
-  getItem: jest.fn(() => new Promise((resolve, reject) => { reject(null); })),
-  setItem: jest.fn((key, value) => new Promise((resolve) => { resolve(value); })),
-}));
+jest.mock('localforage');
 
 describe('pages/TalismanManager', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
-  config.global.plugins = [...config.global.plugins, i18nMocked];
+  config.global.mocks.$t = i18n.global.t;
+  config.global.plugins = [...config.global.plugins, i18n];
+
+  setActivePinia(createPinia());
+  const { getSkillById } = useSkillStore();
+  const { getSlotsById } = useSlotsStore();
+
+  let talismans: Talisman[] = [];
+
+  beforeEach(() => {
+    talismans = [
+      new Talisman({
+        skill1: getSkillById('speed-sharpening'),
+        skill1Level: 1,
+        skill2: getSkillById('weakness-exploit'),
+        skill2Level: 1,
+      }),
+      new Talisman({
+        skill1: getSkillById('bubbly-dance'),
+        skill1Level: 1,
+        slots: getSlotsById('2-2-1'),
+      }),
+      new Talisman({
+        skill1: getSkillById('agitator'),
+        skill1Level: 2,
+        slots: getSlotsById('2-1-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('master-mounter'),
+        skill1Level: 1,
+        skill2: getSkillById('slugger'),
+        skill2Level: 1,
+        slots: getSlotsById('1-1-0'),
+      }),
+    ];
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -42,14 +68,20 @@ describe('pages/TalismanManager', () => {
   it('sets the correct default data', () => {
     const { vm } = shallowMount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
 
     expect(vm.filter).toStrictEqual({
-      filterFavorite: false,
-      filterForMelting: false,
       search: '',
+      showFavorite: false,
+      showForMelting: false,
+      showMeltingFilter: false,
+      options: {
+        meltingFilter: {
+          skipFavorite: true,
+        },
+      },
     });
     expect(vm.dialog).toBe(false);
   });
@@ -57,20 +89,30 @@ describe('pages/TalismanManager', () => {
   it('has a function to open Dialog', () => {
     const { vm } = shallowMount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia()],
       },
     });
 
     expect(typeof vm.openDialog).toBe('function');
+    expect(vm.dialog).toBeFalsy();
+    vm.openDialog();
+    expect(vm.dialog).toBeTruthy();
   });
 
-  it('display Talismans', () => {
+  it('display Talismans', async () => {
     const wrapper = mount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+        })],
         provide: qLayoutInjections(),
       },
     });
+    const { vm } = wrapper;
+    await vm.$nextTick();
+    await vm.$nextTick();
 
     const rows = wrapper.findAllComponents(QTr);
     expect(rows.length).toBe(4);
@@ -79,7 +121,12 @@ describe('pages/TalismanManager', () => {
   it('has a favorite toggle button on a Talisman row', async () => {
     const wrapper = mount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
         provide: qLayoutInjections(),
       },
     });
@@ -102,7 +149,12 @@ describe('pages/TalismanManager', () => {
   it('has a recycling toggle button on a Talisman row', async () => {
     const wrapper = mount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
         provide: qLayoutInjections(),
       },
     });
@@ -125,7 +177,12 @@ describe('pages/TalismanManager', () => {
   it('has a delete button on a Talisman row', async () => {
     const wrapper = mount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
         provide: qLayoutInjections(),
       },
     });
@@ -146,7 +203,12 @@ describe('pages/TalismanManager', () => {
   it('has a search filter', async () => {
     const wrapper = mount(TalismanManager, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
         provide: qLayoutInjections(),
       },
     });
@@ -162,8 +224,136 @@ describe('pages/TalismanManager', () => {
     expect(rows.length).toBe(1);
   });
 
-  // TODO: test for sorting
-  // TODO: test for QPageStick and QDialog
+  it('can sort by skill1', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
+    const { vm } = wrapper;
+    await vm.$nextTick();
+
+    // No sorting
+    let rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('Affûtage rapide');
+    expect(rows[1].vm.$el.textContent).toContain('Ébullition');
+    expect(rows[2].vm.$el.textContent).toContain('Témérité');
+    expect(rows[3].vm.$el.textContent).toContain('Maître-cavalier');
+    // Sorting ASC
+    const headerColumns = wrapper.findAllComponents(QTh);
+    expect(headerColumns.length).toBe(5);
+    await headerColumns[1].trigger('click');
+    await vm.$nextTick();
+    rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('Affûtage rapide');
+    expect(rows[1].vm.$el.textContent).toContain('Ébullition');
+    expect(rows[2].vm.$el.textContent).toContain('Maître-cavalier');
+    expect(rows[3].vm.$el.textContent).toContain('Témérité');
+    // Sorting DESC
+    await headerColumns[1].trigger('click');
+    await vm.$nextTick();
+    rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('Témérité');
+    expect(rows[1].vm.$el.textContent).toContain('Maître-cavalier');
+    expect(rows[2].vm.$el.textContent).toContain('Ébullition');
+    expect(rows[3].vm.$el.textContent).toContain('Affûtage rapide');
+  });
+
+  it('can sort by skill2', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
+    const { vm } = wrapper;
+    await vm.$nextTick();
+
+    // No sorting
+    let rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('Mise à mort');
+    expect(rows[1].vm.$el.textContent).toContain('');
+    expect(rows[2].vm.$el.textContent).toContain('');
+    expect(rows[3].vm.$el.textContent).toContain('Cogneur');
+    // Sorting ASC
+    const headerColumns = wrapper.findAllComponents(QTh);
+    expect(headerColumns.length).toBe(5);
+    await headerColumns[2].trigger('click');
+    await vm.$nextTick();
+    rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain(' ');
+    expect(rows[1].vm.$el.textContent).toContain(' ');
+    expect(rows[2].vm.$el.textContent).toContain('Cogneur');
+    expect(rows[3].vm.$el.textContent).toContain('Mise à mort');
+    // Sorting DESC
+    await headerColumns[2].trigger('click');
+    await vm.$nextTick();
+    rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('Mise à mort');
+    expect(rows[1].vm.$el.textContent).toContain('Cogneur');
+    expect(rows[2].vm.$el.textContent).toContain(' ');
+    expect(rows[3].vm.$el.textContent).toContain(' ');
+  });
+
+  it('can sort by slots', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
+    const { vm } = wrapper;
+    await vm.$nextTick();
+
+    // No sorting
+    let rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('0-0-0');
+    expect(rows[1].vm.$el.textContent).toContain('2-2-1');
+    expect(rows[2].vm.$el.textContent).toContain('2-1-0');
+    expect(rows[3].vm.$el.textContent).toContain('1-1-0');
+    // Sorting ASC
+    const headerColumns = wrapper.findAllComponents(QTh);
+    expect(headerColumns.length).toBe(5);
+    await headerColumns[3].trigger('click');
+    await vm.$nextTick();
+    rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('0-0-0');
+    expect(rows[1].vm.$el.textContent).toContain('1-1-0');
+    expect(rows[2].vm.$el.textContent).toContain('2-1-0');
+    expect(rows[3].vm.$el.textContent).toContain('2-2-1');
+    // Sorting DESC
+    await headerColumns[3].trigger('click');
+    await vm.$nextTick();
+    rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(4);
+    expect(rows[0].vm.$el.textContent).toContain('2-2-1');
+    expect(rows[1].vm.$el.textContent).toContain('2-1-0');
+    expect(rows[2].vm.$el.textContent).toContain('1-1-0');
+    expect(rows[3].vm.$el.textContent).toContain('0-0-0');
+  });
+
+  // TODO: test for QPageStick
 
   // TODO: Test this with cypress ?
   // eslint-disable-next-line jest/no-commented-out-tests
@@ -174,7 +364,7 @@ describe('pages/TalismanManager', () => {
   //
   //     const wrapper = mount(TalismanManager, {
   //       global: {
-  //         plugins: [piniaMocked()],
+  //         plugins: [createTestingPinia()],
   //         provide: qLayoutInjections(),
   //       },
   //     });
@@ -198,7 +388,7 @@ describe('pages/TalismanManager', () => {
   //   it('has a recycling toggle button on a Talisman card', async () => {
   //     const wrapper = mount(TalismanManager, {
   //       global: {
-  //         plugins: [piniaMocked()],
+  //         plugins: [createTestingPinia()],
   //         provide: qLayoutInjections(),
   //       },
   //     });
@@ -222,7 +412,7 @@ describe('pages/TalismanManager', () => {
   //   it('has a delete button on a Talisman card', async () => {
   //     const wrapper = mount(TalismanManager, {
   //       global: {
-  //         plugins: [piniaMocked()],
+  //         plugins: [createTestingPinia()],
   //         provide: qLayoutInjections(),
   //       },
   //     });

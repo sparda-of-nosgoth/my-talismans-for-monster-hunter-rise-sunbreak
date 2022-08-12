@@ -1,31 +1,26 @@
 import {
+  beforeEach,
   describe, expect, it, jest,
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, shallowMount } from '@vue/test-utils';
 import TalismanExport from 'components/TalismanExport.vue';
-import { TranslateOptions } from '@intlify/core-base';
-import { i18nMocked } from 'app/test/mocks/i18n';
 import { Notify, QInput } from 'quasar';
-import { piniaMocked } from 'app/test/mocks/pinia';
 import _now from 'lodash/now';
+import { i18n } from 'boot/i18n';
+import { initFakeTimers } from 'app/test/mocks';
+import { createTestingPinia } from '@pinia/testing';
+import { Talisman } from 'src/models/talisman';
+import { createPinia, setActivePinia } from 'pinia';
+import { useSkillStore } from 'stores/skills';
+import { useSlotsStore } from 'stores/slots';
 
 installQuasarPlugin({ plugins: { Notify } });
+initFakeTimers();
 
-jest.mock('boot/i18n', () => ({
-  i18n: {
-    global: {
-      locale: 'fr',
-      availableLocales: ['en', 'fr'],
-      t: jest.fn((key: string, defaultMsg: string, options: TranslateOptions) => i18nMocked.global.t(key, defaultMsg, options)),
-    },
-  },
-}));
+jest.mock('boot/i18n');
 
-jest.mock('localforage', () => ({
-  getItem: jest.fn(() => new Promise((resolve, reject) => { reject(null); })),
-  setItem: jest.fn((key, value) => new Promise((resolve) => { resolve(value); })),
-}));
+jest.mock('localforage');
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const exportFileMocked = jest.fn((...args) => false);
@@ -45,30 +40,59 @@ jest.mock('quasar', () => {
   };
 });
 
-jest
-  .useFakeTimers('modern')
-  .setSystemTime(new Date('2022-07-26').getTime());
-
 describe('components/TalismanExport', () => {
-  config.global.mocks.$t = i18nMocked.global.t;
-  config.global.plugins = [...config.global.plugins, i18nMocked];
+  config.global.mocks.$t = i18n.global.t;
+  config.global.plugins = [...config.global.plugins, i18n];
+
+  setActivePinia(createPinia());
+  const { getSkillById } = useSkillStore();
+  const { getSlotsById } = useSlotsStore();
+
+  let talismans: Talisman[] = [];
+
+  beforeEach(() => {
+    talismans = [
+      new Talisman({
+        skill1: getSkillById('speed-sharpening'),
+        skill1Level: 1,
+        skill2: getSkillById('weakness-exploit'),
+        skill2Level: 1,
+      }),
+      new Talisman({
+        skill1: getSkillById('master-mounter'),
+        skill1Level: 1,
+        skill2: getSkillById('slugger'),
+        skill2Level: 1,
+        slots: getSlotsById('1-1-0'),
+      }),
+      new Talisman({
+        skill1: getSkillById('agitator'),
+        skill1Level: 2,
+        slots: getSlotsById('2-1-0'),
+      }),
+    ];
+  });
 
   it('has a function to download a csv file', async () => {
     const { vm } = shallowMount(TalismanExport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+        })],
       },
     });
 
+    await vm.$nextTick();
     expect(typeof vm.exportTable).toBe('function');
     await vm.exportTable();
     expect(exportFileMocked)
       .toHaveBeenCalledWith(
         `mhrs_talismansvue--${_now()}.csv`,
-        'Weakness Exploit,2,,,2,1,0\r\n'
-        + 'Attack Boost,2,Slugger,1,1,1,0\r\n'
-        + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
-        + 'Master Mounter,1,Slugger,1,1,1,0',
+        'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
+        + 'Master Mounter,1,Slugger,1,1,1,0\r\n'
+        + 'Agitator,2,,,2,1,0',
         'text/csv',
       );
     // Test notify return when exportFile return is false
@@ -78,15 +102,18 @@ describe('components/TalismanExport', () => {
   it('display all talismans formatted to csv', () => {
     const wrapper = shallowMount(TalismanExport, {
       global: {
-        plugins: [piniaMocked()],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+        })],
       },
     });
 
     const input = wrapper.getComponent(QInput);
     expect(input.vm.modelValue).toStrictEqual(''
-      + 'Weakness Exploit,2,,,2,1,0\r\n'
-      + 'Attack Boost,2,Slugger,1,1,1,0\r\n'
       + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
-      + 'Master Mounter,1,Slugger,1,1,1,0');
+      + 'Master Mounter,1,Slugger,1,1,1,0\r\n'
+      + 'Agitator,2,,,2,1,0');
   });
 });
