@@ -16,7 +16,7 @@ const essentialLinks = [
     separator: true,
   },
   {
-    title: 'menu.skill_type_translation.label',
+    title: 'menu.skills_translation.label',
     icon: 'translate',
     link: '/translations/skill',
     separator: true,
