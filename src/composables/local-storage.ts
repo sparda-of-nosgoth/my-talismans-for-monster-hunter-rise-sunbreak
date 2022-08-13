@@ -12,6 +12,7 @@ export function useLocalStorage() {
    * @param value
    */
   function toTalismans(value: string | null) {
+    talismanStore.$reset();
     _each(JSON.parse(value || '[]'), (data) => {
       talismanStore.talismans.push(new Talisman({ ...data }));
     });

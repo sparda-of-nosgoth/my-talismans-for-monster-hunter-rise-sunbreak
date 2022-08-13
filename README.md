@@ -15,16 +15,6 @@ A tool for Monster Hunter Rise, and his expansion Sunbreak, you can use it to :
 
 For now, the application is only in French, English will be available later.
 
-## Roadmap
-
-- Add English translation.
-- Add export to file.
-- Add more unit tests.
-- Add some filters option for tab.
-- Better design for talisman form.
-- Better identity for general app.
-- Add melting filter, with some options.
-
 ## Installation
 ### Install [Quasar CLI](https://quasar.dev/start/quasar-cli)
 ```bash
