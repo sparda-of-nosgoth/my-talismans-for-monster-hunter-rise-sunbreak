@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### Global
+- Added support of Quasar Language Pack.
+
 #### Talismans manager
 - A badge to display **Talismans** number, changes according to filters.
 

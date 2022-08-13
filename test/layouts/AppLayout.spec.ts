@@ -10,6 +10,7 @@ import { i18n } from 'boot/i18n';
 installQuasarPlugin();
 
 jest.mock('boot/i18n');
+jest.mock('src/utils/quasar-lang');
 
 describe('layouts/AppLayout', () => {
   config.global.mocks.$t = i18n.global.t;
