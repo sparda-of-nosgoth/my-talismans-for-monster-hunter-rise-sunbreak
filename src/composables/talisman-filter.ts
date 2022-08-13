@@ -46,21 +46,21 @@ export function useTalismanFilter() {
   /**
    * Filter Talisman's list
    * @param talismans Talisman's list to apply filters
-   * @param filter TalismanFilter options
+   * @param filterOptions TalismanFilter options
    */
-  function filterTalismans(talismans: Talisman[], filter: TalismanFilter) {
+  function filterTalismans(talismans: Talisman[], filterOptions: TalismanFilter) {
     let filteredTalismans = talismans;
 
-    const { applyMeltingFilter } = useMeltingFilter(filteredTalismans, filter.options.meltingFilter);
-    if (filter.showMeltingFilter) {
+    const { applyMeltingFilter } = useMeltingFilter(filteredTalismans, filterOptions.options.meltingFilter);
+    if (filterOptions.showMeltingFilter) {
       filteredTalismans = applyMeltingFilter();
     }
 
     filteredTalismans = _filter(filteredTalismans, (talisman: Talisman) => (
       // Search term in Skill's name or Slots
-      (compareTalismanBySkill(talisman, filter.search) || compareBySlots(talisman, filter.search))
+      (compareTalismanBySkill(talisman, filterOptions.search) || compareBySlots(talisman, filterOptions.search))
       // filter options : showFavorite and showForMelting
-      && ((filter.showFavorite ? talisman.favorite : true) && (filter.showForMelting ? talisman.forMelting : true))));
+      && ((filterOptions.showFavorite ? talisman.favorite : true) && (filterOptions.showForMelting ? talisman.forMelting : true))));
 
     return filteredTalismans;
   }

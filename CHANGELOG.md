@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Added
+
+#### Talismans manager
+- A badge to display **Talismans** number, changes according to filters.
+
 ### Fixed
 
 #### Misc

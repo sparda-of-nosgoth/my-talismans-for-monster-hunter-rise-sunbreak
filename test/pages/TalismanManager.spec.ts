@@ -9,6 +9,7 @@ import { config, mount, shallowMount } from '@vue/test-utils';
 import TalismanManager from 'pages/TalismanManager.vue';
 import { i18n } from 'boot/i18n';
 import {
+  QBadge,
   QBtn, QInput, QTh, QTr,
 } from 'quasar';
 import { createTestingPinia } from '@pinia/testing';
@@ -351,6 +352,29 @@ describe('pages/TalismanManager', () => {
     expect(rows[1].vm.$el.textContent).toContain('2-1-0');
     expect(rows[2].vm.$el.textContent).toContain('1-1-0');
     expect(rows[3].vm.$el.textContent).toContain('0-0-0');
+  });
+
+  it('has a badge to display talismans number', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
+    const { vm } = wrapper;
+    await vm.$nextTick();
+
+    const badge = wrapper.getComponent(QBadge);
+    expect(badge.vm.$el.textContent).toContain(4);
+    const input = wrapper.getComponent(QInput);
+    await input.setValue('2-1-0');
+    await vm.$nextTick();
+    expect(badge.vm.$el.textContent).toContain(1);
   });
 
   // TODO: test for QPageStick

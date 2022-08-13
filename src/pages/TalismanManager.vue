@@ -8,6 +8,7 @@ import TalismanManagerRowToggles from 'components/TalismanManagerRowToggles.vue'
 import { Skill } from 'src/models/skill';
 import { Slots } from 'src/models/slots';
 import { useLocalStorage } from 'src/composables/local-storage';
+import { Talisman } from 'src/models/talisman';
 
 useLocalStorage();
 const { t } = useI18n({ useScope: 'global' });
@@ -53,6 +54,7 @@ const columns = [
     sortable: false,
   },
 ];
+const talismanRows = ref(talismanStore.talismans.length);
 const filter = ref<TalismanFilter>({
   search: '',
   showFavorite: false,
@@ -64,6 +66,13 @@ const filter = ref<TalismanFilter>({
     },
   },
 });
+
+function filterTable(talismans: Talisman[], filterOptions: TalismanFilter) {
+  const filteredTalismans = filterTalismans(talismans, filterOptions);
+  talismanRows.value = filteredTalismans.length;
+  return filteredTalismans;
+}
+
 const dialog = ref(false);
 
 function openDialog() {
@@ -78,15 +87,23 @@ function openDialog() {
         <q-table
           :grid="$q.screen.xs || $q.screen.sm"
           :grid-header="$q.screen.xs || $q.screen.sm"
-          :title="$t('talisman.manager.table.label')"
           :rows="talismanStore.talismans"
           :columns="columns"
           row-key="id"
           :filter="filter"
-          :filter-method="filterTalismans"
+          :filter-method="filterTable"
           hide-pagination
           :pagination="{rowsPerPage: 0}"
         >
+          <template #top-left>
+            <span class="q-table__title">
+              {{ $t('talisman.manager.table.label') }}
+              <q-badge
+                v-if="talismanRows > 0"
+                align="top"
+              >{{ talismanRows }}</q-badge>
+            </span>
+          </template>
           <template #top-right>
             <q-toggle
               v-model="filter.showMeltingFilter"
