@@ -10,6 +10,23 @@ import { i18n } from 'boot/i18n';
 installQuasarPlugin();
 
 jest.mock('boot/i18n');
+jest.mock('src/utils/quasar-lang');
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const quasarLangSetMocked = jest.fn();
+// To test export to file and notification, exportFile and useQuasar needs to be mocked
+jest.mock('quasar', () => {
+  // Original functions and props, used to get normal use of Quasar, and mock only few functions.
+  const original = jest.requireActual('quasar') as Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  original.Quasar.lang.set = jest.fn((langDefault) => quasarLangSetMocked(langDefault));
+  return {
+    __esModule: true,
+    ...original,
+    default: jest.fn(),
+  };
+});
 
 describe('components/AppLocaleSelector', () => {
   config.global.mocks.$t = i18n.global.t;
@@ -32,5 +49,15 @@ describe('components/AppLocaleSelector', () => {
     await select.setValue('en');
     expect(i18n.global.locale.value).toBe('en');
     expect(vm.locale).toBe('en');
+  });
+
+  it('change quasar lang file  when a value is selected', async () => {
+    const wrapper = shallowMount(AppLocaleSelector);
+
+    const select = wrapper.getComponent(QSelect);
+    await select.setValue('en');
+    expect(quasarLangSetMocked).toHaveBeenCalledWith('en');
+    await select.setValue('fr');
+    expect(quasarLangSetMocked).toHaveBeenCalledWith('fr');
   });
 });
