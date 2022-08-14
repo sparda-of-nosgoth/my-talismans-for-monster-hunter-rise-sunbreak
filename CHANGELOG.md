@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Global
-- Added support of Quasar Language Pack.
+- In **settings** section, a button to **clear all data** was added.
 
 #### Talismans manager
 - A badge to display **Talismans** number, changes according to filters.

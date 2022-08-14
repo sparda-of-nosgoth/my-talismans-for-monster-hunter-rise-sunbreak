@@ -18,7 +18,7 @@ localforage.getItem = () => new Promise((resolve, reject) => {
 });
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line no-underscore-dangle
-localforage.setItem = () => new Promise((resolve, reject) => { reject(false); });
+// eslint-disable-next-line no-underscore-dangle, no-undef
+localforage.setItem = jest.fn(() => new Promise((resolve, reject) => { reject(false); }));
 
 module.exports = localforage;

@@ -25,5 +25,8 @@ export const useTalismanStore = defineStore('talismans', {
       this.talismans[index].forMelting = !talisman.forMelting;
       this.talismans[index].favorite = this.talismans[index].forMelting ? false : this.talismans[index].favorite;
     },
+    clear() {
+      this.$reset();
+    },
   },
 });

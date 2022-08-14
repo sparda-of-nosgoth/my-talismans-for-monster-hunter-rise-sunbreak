@@ -14,9 +14,9 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/translations/skill',
+    path: '/skills/translation',
     component: () => import('layouts/AppLayout.vue'),
-    children: [{ path: '', component: () => import('pages/TranslationSkill.vue') }],
+    children: [{ path: '', component: () => import('pages/SkillTranslation.vue') }],
   },
 
   // Always leave this as last one,

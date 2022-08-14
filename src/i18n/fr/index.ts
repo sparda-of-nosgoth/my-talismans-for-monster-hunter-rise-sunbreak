@@ -3,6 +3,12 @@ import skillTypeTranslation from './skill-type';
 
 export default {
   app_title: 'MHRS - Gestionnaire de talismans',
+  dialog: {
+    button: {
+      confirm: 'Confirmer',
+      cancel: 'Annuler',
+    },
+  },
   menu: {
     header: 'Menu principal',
     talisman_manager: {
@@ -14,9 +20,16 @@ export default {
     skills_translation: {
       label: 'Traduction des talents',
     },
-    options: 'Options',
+    settings: 'Options',
   },
-  options: {
+  settings: {
+    clear_data: {
+      dialog: {
+        warning_title: 'Attention !',
+        warning_message: 'Cette action est irréversible, voulez-vous vraiment supprimer l\'intégralité des données ?',
+      },
+      label: 'Supprimer les données',
+    },
     language: {
       label: 'Langue',
       en: {
@@ -82,13 +95,14 @@ export default {
         label: 'Fusion de talisman',
       },
       table: {
-        label: 'Mes talismans',
-        search: 'Rechercher',
         header: {
           skill1: 'Talent principal',
           skill2: 'Talent secondaire',
           slots: 'Emplacements',
         },
+        label: 'Mes talismans',
+        no_data: 'Aucun talisman à afficher',
+        search: 'Rechercher',
       },
     },
     validation: {

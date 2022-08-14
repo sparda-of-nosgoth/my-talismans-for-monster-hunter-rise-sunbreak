@@ -154,4 +154,18 @@ describe('stores/talismans', () => {
       forMelting: true,
     }));
   });
+
+  it('clear all data', () => {
+    const talismanStore = useTalismanStore();
+    talismanStore.talismans.push(talisman);
+    talismanStore.talismans.push(talisman);
+
+    expect(talismanStore.talismans).toStrictEqual([talisman, talisman]);
+    expect(talismanStore.talismans.length).toBe(2);
+
+    talismanStore.clear();
+
+    expect(talismanStore.talismans).toStrictEqual([]);
+    expect(talismanStore.talismans.length).toBe(0);
+  });
 });

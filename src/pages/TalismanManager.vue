@@ -7,10 +7,8 @@ import { useI18n } from 'vue-i18n';
 import TalismanManagerRowToggles from 'components/TalismanManagerRowToggles.vue';
 import { Skill } from 'src/models/skill';
 import { Slots } from 'src/models/slots';
-import { useLocalStorage } from 'src/composables/local-storage';
 import { Talisman } from 'src/models/talisman';
 
-useLocalStorage();
 const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();
 const { filterTalismans } = useTalismanFilter();
@@ -92,9 +90,12 @@ function openDialog() {
           row-key="id"
           :filter="filter"
           :filter-method="filterTable"
+          :no-data-label="$t('talisman.manager.table.no_data')"
+          :no-results-label="$t('talisman.manager.table.no_data')"
           hide-pagination
           :pagination="{rowsPerPage: 0}"
         >
+          <!-- Top left template-->
           <template #top-left>
             <span class="q-table__title">
               {{ $t('talisman.manager.table.label') }}
@@ -104,6 +105,7 @@ function openDialog() {
               >{{ talismanRows }}</q-badge>
             </span>
           </template>
+          <!-- Top right template-->
           <template #top-right>
             <q-toggle
               v-model="filter.showMeltingFilter"

@@ -7,15 +7,16 @@ import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 import localforage from 'localforage';
 import { config, shallowMount } from '@vue/test-utils';
-import TalismanManager from 'pages/TalismanManager.vue';
+import AppLayout from 'layouts/AppLayout.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { i18n } from 'boot/i18n';
+import { useTalismanStore } from 'stores/talismans';
 
 installQuasarPlugin();
 
-jest.mock('localforage');
 jest.mock('boot/i18n');
+jest.mock('localforage');
 
 describe('composables/local-forage', () => {
   config.global.mocks.$t = i18n.global.t;
@@ -61,13 +62,14 @@ describe('composables/local-forage', () => {
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
     localforage.__setMockData__(JSON.stringify(allTalismans));
-    const { vm } = shallowMount(TalismanManager, {
+    const { vm } = shallowMount(AppLayout, {
       global: {
-        plugins: [createTestingPinia()],
+        plugins: [createTestingPinia({ stubActions: false })],
       },
     });
     await vm.$nextTick();
-    expect(vm.talismanStore.talismans).toStrictEqual(allTalismans);
+    const talismanStore = useTalismanStore();
+    expect(talismanStore.talismans).toStrictEqual(allTalismans);
   });
 
   it('when component if mounted, load empty cache to store', async () => {
@@ -75,12 +77,33 @@ describe('composables/local-forage', () => {
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
     localforage.__setMockData__('');
-    const { vm } = shallowMount(TalismanManager, {
+    const { vm } = shallowMount(AppLayout, {
       global: {
-        plugins: [createTestingPinia()],
+        plugins: [createTestingPinia({ stubActions: false })],
       },
     });
     await vm.$nextTick();
-    expect(vm.talismanStore.talismans).toStrictEqual([]);
+    const talismanStore = useTalismanStore();
+    expect(talismanStore.talismans).toStrictEqual([]);
+  });
+
+  it('when store update his data with an action, data is stored in cache', async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line no-underscore-dangle
+    localforage.__setMockData__('');
+    const { vm } = shallowMount(AppLayout, {
+      global: {
+        plugins: [createTestingPinia({ stubActions: false })],
+      },
+    });
+    await vm.$nextTick();
+    const talismanStore = useTalismanStore();
+    talismanStore.addTalisman(new Talisman({
+      skill1: getSkillById('weakness-exploit'),
+      skill1Level: 2,
+      slots: getSlotsById('2-1-0'),
+    }));
+    expect(localforage.setItem).toHaveBeenCalledTimes(1);
   });
 });

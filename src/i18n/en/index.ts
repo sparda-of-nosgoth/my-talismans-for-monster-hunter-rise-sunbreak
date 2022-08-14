@@ -3,6 +3,12 @@ import skillTypeTranslation from './skill-type';
 
 export default {
   app_title: 'MHRS - Talismans manager',
+  dialog: {
+    button: {
+      confirm: 'Confirm',
+      cancel: 'Cancel',
+    },
+  },
   menu: {
     header: 'Main Menu',
     talisman_manager: {
@@ -14,9 +20,16 @@ export default {
     skills_translation: {
       label: 'Skills translation',
     },
-    options: 'Options',
+    settings: 'Settings',
   },
-  options: {
+  settings: {
+    clear_data: {
+      dialog: {
+        warning_title: 'Warning !',
+        warning_message: 'This action is irreversible, do you really want to delete all data?',
+      },
+      label: 'Erase all data',
+    },
     language: {
       label: 'Language',
       en: {
@@ -82,13 +95,14 @@ export default {
         label: 'Melting Talismans',
       },
       table: {
-        label: 'My talismans',
-        search: 'Search',
         header: {
           skill1: 'Primary skill',
           skill2: 'Secondary skill',
           slots: 'Slots',
         },
+        label: 'My talismans',
+        no_data: 'No talisman to display',
+        search: 'Search',
       },
     },
     validation: {

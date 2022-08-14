@@ -6,9 +6,7 @@ import { useQuasar } from 'quasar';
 import _each from 'lodash/each';
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
-import { useLocalStorage } from 'src/composables/local-storage';
 
-useLocalStorage();
 const { notify } = useQuasar();
 const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();
