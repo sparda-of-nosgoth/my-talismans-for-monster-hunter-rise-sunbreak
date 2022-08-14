@@ -1,12 +1,12 @@
 import _each from 'lodash/each';
 import { i18n } from 'boot/i18n';
 
-export function translate(key: string) {
+export function translate(key: string | null | undefined) {
   const { locale, t } = i18n.global;
   return key ? t(key, key, { locale }) : '';
 }
 
-export function translateInEn(key: string) {
+export function translateInEn(key: string | null | undefined) {
   const { t } = i18n.global;
   return key ? t(key, key, { locale: 'en' }) : '';
 }

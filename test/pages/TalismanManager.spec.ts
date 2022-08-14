@@ -21,7 +21,6 @@ import { Talisman } from 'src/models/talisman';
 installQuasarPlugin();
 
 jest.mock('boot/i18n');
-
 jest.mock('localforage');
 
 describe('pages/TalismanManager', () => {

@@ -21,15 +21,12 @@ export interface TalismanFilter {
  * @param terms Terms to find
  */
 function compareTalismanBySkill(talisman: Talisman, terms: string): boolean {
-  const skill1Name = talisman.skill1?.id ?? '';
-  const skill2Name = talisman.skill2?.id ?? '';
-
   // Always search into current locale translations
-  return _lowercase(translate(skill1Name)).includes(_lowercase(terms))
-    || _lowercase(translate(skill2Name)).includes(_lowercase(terms))
+  return _lowercase(translate(talisman.skill1?.id)).includes(_lowercase(terms))
+    || _lowercase(translate(talisman.skill2?.id)).includes(_lowercase(terms))
     // Always search into english translations
-    || _lowercase(translateInEn(skill1Name)).includes(_lowercase(terms))
-    || _lowercase(translateInEn(skill2Name)).includes(_lowercase(terms));
+    || _lowercase(translateInEn(talisman.skill1?.id)).includes(_lowercase(terms))
+    || _lowercase(translateInEn(talisman.skill2?.id)).includes(_lowercase(terms));
 }
 
 /**

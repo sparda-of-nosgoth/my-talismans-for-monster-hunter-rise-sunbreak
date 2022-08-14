@@ -131,7 +131,6 @@ describe('composables/talisman-filter-melting', () => {
   it('apply melting filter with skipFavorite at false', () => {
     const { applyMeltingFilter } = useMeltingFilter(talismans, { skipFavorite: false });
     const talismansToMelt = applyMeltingFilter();
-    expect(talismansToMelt.length).toStrictEqual(9);
     expect(talismansToMelt).toStrictEqual([
       talismans[0],
       talismans[1],
@@ -148,7 +147,6 @@ describe('composables/talisman-filter-melting', () => {
   it('apply melting filter with skipFavorite at true', () => {
     const { applyMeltingFilter } = useMeltingFilter(talismans, { skipFavorite: true });
     const talismansToMelt = applyMeltingFilter();
-    expect(talismansToMelt.length).toStrictEqual(8);
     expect(talismansToMelt).toStrictEqual([
       talismans[0],
       talismans[1],

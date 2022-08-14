@@ -15,7 +15,6 @@ import { i18n } from 'boot/i18n';
 installQuasarPlugin();
 
 jest.mock('localforage');
-
 jest.mock('boot/i18n');
 
 describe('composables/local-forage', () => {
