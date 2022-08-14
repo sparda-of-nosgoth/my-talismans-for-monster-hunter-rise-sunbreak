@@ -5,15 +5,16 @@ import { useSkillFilter } from 'src/composables/skill-filter';
 import { useTalismanValidator } from 'src/composables/talisman-validator';
 import TalismanManagerFormErrorCaption from 'components/TalismanManagerFormErrorCaption.vue';
 import { useSkillStore } from 'stores/skills';
-import { Talisman, TalismanConstructor } from 'src/models/talisman';
+import { Talisman } from 'src/models/talisman';
+import { useSlotsStore } from 'stores/slots';
 
 const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
 const { sortedSkills } = useSkillStore();
-const talisman = ref<Talisman>(new Talisman({}));
-const form = ref<TalismanConstructor>({
-  skill1Level: 1,
-});
+const { getSlotsById } = useSlotsStore();
+const talisman = ref<Talisman>(new Talisman({
+  slots: getSlotsById('0-0-0'),
+}));
 const { filteredSkills, filterSkillByName } = useSkillFilter(sortedSkills);
 const { errors, isValid } = useTalismanValidator(talisman);
 
@@ -23,9 +24,13 @@ function filterSkills(needle: string, update: (callback: () => void) => void): v
   });
 }
 
-watch(form, (talismanData: TalismanConstructor) => {
-  talisman.value = new Talisman({ ...talismanData });
-});
+watch(
+  [() => talisman.value.slots.slot1, () => talisman.value.slots.slot2, () => talisman.value.slots.slot3],
+  ([slot1, slot2, slot3]) => {
+    talisman.value.slots.id = `${slot1}-${slot2}-${slot3}`;
+  },
+  { deep: true },
+);
 
 function onSubmit() {
   // If there is no errors
@@ -77,6 +82,7 @@ function onSubmit() {
           lazy-rules
           :rules="[
             () => !errors.skill2.notFound || $t('talisman.validation.skill2.not_found'),
+            () => !errors.skill2.isEmpty || $t('talisman.validation.skill2.is_empty'),
             () => !errors.skill2Level.isEmpty || $t('talisman.validation.skill2Level.is_empty'),
             () => !errors.skill2Level.exceedsMaximum || $t('talisman.validation.skill2Level.exceeds_maximum', { level: talisman.skill2Level, level_maximum: talisman.skill2?.levelMaximum }),
           ]"

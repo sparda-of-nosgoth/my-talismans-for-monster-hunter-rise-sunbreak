@@ -5,6 +5,7 @@ import _find from 'lodash/find';
 import _filter from 'lodash/filter';
 import { Skill, skillList } from 'src/models/skill';
 import { SkillType, skillTypeList } from 'src/models/skill-type';
+import _cloneDeep from 'lodash/cloneDeep';
 
 export const useSkillStore = defineStore('skills', {
   state: () => ({
@@ -14,9 +15,9 @@ export const useSkillStore = defineStore('skills', {
 
   getters: {
     // To get one skill by his id
-    getSkillById: (state) => (id: string): Skill | undefined => _find(state.skills, { id }),
+    getSkillById: (state) => (id: string): Skill | undefined => _cloneDeep(_find(state.skills, { id })),
     // To get one skill by his translated name
-    getSkillByName: (state) => (skillName: string) => _find(state.skills, (skill: Skill) => searchInLocales(skill.id, skillName)),
+    getSkillByName: (state) => (skillName: string) => _cloneDeep(_find(state.skills, (skill: Skill) => searchInLocales(skill.id, skillName))),
     // To filter skillList by SkillType
     filterByType: (state) => (skillType: SkillType) => _filter(state.skills, { type: skillType.id }),
     // Sorted skillList by translated names

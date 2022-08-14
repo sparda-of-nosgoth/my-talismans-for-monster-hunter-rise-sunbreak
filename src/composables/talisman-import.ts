@@ -87,49 +87,44 @@ export function useTalismanImport(csvData: Ref<string> | string) {
       newline: '\n',
     });
 
-    try {
-      _each(result.data, (temporaryTalisman: TemporaryTalisman) => {
-        const { errorsFromTalisman, talismanIsValid } = useTemporaryTalismanValidator(temporaryTalisman);
+    _each(result.data, (temporaryTalisman: TemporaryTalisman) => {
+      const { errorsFromTalisman, talismanIsValid } = useTemporaryTalismanValidator(temporaryTalisman);
 
-        if (talismanIsValid.value) {
-          talismansToImport.value.push(createTalisman(temporaryTalisman));
-        } else {
-          const {
-            skill1, skill1Level, skill2, skill2Level, slots,
-          } = errorsFromTalisman.value;
-          if (skill1.isEmpty) {
-            errorsFromImport.value.skill1IsEmpty.push(temporaryTalisman);
-          }
-          if (skill1.notFound) {
-            errorsFromImport.value.skill1NotFound.push(temporaryTalisman);
-          }
-          if (skill1Level.isEmpty) {
-            errorsFromImport.value.skill1LevelIsEmpty.push(temporaryTalisman);
-          }
-          if (skill1Level.exceedsMaximum) {
-            errorsFromImport.value.skill1LevelExceedsMaximum.push(temporaryTalisman);
-          }
-          if (skill2.isEmpty) {
-            errorsFromImport.value.skill2IsEmpty.push(temporaryTalisman);
-          }
-          if (skill2.notFound) {
-            errorsFromImport.value.skill2NotFound.push(temporaryTalisman);
-          }
-          if (skill2Level.isEmpty) {
-            errorsFromImport.value.skill2LevelIsEmpty.push(temporaryTalisman);
-          }
-          if (skill2Level.exceedsMaximum) {
-            errorsFromImport.value.skill2LevelExceedsMaximum.push(temporaryTalisman);
-          }
-          if (slots.notFound) {
-            errorsFromImport.value.slotsNotFound.push(temporaryTalisman);
-          }
+      if (talismanIsValid.value) {
+        talismansToImport.value.push(createTalisman(temporaryTalisman));
+      } else {
+        const {
+          skill1, skill1Level, skill2, skill2Level, slots,
+        } = errorsFromTalisman.value;
+        if (skill1.isEmpty) {
+          errorsFromImport.value.skill1IsEmpty.push(temporaryTalisman);
         }
-      });
-    } catch (e) {
-      // TODO-post-v1.0: find a better error to throw
-      throw new Error('An error occured during import');
-    }
+        if (skill1.notFound) {
+          errorsFromImport.value.skill1NotFound.push(temporaryTalisman);
+        }
+        if (skill1Level.isEmpty) {
+          errorsFromImport.value.skill1LevelIsEmpty.push(temporaryTalisman);
+        }
+        if (skill1Level.exceedsMaximum) {
+          errorsFromImport.value.skill1LevelExceedsMaximum.push(temporaryTalisman);
+        }
+        if (skill2.isEmpty) {
+          errorsFromImport.value.skill2IsEmpty.push(temporaryTalisman);
+        }
+        if (skill2.notFound) {
+          errorsFromImport.value.skill2NotFound.push(temporaryTalisman);
+        }
+        if (skill2Level.isEmpty) {
+          errorsFromImport.value.skill2LevelIsEmpty.push(temporaryTalisman);
+        }
+        if (skill2Level.exceedsMaximum) {
+          errorsFromImport.value.skill2LevelExceedsMaximum.push(temporaryTalisman);
+        }
+        if (slots.notFound) {
+          errorsFromImport.value.slotsNotFound.push(temporaryTalisman);
+        }
+      }
+    });
   }
 
   if (isRef(csvData)) {

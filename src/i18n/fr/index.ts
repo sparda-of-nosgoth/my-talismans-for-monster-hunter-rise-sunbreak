@@ -102,6 +102,7 @@ export default {
       },
       skill2: {
         not_found: 'Le talent secondaire n\'existe pas.',
+        is_empty: 'Le talent secondaire ne peut être vide, son niveau étant renseigné.',
       },
       skill2Level: {
         is_empty: 'Le niveau du talent secondaire ne peut être vide ou zéro.',

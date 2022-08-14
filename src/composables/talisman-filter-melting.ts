@@ -37,20 +37,19 @@ export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOp
   }
 
   /**
-   * Return skill's decoration weight, equals to the best decoration's required slots
+   * Return skill's decoration weight, equals to the lowest decoration's required slots for one skill point
    * @param skill Talisman's Skill
    */
   function getSkillDecorationWeight(skill: Skill): number {
-    let bestDecoration = 4;
+    let lowestDecoration = 4;
 
-    // TODO: find a better way
     _each(skill.decorations, (decoration: Decoration) => {
-      if (decoration.requiredSlot < bestDecoration) {
-        bestDecoration = decoration.requiredSlot;
+      if (decoration.requiredSlot < lowestDecoration) {
+        lowestDecoration = decoration.requiredSlot;
       }
     });
 
-    return bestDecoration;
+    return lowestDecoration;
   }
 
   /**
@@ -160,7 +159,7 @@ export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOp
    * @param talismanToCompare currently compared talisman
    */
   function hasSkillInCommon(skill: Skill, talismanToCompare: Talisman): boolean {
-    return _indexOf([talismanToCompare.skill1, talismanToCompare.skill2], skill) > -1;
+    return _indexOf([talismanToCompare.skill1?.id, talismanToCompare.skill2?.id], skill.id) > -1;
   }
 
   /**
@@ -216,7 +215,7 @@ export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOp
       return talisman.updateWeight(-500);
     }
 
-    // If options FilterOptions::SKIP_FAVORITE is enabled, we return a very positive weight.
+    // If options skipFavorite is enabled, we return a very positive weight.
     if (options.skipFavorite && talisman.favorite) {
       return talisman.updateWeight(500);
     }

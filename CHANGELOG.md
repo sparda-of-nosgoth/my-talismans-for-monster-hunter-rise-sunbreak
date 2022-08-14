@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Talismans manager
 - A badge to display **Talismans** number, changes according to filters.
 
+### Changed
+
+#### Misc
+- Test coverage to 100%.
+
 ### Fixed
 
 #### Misc

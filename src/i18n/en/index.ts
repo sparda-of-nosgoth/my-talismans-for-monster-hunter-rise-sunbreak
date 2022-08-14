@@ -102,6 +102,7 @@ export default {
       },
       skill2: {
         not_found: 'Secondary skill doesn\'t exist.',
+        is_empty: 'Secondary skill can\'t be empty, his level being filled.',
       },
       skill2Level: {
         is_empty: 'Secondary skill\'s level can\'t be empty or zero.',

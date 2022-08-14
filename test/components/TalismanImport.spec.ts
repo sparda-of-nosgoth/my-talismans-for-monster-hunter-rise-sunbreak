@@ -18,9 +18,22 @@ installQuasarPlugin({ plugins: { Notify } });
 initFakeTimers();
 
 jest.mock('boot/i18n');
-
 jest.mock('localforage');
 
+const notifyMocked = jest.fn();
+// To test export to file and notification, exportFile and useQuasar needs to be mocked
+jest.mock('quasar', () => {
+  // Original functions and props, used to get normal use of Quasar, and mock only few functions.
+  const original = jest.requireActual('quasar') as Record<string, unknown>;
+  return {
+    __esModule: true,
+    ...original,
+    default: jest.fn(),
+    useQuasar: jest.fn(() => ({
+      notify: notifyMocked,
+    })),
+  };
+});
 describe('components/TalismanImport', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];

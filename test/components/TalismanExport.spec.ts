@@ -19,7 +19,6 @@ installQuasarPlugin({ plugins: { Notify } });
 initFakeTimers();
 
 jest.mock('boot/i18n');
-
 jest.mock('localforage');
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -18,7 +18,7 @@ const { errorsFromImport, talismansToImport } = useTalismanImport(talismanList);
 const submitDisabled = computed(() => talismansToImport.value.length <= 0);
 
 function submitImport() {
-  try {
+  if (talismansToImport.value) {
     _each(talismansToImport.value, (talisman) => {
       talismanStore.addTalisman(talisman);
     });
@@ -27,15 +27,6 @@ function submitImport() {
       position: 'bottom',
       message: t('talisman.import.success', { count: talismansToImport.value.length }),
       icon: 'check',
-    });
-  } catch (e) {
-    const error = e as Error;
-    // TODO-post-v1.0: find a better error message to display
-    notify({
-      color: 'negative',
-      position: 'bottom',
-      message: error.message,
-      icon: 'report_problem',
     });
   }
 }
