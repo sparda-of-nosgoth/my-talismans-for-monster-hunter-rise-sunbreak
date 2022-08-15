@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { useSettingsStore } from 'stores/settings';
+import { watch } from 'vue';
 
+const settingsStore = useSettingsStore();
 const { locale, availableLocales } = useI18n({ useScope: 'global' });
+
+watch(locale, (newLocale: string) => {
+  settingsStore.updateLocale(newLocale);
+});
 </script>
 
 <template>

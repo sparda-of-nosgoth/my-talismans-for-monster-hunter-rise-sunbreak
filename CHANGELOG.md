@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Global
 - In **settings** section, a button to **clear all data** was added.
+- **Settings** are now saved into a store, and local storage.
 
 #### Talismans manager
 - A badge to display **Talismans** number, changes according to filters.
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 #### Misc
+- Some refactoring on tests and local storage.
 - Test coverage to 100%.
 
 ### Fixed
