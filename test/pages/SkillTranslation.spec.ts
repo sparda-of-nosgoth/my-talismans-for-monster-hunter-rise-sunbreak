@@ -5,7 +5,7 @@ import { installQuasarPlugin, qLayoutInjections } from '@quasar/quasar-app-exten
 import {
   config, flushPromises, mount, shallowMount,
 } from '@vue/test-utils';
-import TranslationSkill from 'pages/TranslationSkill.vue';
+import TranslationSkill from 'pages/SkillTranslation.vue';
 import { QCard, QItem } from 'quasar';
 import { i18n } from 'boot/i18n';
 import { createTestingPinia } from '@pinia/testing';
@@ -14,7 +14,7 @@ installQuasarPlugin();
 
 jest.mock('boot/i18n');
 
-describe('pages/SkillTypeList', () => {
+describe('pages/SkillTranslation', () => {
   config.global.mocks.$t = i18n.global.t;
 
   it('sets the correct default data', () => {

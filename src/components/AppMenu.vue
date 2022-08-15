@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppEssentialLink from 'components/AppEssentialLink.vue';
-import AppLocaleSelector from 'components/AppLocaleSelector.vue';
+import SettingsClearData from 'components/SettingsClearData.vue';
+import SettingsLocaleSelector from 'components/SettingsLocaleSelector.vue';
 import AppVersion from 'components/AppVersion.vue';
 
 const essentialLinks = [
@@ -18,7 +19,7 @@ const essentialLinks = [
   {
     title: 'menu.skills_translation.label',
     icon: 'translate',
-    link: '/translations/skill',
+    link: '/skills/translation',
     separator: true,
   },
 ];
@@ -40,11 +41,16 @@ const essentialLinks = [
   <div class="q-pa-md fixed-bottom">
     <q-list>
       <q-item-label header>
-        {{ $t('menu.options') }}
+        {{ $t('menu.settings') }}
       </q-item-label>
       <q-item>
         <q-item-section>
-          <app-locale-selector />
+          <settings-locale-selector />
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <settings-clear-data />
         </q-item-section>
       </q-item>
       <q-separator />

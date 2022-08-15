@@ -34,6 +34,7 @@ jest.mock('quasar', () => {
     })),
   };
 });
+
 describe('components/TalismanImport', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
