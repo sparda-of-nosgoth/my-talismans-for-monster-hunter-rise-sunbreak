@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers';
-// TODO: VOir si une autre méthodologie est possible
+// TODO: Voir si une autre méthodologie est possible
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { createI18n } from 'app/node_modules/vue-i18n/dist/vue-i18n.esm-bundler';

@@ -18,7 +18,6 @@ installQuasarPlugin({ plugins: { Notify } });
 initFakeTimers();
 
 jest.mock('boot/i18n');
-jest.mock('localforage');
 
 const notifyMocked = jest.fn();
 // To test export to file and notification, exportFile and useQuasar needs to be mocked

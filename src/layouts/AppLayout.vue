@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import AppMenu from 'components/AppMenu.vue';
-import { useLocalStorage } from 'src/composables/local-storage';
-
-useLocalStorage();
 
 const leftDrawerOpen = ref(false);
 

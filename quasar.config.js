@@ -32,6 +32,7 @@ module.exports = configure((/* ctx */) => ({
   // https://v2.quasar.dev/quasar-cli-vite/boot-files
   boot: [
     'config',
+    'local-storage',
     'i18n',
   ],
 
