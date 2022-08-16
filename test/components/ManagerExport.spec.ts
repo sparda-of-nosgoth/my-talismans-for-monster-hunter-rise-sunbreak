@@ -4,7 +4,7 @@ import {
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, shallowMount } from '@vue/test-utils';
-import TalismanExport from 'components/TalismanExport.vue';
+import ManagerExport from 'components/ManagerExport.vue';
 import { Notify, QInput } from 'quasar';
 import _now from 'lodash/now';
 import { i18n } from 'boot/i18n';
@@ -38,7 +38,7 @@ jest.mock('quasar', () => {
   };
 });
 
-describe('components/TalismanExport', () => {
+describe('components/ManagerExport', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
 
@@ -71,8 +71,8 @@ describe('components/TalismanExport', () => {
     ];
   });
 
-  it('has a function to download a csv file', async () => {
-    const { vm } = shallowMount(TalismanExport, {
+  it('can download a csv file', async () => {
+    const { vm } = shallowMount(ManagerExport, {
       global: {
         plugins: [createTestingPinia({
           initialState: {
@@ -98,7 +98,7 @@ describe('components/TalismanExport', () => {
   });
 
   it('display all talismans formatted to csv', () => {
-    const wrapper = shallowMount(TalismanExport, {
+    const wrapper = shallowMount(ManagerExport, {
       global: {
         plugins: [createTestingPinia({
           initialState: {

@@ -3,22 +3,22 @@ import {
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, mount, shallowMount } from '@vue/test-utils';
-import TalismanManagerForm from 'components/TalismanManagerForm.vue';
+import ManagerTalismanForm from 'components/ManagerTalismanForm.vue';
 import { i18n } from 'boot/i18n';
 import { initFakeTimers } from 'app/test/mocks';
 import { Talisman } from 'src/models/talisman';
 import { createTestingPinia } from '@pinia/testing';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
-import { QSelect } from 'quasar';
 import { useSlotsStore } from 'stores/slots';
+import { useTalismanStore } from 'stores/talismans';
 
 installQuasarPlugin();
 initFakeTimers();
 
 jest.mock('boot/i18n');
 
-describe('components/TalismanManagerForm', () => {
+describe('components/ManagerTalismanForm', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
 
@@ -27,7 +27,7 @@ describe('components/TalismanManagerForm', () => {
   const { getSlotsById } = useSlotsStore();
 
   it('sets the correct default data', () => {
-    const { vm } = shallowMount(TalismanManagerForm, {
+    const { vm } = shallowMount(ManagerTalismanForm, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -37,8 +37,8 @@ describe('components/TalismanManagerForm', () => {
       .toStrictEqual(new Talisman({}));
   });
 
-  it('has a function to filter skills', async () => {
-    const { vm } = shallowMount(TalismanManagerForm, {
+  it('can filter skills', async () => {
+    const { vm } = shallowMount(ManagerTalismanForm, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
       },
@@ -57,8 +57,8 @@ describe('components/TalismanManagerForm', () => {
     ]);
   });
 
-  it('watch form to update Talisman value', async () => {
-    const wrapper = mount(TalismanManagerForm, {
+  it('watch each slot to update Talisman Slots id value', async () => {
+    const wrapper = mount(ManagerTalismanForm, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
       },
@@ -66,33 +66,28 @@ describe('components/TalismanManagerForm', () => {
     const { vm } = wrapper;
 
     expect(vm.talisman).toStrictEqual(new Talisman({}));
-    const skill1Select = wrapper.findComponent(QSelect);
-    await skill1Select.setValue(getSkillById('charge-master'));
+    vm.talisman.slots.slot1 = 3;
     await vm.$nextTick();
     expect(vm.talisman).toStrictEqual(new Talisman({
-      skill1: getSkillById('charge-master'),
-      skill1Level: 1,
+      slots: {
+        id: '3-0-0',
+        slot1: 3,
+        slot2: 0,
+        slot3: 0,
+      },
     }));
   });
 
-  it('has a function to submit Talisman', () => {
-    const { vm } = shallowMount(TalismanManagerForm, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(typeof vm.onSubmit).toBe('function');
-  });
-
-  it('emit created on submit when a talisman is valid', async () => {
-    const wrapper = mount(TalismanManagerForm, {
+  it('on submit when a talisman is valid, add talisman to store', async () => {
+    const wrapper = mount(ManagerTalismanForm, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
       },
     });
     const { vm } = wrapper;
+    const { talismans } = useTalismanStore();
 
+    expect(talismans).toStrictEqual([]);
     expect(vm.talisman).toStrictEqual(new Talisman({}));
     vm.talisman = new Talisman({
       skill1Level: 2,
@@ -119,7 +114,13 @@ describe('components/TalismanManagerForm', () => {
       slots: getSlotsById('3-2-1'),
     }));
     vm.onSubmit();
-    expect(wrapper.emitted('created')).toBeTruthy();
+    expect(talismans).toStrictEqual([new Talisman({
+      skill1: getSkillById('charge-master'),
+      skill1Level: 2,
+      skill2: getSkillById('good-luck'),
+      skill2Level: 1,
+      slots: getSlotsById('3-2-1'),
+    })]);
   });
 
   // eslint-disable-next-line jest/no-commented-out-tests

@@ -3,14 +3,16 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: () => ({ path: '/talismans/manager' }),
+    component: () => import('layouts/AppLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/TalismanManager.vue') },
+    ],
   },
   {
     path: '/talismans/',
     component: () => import('layouts/AppLayout.vue'),
     children: [
-      { path: 'manager', component: () => import('pages/TalismanManager.vue') },
-      { path: 'import_export', component: () => import('pages/TalismanImportExport.vue') },
+      { path: 'import_export', component: () => import('components/ManagerImportExport.vue') },
     ],
   },
   {

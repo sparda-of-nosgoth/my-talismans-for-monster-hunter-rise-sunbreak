@@ -9,7 +9,7 @@ describe('stores/slots', () => {
     setActivePinia(createPinia());
   });
 
-  it('has a function to get Slots by id', () => {
+  it('can get Slots by id', () => {
     const { getSlotsById } = useSlotsStore();
     expect(getSlotsById('0-0-0')).toStrictEqual(
       {
@@ -31,7 +31,7 @@ describe('stores/slots', () => {
     expect(getSlotsById('4-4-4')).toBeFalsy();
   });
 
-  it('has a function to get Slots by each slot', () => {
+  it('can get Slots by each slot', () => {
     const { getSlotsBySlot } = useSlotsStore();
     expect(getSlotsBySlot(0, 0, 0)).toStrictEqual(
       {

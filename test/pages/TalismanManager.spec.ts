@@ -5,12 +5,11 @@ import {
   installQuasarPlugin,
   qLayoutInjections,
 } from '@quasar/quasar-app-extension-testing-unit-jest';
-import { config, mount, shallowMount } from '@vue/test-utils';
+import { config, mount } from '@vue/test-utils';
 import TalismanManager from 'pages/TalismanManager.vue';
 import { i18n } from 'boot/i18n';
 import {
-  QBadge,
-  QBtn, QInput, QTh, QTr,
+  QBtn, QTh, QTr,
 } from 'quasar';
 import { createTestingPinia } from '@pinia/testing';
 import { createPinia, setActivePinia } from 'pinia';
@@ -41,12 +40,14 @@ describe('pages/TalismanManager', () => {
     skill1: getSkillById('bubbly-dance'),
     skill1Level: 1,
     slots: getSlotsById('2-2-1'),
+    favorite: true,
   });
 
   const talisman3: Talisman = new Talisman({
     skill1: getSkillById('agitator'),
     skill1Level: 2,
     slots: getSlotsById('2-1-0'),
+    favorite: true,
   });
 
   const talisman4: Talisman = new Talisman({
@@ -65,53 +66,6 @@ describe('pages/TalismanManager', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('sets the correct default data', () => {
-    const { vm } = shallowMount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(vm.filter).toStrictEqual({
-      search: '',
-      showFavorite: false,
-      showMeldingFilter: false,
-      options: {
-        meldingFilter: {
-          skipFavorite: true,
-        },
-      },
-    });
-    expect(vm.talismanFormDialog).toBe(false);
-    expect(vm.helpDialog).toBe(false);
-  });
-
-  it('has a function to open talismanFormDialog', () => {
-    const { vm } = shallowMount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(typeof vm.showTalismanFormDialog).toBe('function');
-    expect(vm.talismanFormDialog).toBeFalsy();
-    vm.showTalismanFormDialog();
-    expect(vm.talismanFormDialog).toBeTruthy();
-  });
-
-  it('has a function to open helpDialog', () => {
-    const { vm } = shallowMount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(typeof vm.showHelpDialog).toBe('function');
-    expect(vm.helpDialog).toBeFalsy();
-    vm.showHelpDialog();
-    expect(vm.helpDialog).toBeTruthy();
   });
 
   it('display Talismans', async () => {
@@ -213,30 +167,6 @@ describe('pages/TalismanManager', () => {
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
     expect(rows.length).toBe(3);
-  });
-
-  it('has a search filter', async () => {
-    const wrapper = mount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia({
-          initialState: {
-            talismans: { talismans },
-          },
-          stubActions: false,
-        })],
-        provide: qLayoutInjections(),
-      },
-    });
-    const { vm } = wrapper;
-    await vm.$nextTick();
-
-    let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
-    const input = wrapper.getComponent(QInput);
-    await input.setValue('2-1-0');
-    await vm.$nextTick();
-    rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(1);
   });
 
   it('can sort by skill1', async () => {
@@ -368,11 +298,16 @@ describe('pages/TalismanManager', () => {
     expect(rows[3].vm.props.row).toStrictEqual(talisman1);
   });
 
-  it('has a badge to display talismans number', async () => {
+  it('show filtered rows for search filter', async () => {
     const wrapper = mount(TalismanManager, {
       global: {
         plugins: [createTestingPinia({
           initialState: {
+            manager: {
+              filters: {
+                search: '2-1-0',
+              },
+            },
             talismans: { talismans },
           },
           stubActions: false,
@@ -380,92 +315,75 @@ describe('pages/TalismanManager', () => {
         provide: qLayoutInjections(),
       },
     });
-    const { vm } = wrapper;
-    await vm.$nextTick();
 
-    const badge = wrapper.getComponent(QBadge);
-    expect(badge.vm.$el.textContent).toContain(4);
-    const input = wrapper.getComponent(QInput);
-    await input.setValue('2-1-0');
-    await vm.$nextTick();
-    expect(badge.vm.$el.textContent).toContain(1);
+    const rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(1);
   });
 
-  // TODO: test for QPageStick
+  it('show filtered rows for showFavorite filter', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            manager: {
+              filters: {
+                showFavorite: true,
+              },
+            },
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
 
-  // TODO: Test this with cypress ?
-  // eslint-disable-next-line jest/no-commented-out-tests
-  // describe('on small screen', () => {
-  // eslint-disable-next-line jest/no-commented-out-tests
-  //   it('has a favorite toggle button on a Talisman card', async () => {
-  //     resizeScreen();
-  //
-  //     const wrapper = mount(TalismanManager, {
-  //       global: {
-  //         plugins: [createTestingPinia()],
-  //         provide: qLayoutInjections(),
-  //       },
-  //     });
-  //     const { vm } = wrapper;
-  //     await vm.$nextTick();
-  //
-  //     const cards = wrapper.findAllComponents(QCard);
-  //     let btn = cards[0].findAllComponents(QBtn);
-  //     expect(btn[0].exists()).toBeTruthy();
-  //     expect(btn[0].props().icon).toBe('favorite');
-  //     expect(btn[0].props().color).toBe('grey');
-  //     await btn[0].trigger('click');
-  //     await vm.$nextTick();
-  //     btn = cards[0].findAllComponents(QBtn);
-  //     expect(btn[0].exists()).toBeTruthy();
-  //     expect(btn[0].props().icon).toBe('favorite');
-  //     expect(btn[0].props().color).toBe('pink-8');
-  //   });
-  //
-  // eslint-disable-next-line jest/no-commented-out-tests
-  //   it('has a recycling toggle button on a Talisman card', async () => {
-  //     const wrapper = mount(TalismanManager, {
-  //       global: {
-  //         plugins: [createTestingPinia()],
-  //         provide: qLayoutInjections(),
-  //       },
-  //     });
-  //     const { vm } = wrapper;
-  //     await vm.$nextTick();
-  //
-  //     const cards = wrapper.findAllComponents(QCard);
-  //     let btn = cards[0].findAllComponents(QBtn);
-  //     expect(btn[1].exists()).toBeTruthy();
-  //     expect(btn[1].props().icon).toBe('recycling');
-  //     expect(btn[1].props().color).toBe('grey');
-  //     await btn[1].trigger('click');
-  //     await vm.$nextTick();
-  //     btn = cards[0].findAllComponents(QBtn);
-  //     expect(btn[1].exists()).toBeTruthy();
-  //     expect(btn[1].props().icon).toBe('recycling');
-  //     expect(btn[1].props().color).toBe('green-10');
-  //   });
-  //
-  // eslint-disable-next-line jest/no-commented-out-tests
-  //   it('has a delete button on a Talisman card', async () => {
-  //     const wrapper = mount(TalismanManager, {
-  //       global: {
-  //         plugins: [createTestingPinia()],
-  //         provide: qLayoutInjections(),
-  //       },
-  //     });
-  //     const { vm } = wrapper;
-  //     await vm.$nextTick();
-  //
-  //     let cards = wrapper.findAllComponents(QCard);
-  //     expect(cards.length).toBe(2);
-  //     const btn = cards[0].findAllComponents(QBtn);
-  //     expect(btn[2].exists()).toBeTruthy();
-  //     expect(btn[2].props().icon).toBe('delete');
-  //     await btn[2].trigger('click');
-  //     await vm.$nextTick();
-  //     cards = wrapper.findAllComponents(QCard);
-  //     expect(cards.length).toBe(1);
-  //   });
-  // });
+    const rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(2);
+  });
+
+  it('show filtered rows for showMeldingFilter filter', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            manager: {
+              filters: {
+                showMeldingFilter: true,
+              },
+            },
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
+
+    const rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(1);
+  });
+
+  it('show filtered rows with multiple filters', async () => {
+    const wrapper = mount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            manager: {
+              filters: {
+                search: '2-1-0',
+                showFavorite: true,
+              },
+            },
+            talismans: { talismans },
+          },
+          stubActions: false,
+        })],
+        provide: qLayoutInjections(),
+      },
+    });
+
+    const rows = wrapper.findAllComponents(QTr);
+    expect(rows.length).toBe(1);
+  });
 });

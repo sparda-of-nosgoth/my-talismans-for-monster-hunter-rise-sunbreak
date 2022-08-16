@@ -10,7 +10,7 @@ jest.mock('boot/i18n');
 describe('composables/skill-filter', () => {
   setActivePinia(createPinia());
 
-  it('has a function to to filter skills by name', () => {
+  it('can filter skills by name', () => {
     const { getSkillById, sortedSkills } = useSkillStore();
     const { filteredSkills, filterSkillByName } = useSkillFilter(sortedSkills);
     filterSkillByName('Cha');

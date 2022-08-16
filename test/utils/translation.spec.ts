@@ -9,17 +9,17 @@ installQuasarPlugin();
 jest.mock('boot/i18n');
 
 describe('utils/translation', () => {
-  it('has a function to translate in current locale', () => {
+  it('can translate in current locale', () => {
     expect(typeof translate).toBe('function');
     expect(translate('quest')).toStrictEqual('Quête');
   });
 
-  it('has a function to translate in current English', () => {
+  it('can translate in current English', () => {
     expect(typeof translateInEn).toBe('function');
     expect(translateInEn('quest')).toStrictEqual('Quest');
   });
 
-  it('has a function to search if a translation exist in each locales', () => {
+  it('can search if a translation exist in each locales', () => {
     expect(typeof searchInLocales).toBe('function');
     expect(searchInLocales('quest', 'Quête')).toBeTruthy();
     expect(searchInLocales('quest', 'Quest')).toBeTruthy();

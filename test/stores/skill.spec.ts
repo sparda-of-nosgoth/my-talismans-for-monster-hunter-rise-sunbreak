@@ -12,7 +12,7 @@ describe('stores/skill', () => {
     setActivePinia(createPinia());
   });
 
-  it('has a function to get skill by id', () => {
+  it('can get skill by id', () => {
     const { getSkillById } = useSkillStore();
     expect(getSkillById('botanist')).toStrictEqual({
       id: 'botanist',
@@ -29,7 +29,7 @@ describe('stores/skill', () => {
     expect(getSkillById('bokanist')).toBeFalsy();
   });
 
-  it('has a function to get a Skill by a translated name', () => {
+  it('can get a Skill by a translated name', () => {
     const { getSkillByName } = useSkillStore();
     // Find with a name translated in French
     expect(getSkillByName('Mise à mort')).toStrictEqual({
@@ -58,7 +58,7 @@ describe('stores/skill', () => {
     expect(getSkillByName('Seed Sharpening')).toBeFalsy();
   });
 
-  it('has a function to filter skills by SkillType', () => {
+  it('can filter skills by SkillType', () => {
     const { filterByType, getSkillById } = useSkillStore();
     expect(filterByType({ id: 'quest' })).toStrictEqual([
       getSkillById('affinity-sliding'),
