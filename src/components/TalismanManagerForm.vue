@@ -10,12 +10,12 @@ import { useSlotsStore } from 'stores/slots';
 
 const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
-const { sortedSkills } = useSkillStore();
+const { sortedSkillsFoundOnTalismanOnly } = useSkillStore();
 const { getSlotsById } = useSlotsStore();
 const talisman = ref<Talisman>(new Talisman({
   slots: getSlotsById('0-0-0'),
 }));
-const { filteredSkills, filterSkillByName } = useSkillFilter(sortedSkills);
+const { filteredSkills, filterSkillByName } = useSkillFilter(sortedSkillsFoundOnTalismanOnly);
 const { errors, isValid } = useTalismanValidator(talisman);
 
 function filterSkills(needle: string, update: (callback: () => void) => void): void {
