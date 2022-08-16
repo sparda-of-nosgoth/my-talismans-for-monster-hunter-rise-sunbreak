@@ -50,7 +50,6 @@ describe('composables/talisman', () => {
     const filter: TalismanFilter = {
       search: '',
       showFavorite: false,
-      showForMelting: false,
       showMeltingFilter: false,
       options: {
         meltingFilter: {
@@ -73,26 +72,20 @@ describe('composables/talisman', () => {
     // Find with favorite filter to true
     filter.search = '';
     filter.showFavorite = true;
-    filter.showForMelting = false;
+    filter.showMeltingFilter = false;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[2]]);
-    // Find with forMelting filter to true
-    filter.search = '';
-    filter.showFavorite = false;
-    filter.showForMelting = true;
-    expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[3]]);
     // Find with multiples filters
     filter.search = '1-0';
     filter.showFavorite = true;
-    filter.showForMelting = false;
+    filter.showMeltingFilter = false;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([]);
     // Show Melting Filter result
     filter.search = '';
     filter.showFavorite = false;
-    filter.showForMelting = false;
     filter.showMeltingFilter = true;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[0], allTalismans[3]]);
     // Show Melting Filter result with other filters
-    filter.showForMelting = true;
+    filter.search = '1-1';
     filter.showMeltingFilter = true;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[3]]);
   });

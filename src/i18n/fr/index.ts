@@ -87,8 +87,12 @@ export default {
           label: 'Talent secondaire',
         },
         button: {
-          submit: 'Ajouter',
-          cancel: 'Annuler',
+          cancel: {
+            label: 'Annuler',
+          },
+          submit: {
+            label: 'Ajouter',
+          },
         },
       },
       melting_filter: {
@@ -103,6 +107,14 @@ export default {
         label: 'Mes talismans',
         no_data: 'Aucun talisman à afficher',
         search: 'Rechercher',
+      },
+      tooltip: {
+        add_talisman: 'Ajouter un talisman',
+        add_to_favorite: 'Ajouter aux favoris',
+        add_to_for_melting: 'À fusionner',
+        delete_talisman: 'Supprimer le talisman',
+        toggle_show_favorite: 'Afficher les talismans favoris',
+        toggle_show_melting_filter: 'Afficher les talismans à fusionner',
       },
     },
     validation: {

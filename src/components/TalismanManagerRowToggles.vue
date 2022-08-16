@@ -19,13 +19,23 @@ const emit = defineEmits<{
       flat
       :color="talisman.favorite === true ? 'pink-8' : 'grey'"
       icon="favorite"
+      :aria-label="$t('talisman.manager.tooltip.add_to_favorite')"
       @click="() => emit('toggle-favorite', talisman)"
-    />
+    >
+      <q-tooltip delay="1000">
+        {{ $t('talisman.manager.tooltip.add_to') }}
+      </q-tooltip>
+    </q-btn>
     <q-btn
       flat
       :color="talisman.forMelting === true ? 'green-10' : 'grey'"
       icon="recycling"
+      :aria-label="$t('talisman.manager.tooltip.add_to_for_melting')"
       @click="() => emit('toggle-for-melting', talisman)"
-    />
+    >
+      <q-tooltip delay="1000">
+        {{ $t('talisman.manager.tooltip.add_to_for_melting') }}
+      </q-tooltip>
+    </q-btn>
   </q-btn-group>
 </template>
