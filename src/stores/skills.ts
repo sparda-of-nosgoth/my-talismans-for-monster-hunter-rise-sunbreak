@@ -22,5 +22,7 @@ export const useSkillStore = defineStore('skills', {
     filterByType: (state) => (skillType: SkillType) => _filter(state.skills, { type: skillType.id }),
     // Sorted skillList by translated names
     sortedSkills: (state) => _sortBy(state.skills, [(skill) => translate(skill.id)]),
+    // SkillList found on talisman only, sorted by translated names
+    sortedSkillsFoundOnTalismanOnly: (state) => _sortBy(_filter(state.skills, { foundOnTalismans: true }), [(skill) => translate(skill.id)]),
   },
 });

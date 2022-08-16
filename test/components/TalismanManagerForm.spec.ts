@@ -50,7 +50,6 @@ describe('components/TalismanManagerForm', () => {
     await vm.$nextTick();
     expect(updateMock).toHaveBeenCalledTimes(1);
     expect(vm.filteredSkills).toStrictEqual([
-      getSkillById('chameleos-blessing'),
       getSkillById('good-luck'),
       getSkillById('charge-master'),
       getSkillById('load-shells'),
