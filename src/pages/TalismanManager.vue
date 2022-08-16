@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import TalismanListFormAdd from 'components/TalismanManagerForm.vue';
 import { TalismanFilter, useTalismanFilter } from 'src/composables/talisman-filter';
 import { useTalismanStore } from 'stores/talismans';
@@ -13,7 +13,7 @@ const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();
 const { filterTalismans } = useTalismanFilter();
 
-const columns = [
+const columns = computed(() => [
   {
     name: 'actions_prefix',
     style: 'width: 150px',
@@ -51,7 +51,8 @@ const columns = [
     style: 'width: 100px',
     sortable: false,
   },
-];
+]);
+
 const talismanRows = ref(talismanStore.talismans.length);
 const filter = ref<TalismanFilter>({
   search: '',
