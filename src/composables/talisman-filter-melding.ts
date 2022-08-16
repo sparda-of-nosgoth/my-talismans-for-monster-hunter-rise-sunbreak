@@ -7,12 +7,12 @@ import { Decoration } from 'src/models/decoration';
 import { Skill } from 'src/models/skill';
 import { Talisman } from 'src/models/talisman';
 
-export interface MeltingFilterOptions {
+export interface MeldingFilterOptions {
   // Option to skip favorite talismans during talisman's filtering. Default: false.
   skipFavorite: boolean
 }
 
-export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOptions) {
+export function useMeldingFilter(talismans: Talisman[], options: MeldingFilterOptions) {
   /**
    * Skills weight calculators
    */
@@ -211,7 +211,7 @@ export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOp
     talisman.resetWeight();
 
     // If Talisman is already tag for rebirth, we return a negative weight.
-    if (talisman.forMelting) {
+    if (talisman.forMelding) {
       return talisman.updateWeight(-500);
     }
 
@@ -248,15 +248,15 @@ export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOp
   }
 
   /**
-   * Return bool if a talisman is good for melting or not.
-   * If Talisman's weight is lower than 100, it's a bad talisman, good for melting.
+   * Return bool if a talisman is good for melding or not.
+   * If Talisman's weight is lower than 100, it's a bad talisman, good for melding.
    * @param talisman Talisman to compare
    */
   function toMelt(talisman: Talisman): boolean {
     return talisman.weight < 100;
   }
 
-  function applyMeltingFilter(): Talisman[] {
+  function applyMeldingFilter(): Talisman[] {
     // TODO: Try to pass a ref ?
     let talismansWithWeight = _map(talismans, calculateTalismanBaseWeight);
     talismansWithWeight = _map(talismansWithWeight, calculateCommonSkillWeight);
@@ -264,5 +264,5 @@ export function useMeltingFilter(talismans: Talisman[], options: MeltingFilterOp
     return _filter(talismansWithWeight, toMelt);
   }
 
-  return { applyMeltingFilter };
+  return { applyMeldingFilter };
 }

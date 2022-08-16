@@ -9,7 +9,7 @@ defineProps<{
 // eslint-disable-next-line func-call-spacing, no-spaced-func
 const emit = defineEmits<{
   (e: 'toggle-favorite', talisman: Talisman): void
-  (e: 'toggle-for-melting', talisman: Talisman): void
+  (e: 'toggle-for-melding', talisman: Talisman): void
 }>();
 </script>
 
@@ -28,13 +28,13 @@ const emit = defineEmits<{
     </q-btn>
     <q-btn
       flat
-      :color="talisman.forMelting === true ? 'green-10' : 'grey'"
+      :color="talisman.forMelding === true ? 'green-10' : 'grey'"
       icon="recycling"
-      :aria-label="$t('talisman.manager.tooltip.add_to_for_melting')"
-      @click="() => emit('toggle-for-melting', talisman)"
+      :aria-label="$t('talisman.manager.tooltip.add_to_for_melding')"
+      @click="() => emit('toggle-for-melding', talisman)"
     >
       <q-tooltip delay="1000">
-        {{ $t('talisman.manager.tooltip.add_to_for_melting') }}
+        {{ $t('talisman.manager.tooltip.add_to_for_melding') }}
       </q-tooltip>
     </q-btn>
   </q-btn-group>

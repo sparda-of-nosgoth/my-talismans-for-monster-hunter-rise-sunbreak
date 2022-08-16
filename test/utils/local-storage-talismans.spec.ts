@@ -54,7 +54,7 @@ describe('utils/local-storage-talismans', () => {
       skill2: getSkillById('slugger'),
       skill2Level: 1,
       slots: getSlotsById('1-1-0'),
-      forMelting: true,
+      forMelding: true,
     }),
   ];
 

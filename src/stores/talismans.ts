@@ -18,12 +18,12 @@ export const useTalismanStore = defineStore('talismans', {
     toggleFavorite(talisman: Talisman) {
       const index = _findIndex(this.talismans, talisman);
       this.talismans[index].favorite = !talisman.favorite;
-      this.talismans[index].forMelting = this.talismans[index].favorite ? false : this.talismans[index].forMelting;
+      this.talismans[index].forMelding = this.talismans[index].favorite ? false : this.talismans[index].forMelding;
     },
-    toggleForMelting(talisman: Talisman) {
+    toggleForMelding(talisman: Talisman) {
       const index = _findIndex(this.talismans, talisman);
-      this.talismans[index].forMelting = !talisman.forMelting;
-      this.talismans[index].favorite = this.talismans[index].forMelting ? false : this.talismans[index].favorite;
+      this.talismans[index].forMelding = !talisman.forMelding;
+      this.talismans[index].favorite = this.talismans[index].forMelding ? false : this.talismans[index].favorite;
     },
     clear() {
       this.$reset();

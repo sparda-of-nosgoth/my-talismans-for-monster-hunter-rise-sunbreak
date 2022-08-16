@@ -7,7 +7,7 @@ export interface TalismanConstructor {
   skill2?: Skill | null
   skill2Level?: number
   slots?: Slots
-  forMelting?: boolean
+  forMelding?: boolean
   favorite?: boolean
 }
 
@@ -22,14 +22,14 @@ export class Talisman {
 
   slots: Slots;
 
-  forMelting: boolean;
+  forMelding: boolean;
 
   favorite: boolean;
 
   weight: number;
 
   constructor({
-    skill1, skill1Level, skill2, skill2Level, slots, forMelting, favorite,
+    skill1, skill1Level, skill2, skill2Level, slots, forMelding, favorite,
   }: TalismanConstructor) {
     this.skill1 = skill1 ?? null;
     this.skill1Level = skill1Level ?? 1;
@@ -37,7 +37,7 @@ export class Talisman {
     this.skill2Level = skill2Level ?? null;
     this.slots = slots ?? slotsList[0];
     this.favorite = favorite ?? false;
-    this.forMelting = forMelting ?? false;
+    this.forMelding = forMelding ?? false;
     this.weight = 0;
   }
 

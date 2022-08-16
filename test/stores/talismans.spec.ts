@@ -51,12 +51,12 @@ describe('stores/talismans', () => {
     expect(talismanStore.talismans.length).toBe(0);
   });
 
-  it('toggle favorite on a Talisman with favorite at false and forMelting at false', () => {
+  it('toggle favorite on a Talisman with favorite at false and forMelding at false', () => {
     const { getSkillById } = useSkillStore();
     const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
     talismanStore.talismans.push(talisman);
-    // field favorite will be true and forMelting will be false
+    // field favorite will be true and forMelding will be false
     talismanStore.toggleFavorite(talisman);
     expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
       skill1: getSkillById('capture-master'),
@@ -68,13 +68,13 @@ describe('stores/talismans', () => {
     }));
   });
 
-  it('toggle favorite on a Talisman with favorite at true and forMelting at false', () => {
+  it('toggle favorite on a Talisman with favorite at true and forMelding at false', () => {
     const { getSkillById } = useSkillStore();
     const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
     talisman.favorite = true;
     talismanStore.talismans.push(talisman);
-    // field favorite will be false and forMelting will be false
+    // field favorite will be false and forMelding will be false
     talismanStore.toggleFavorite(talisman);
     expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
       skill1: getSkillById('capture-master'),
@@ -85,13 +85,13 @@ describe('stores/talismans', () => {
     }));
   });
 
-  it('toggle favorite on a Talisman with favorite at false and forMelting at true', () => {
+  it('toggle favorite on a Talisman with favorite at false and forMelding at true', () => {
     const { getSkillById } = useSkillStore();
     const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
-    talisman.forMelting = true;
+    talisman.forMelding = true;
     talismanStore.talismans.push(talisman);
-    // field favorite will be true and forMelting will be false
+    // field favorite will be true and forMelding will be false
     talismanStore.toggleFavorite(talisman);
     expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
       skill1: getSkillById('capture-master'),
@@ -103,31 +103,31 @@ describe('stores/talismans', () => {
     }));
   });
 
-  it('toggle forMelting on a Talisman with forMelting at false and favorite at false', () => {
+  it('toggle forMelding on a Talisman with forMelding at false and favorite at false', () => {
     const { getSkillById } = useSkillStore();
     const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
     talismanStore.talismans.push(talisman);
-    // field forMelting will be true and favorite will be false
-    talismanStore.toggleForMelting(talisman);
+    // field forMelding will be true and favorite will be false
+    talismanStore.toggleForMelding(talisman);
     expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
       skill1: getSkillById('capture-master'),
       skill1Level: 1,
       skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
       slots: getSlotsById('2-1-0'),
-      forMelting: true,
+      forMelding: true,
     }));
   });
 
-  it('toggle forMelting on a Talisman with forMelting at true and favorite at false', () => {
+  it('toggle forMelding on a Talisman with forMelding at true and favorite at false', () => {
     const { getSkillById } = useSkillStore();
     const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
-    talisman.forMelting = true;
+    talisman.forMelding = true;
     talismanStore.talismans.push(talisman);
-    // field forMelting will be false and favorite will be false
-    talismanStore.toggleForMelting(talisman);
+    // field forMelding will be false and favorite will be false
+    talismanStore.toggleForMelding(talisman);
     expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
       skill1: getSkillById('capture-master'),
       skill1Level: 1,
@@ -137,21 +137,21 @@ describe('stores/talismans', () => {
     }));
   });
 
-  it('toggle forMelting on a Talisman with forMelting at false and favorite at true', () => {
+  it('toggle forMelding on a Talisman with forMelding at false and favorite at true', () => {
     const { getSkillById } = useSkillStore();
     const { getSlotsById } = useSlotsStore();
     const talismanStore = useTalismanStore();
     talisman.favorite = true;
     talismanStore.talismans.push(talisman);
-    // field forMelting will be true and favorite will be false
-    talismanStore.toggleForMelting(talisman);
+    // field forMelding will be true and favorite will be false
+    talismanStore.toggleForMelding(talisman);
     expect(talismanStore.talismans[0]).toStrictEqual(new Talisman({
       skill1: getSkillById('capture-master'),
       skill1Level: 1,
       skill2: getSkillById('hunger-resistance'),
       skill2Level: 2,
       slots: getSlotsById('2-1-0'),
-      forMelting: true,
+      forMelding: true,
     }));
   });
 

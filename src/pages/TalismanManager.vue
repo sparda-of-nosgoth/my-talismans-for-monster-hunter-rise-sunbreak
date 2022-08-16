@@ -58,9 +58,9 @@ const talismanRows = ref(talismanStore.talismans.length);
 const filter = ref<TalismanFilter>({
   search: '',
   showFavorite: false,
-  showMeltingFilter: false,
+  showMeldingFilter: false,
   options: {
-    meltingFilter: {
+    meldingFilter: {
       skipFavorite: true,
     },
   },
@@ -113,12 +113,12 @@ function openDialog() {
           <!-- Top right template-->
           <template #top-right>
             <q-toggle
-              v-model="filter.showMeltingFilter"
+              v-model="filter.showMeldingFilter"
               icon="recycling"
-              :aria-label="$t('talisman.manager.tooltip.toggle_show_melting_filter')"
+              :aria-label="$t('talisman.manager.tooltip.toggle_show_melding_filter')"
             >
               <q-tooltip delay="1000">
-                {{ $t('talisman.manager.tooltip.toggle_show_melting_filter') }}
+                {{ $t('talisman.manager.tooltip.toggle_show_melding_filter') }}
               </q-tooltip>
             </q-toggle>
             <q-toggle
@@ -152,7 +152,7 @@ function openDialog() {
                   <talisman-manager-row-toggles
                     :talisman="props.row"
                     @toggle-favorite="() => talismanStore.toggleFavorite(props.row)"
-                    @toggle-for-melting="() => talismanStore.toggleForMelting(props.row)"
+                    @toggle-for-melding="() => talismanStore.toggleForMelding(props.row)"
                   />
                 </div>
               </q-td>
@@ -232,7 +232,7 @@ function openDialog() {
                   <talisman-manager-row-toggles
                     :talisman="item.row"
                     @toggle-favorite="() => talismanStore.toggleFavorite(item.row)"
-                    @toggle-for-melting="() => talismanStore.toggleForMelting(item.row)"
+                    @toggle-for-melding="() => talismanStore.toggleForMelding(item.row)"
                   />
                   <q-space />
                   <q-btn
