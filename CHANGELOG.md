@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+#### Talismans manager
+- Fixed a bug on header translations when local is changed.
+
 #### Misc
 - Fixed a bug that re-add cache data to stores instead of replace it.
 
