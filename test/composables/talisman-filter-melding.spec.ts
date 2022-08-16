@@ -3,7 +3,7 @@ import {
   describe, expect, it, jest,
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
-import { useMeltingFilter } from 'src/composables/talisman-filter-melting';
+import { useMeldingFilter } from 'src/composables/talisman-filter-melding';
 import { Talisman } from 'src/models/talisman';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
@@ -15,7 +15,7 @@ initFakeTimers();
 
 jest.mock('boot/i18n');
 
-describe('composables/talisman-filter-melting', () => {
+describe('composables/talisman-filter-melding', () => {
   setActivePinia(createPinia());
   const { getSkillById } = useSkillStore();
   const { getSlotsById } = useSlotsStore();
@@ -108,14 +108,14 @@ describe('composables/talisman-filter-melting', () => {
         skill2Level: 2,
         slots: getSlotsById('1-1-1'),
       }),
-      // #12: To melt, tagged has forMelting
+      // #12: To melt, tagged has forMelding
       new Talisman({
         skill1: getSkillById('botanist'),
         skill1Level: 2,
         skill2: getSkillById('jump-master'),
         skill2Level: 1,
         slots: getSlotsById('2-1-1'),
-        forMelting: true,
+        forMelding: true,
       }),
       // #13: To keep, good one
       new Talisman({
@@ -128,9 +128,9 @@ describe('composables/talisman-filter-melting', () => {
     ];
   });
 
-  it('apply melting filter with skipFavorite at false', () => {
-    const { applyMeltingFilter } = useMeltingFilter(talismans, { skipFavorite: false });
-    const talismansToMelt = applyMeltingFilter();
+  it('apply melding filter with skipFavorite at false', () => {
+    const { applyMeldingFilter } = useMeldingFilter(talismans, { skipFavorite: false });
+    const talismansToMelt = applyMeldingFilter();
     expect(talismansToMelt).toStrictEqual([
       talismans[0],
       talismans[1],
@@ -144,9 +144,9 @@ describe('composables/talisman-filter-melting', () => {
     ]);
   });
 
-  it('apply melting filter with skipFavorite at true', () => {
-    const { applyMeltingFilter } = useMeltingFilter(talismans, { skipFavorite: true });
-    const talismansToMelt = applyMeltingFilter();
+  it('apply melding filter with skipFavorite at true', () => {
+    const { applyMeldingFilter } = useMeldingFilter(talismans, { skipFavorite: true });
+    const talismansToMelt = applyMeldingFilter();
     expect(talismansToMelt).toStrictEqual([
       talismans[0],
       talismans[1],

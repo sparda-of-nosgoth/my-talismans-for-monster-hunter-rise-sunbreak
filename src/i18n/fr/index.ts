@@ -95,7 +95,7 @@ export default {
           },
         },
       },
-      melting_filter: {
+      melding_filter: {
         label: 'Fusion de talisman',
       },
       table: {
@@ -111,10 +111,10 @@ export default {
       tooltip: {
         add_talisman: 'Ajouter un talisman',
         add_to_favorite: 'Ajouter aux favoris',
-        add_to_for_melting: 'À fusionner',
+        add_to_for_melding: 'À fusionner',
         delete_talisman: 'Supprimer le talisman',
         toggle_show_favorite: 'Afficher les talismans favoris',
-        toggle_show_melting_filter: 'Afficher les talismans à fusionner',
+        toggle_show_melding_filter: 'Afficher les talismans à fusionner',
       },
     },
     validation: {

@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Talismans manager
 - Removed **toggle for melting**, to display **Talismans** toggled has _for melting_, redondant with **toggle melting filter**.
 
+### Fixed
+
+#### Misc
+- Fixed typo misreading, replaced **melting** with **melding**.
+
 ## [0.2.1] - 2022-08-16
 
 ### Added

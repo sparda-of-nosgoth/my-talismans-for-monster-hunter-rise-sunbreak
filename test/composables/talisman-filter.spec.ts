@@ -41,7 +41,7 @@ describe('composables/talisman', () => {
       skill2: getSkillById('slugger'),
       skill2Level: 1,
       slots: getSlotsById('1-1-0'),
-      forMelting: true,
+      forMelding: true,
     }),
   ];
 
@@ -50,9 +50,9 @@ describe('composables/talisman', () => {
     const filter: TalismanFilter = {
       search: '',
       showFavorite: false,
-      showMeltingFilter: false,
+      showMeldingFilter: false,
       options: {
-        meltingFilter: {
+        meldingFilter: {
           skipFavorite: true,
         },
       },
@@ -72,21 +72,21 @@ describe('composables/talisman', () => {
     // Find with favorite filter to true
     filter.search = '';
     filter.showFavorite = true;
-    filter.showMeltingFilter = false;
+    filter.showMeldingFilter = false;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[2]]);
     // Find with multiples filters
     filter.search = '1-0';
     filter.showFavorite = true;
-    filter.showMeltingFilter = false;
+    filter.showMeldingFilter = false;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([]);
-    // Show Melting Filter result
+    // Show Melding Filter result
     filter.search = '';
     filter.showFavorite = false;
-    filter.showMeltingFilter = true;
+    filter.showMeldingFilter = true;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[0], allTalismans[3]]);
-    // Show Melting Filter result with other filters
+    // Show Melding Filter result with other filters
     filter.search = '1-1';
-    filter.showMeltingFilter = true;
+    filter.showMeldingFilter = true;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[3]]);
   });
 });

@@ -2,14 +2,14 @@ import _lowercase from 'lodash/lowerCase';
 import _filter from 'lodash/filter';
 import { translate, translateInEn } from 'src/utils/translation';
 import { Talisman } from 'src/models/talisman';
-import { MeltingFilterOptions, useMeltingFilter } from 'src/composables/talisman-filter-melting';
+import { MeldingFilterOptions, useMeldingFilter } from 'src/composables/talisman-filter-melding';
 
 export interface TalismanFilter {
   search: string
   showFavorite: boolean
-  showMeltingFilter: boolean
+  showMeldingFilter: boolean
   options: {
-    meltingFilter: MeltingFilterOptions
+    meldingFilter: MeldingFilterOptions
   }
 }
 
@@ -47,9 +47,9 @@ export function useTalismanFilter() {
   function filterTalismans(talismans: Talisman[], filterOptions: TalismanFilter) {
     let filteredTalismans = talismans;
 
-    const { applyMeltingFilter } = useMeltingFilter(filteredTalismans, filterOptions.options.meltingFilter);
-    if (filterOptions.showMeltingFilter) {
-      filteredTalismans = applyMeltingFilter();
+    const { applyMeldingFilter } = useMeldingFilter(filteredTalismans, filterOptions.options.meldingFilter);
+    if (filterOptions.showMeldingFilter) {
+      filteredTalismans = applyMeldingFilter();
     }
 
     filteredTalismans = _filter(filteredTalismans, (talisman: Talisman) => (
