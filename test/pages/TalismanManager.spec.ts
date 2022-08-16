@@ -30,34 +30,37 @@ describe('pages/TalismanManager', () => {
   const { getSkillById } = useSkillStore();
   const { getSlotsById } = useSlotsStore();
 
+  const talisman1: Talisman = new Talisman({
+    skill1: getSkillById('speed-sharpening'),
+    skill1Level: 1,
+    skill2: getSkillById('weakness-exploit'),
+    skill2Level: 1,
+  });
+
+  const talisman2: Talisman = new Talisman({
+    skill1: getSkillById('bubbly-dance'),
+    skill1Level: 1,
+    slots: getSlotsById('2-2-1'),
+  });
+
+  const talisman3: Talisman = new Talisman({
+    skill1: getSkillById('agitator'),
+    skill1Level: 2,
+    slots: getSlotsById('2-1-0'),
+  });
+
+  const talisman4: Talisman = new Talisman({
+    skill1: getSkillById('master-mounter'),
+    skill1Level: 1,
+    skill2: getSkillById('slugger'),
+    skill2Level: 1,
+    slots: getSlotsById('1-1-0'),
+  });
+
   let talismans: Talisman[] = [];
 
   beforeEach(() => {
-    talismans = [
-      new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 1,
-        skill2: getSkillById('weakness-exploit'),
-        skill2Level: 1,
-      }),
-      new Talisman({
-        skill1: getSkillById('bubbly-dance'),
-        skill1Level: 1,
-        slots: getSlotsById('2-2-1'),
-      }),
-      new Talisman({
-        skill1: getSkillById('agitator'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
-      }),
-      new Talisman({
-        skill1: getSkillById('master-mounter'),
-        skill1Level: 1,
-        skill2: getSkillById('slugger'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
-      }),
-    ];
+    talismans = [talisman1, talisman2, talisman3, talisman4];
   });
 
   afterEach(() => {
@@ -326,10 +329,10 @@ describe('pages/TalismanManager', () => {
     // No sorting
     let rows = wrapper.findAllComponents(QTr);
     expect(rows.length).toBe(4);
-    expect(rows[0].vm.$el.textContent).toContain('0-0-0');
-    expect(rows[1].vm.$el.textContent).toContain('2-2-1');
-    expect(rows[2].vm.$el.textContent).toContain('2-1-0');
-    expect(rows[3].vm.$el.textContent).toContain('1-1-0');
+    expect(rows[0].vm.props.row).toStrictEqual(talisman1);
+    expect(rows[1].vm.props.row).toStrictEqual(talisman2);
+    expect(rows[2].vm.props.row).toStrictEqual(talisman3);
+    expect(rows[3].vm.props.row).toStrictEqual(talisman4);
     // Sorting ASC
     const headerColumns = wrapper.findAllComponents(QTh);
     expect(headerColumns.length).toBe(5);
@@ -337,19 +340,19 @@ describe('pages/TalismanManager', () => {
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
     expect(rows.length).toBe(4);
-    expect(rows[0].vm.$el.textContent).toContain('0-0-0');
-    expect(rows[1].vm.$el.textContent).toContain('1-1-0');
-    expect(rows[2].vm.$el.textContent).toContain('2-1-0');
-    expect(rows[3].vm.$el.textContent).toContain('2-2-1');
+    expect(rows[0].vm.props.row).toStrictEqual(talisman1);
+    expect(rows[1].vm.props.row).toStrictEqual(talisman4);
+    expect(rows[2].vm.props.row).toStrictEqual(talisman3);
+    expect(rows[3].vm.props.row).toStrictEqual(talisman2);
     // Sorting DESC
     await headerColumns[3].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
     expect(rows.length).toBe(4);
-    expect(rows[0].vm.$el.textContent).toContain('2-2-1');
-    expect(rows[1].vm.$el.textContent).toContain('2-1-0');
-    expect(rows[2].vm.$el.textContent).toContain('1-1-0');
-    expect(rows[3].vm.$el.textContent).toContain('0-0-0');
+    expect(rows[0].vm.props.row).toStrictEqual(talisman2);
+    expect(rows[1].vm.props.row).toStrictEqual(talisman3);
+    expect(rows[2].vm.props.row).toStrictEqual(talisman4);
+    expect(rows[3].vm.props.row).toStrictEqual(talisman1);
   });
 
   it('has a badge to display talismans number', async () => {

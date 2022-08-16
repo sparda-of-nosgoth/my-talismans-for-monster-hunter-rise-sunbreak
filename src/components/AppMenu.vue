@@ -7,7 +7,7 @@ import AppVersion from 'components/AppVersion.vue';
 const essentialLinks = [
   {
     title: 'menu.talisman_manager.label',
-    icon: 'manage_search',
+    icon: 'img:src/assets/images/item_talisman_white.svg',
     link: '/talismans/manager',
   },
   {

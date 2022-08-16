@@ -8,6 +8,7 @@ import TalismanManagerRowToggles from 'components/TalismanManagerRowToggles.vue'
 import { Skill } from 'src/models/skill';
 import { Slots } from 'src/models/slots';
 import { Talisman } from 'src/models/talisman';
+import TalismanSlots from 'components/TalismanSlots.vue';
 
 const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();
@@ -99,6 +100,10 @@ function openDialog() {
           <!-- Top left template-->
           <template #top-left>
             <span class="q-table__title">
+              <q-icon
+                name="img:src/assets/images/item_talisman_white.svg"
+                size="lg"
+              />
               {{ $t('talisman.manager.table.label') }}
               <q-badge
                 v-if="talismanRows > 0"
@@ -166,9 +171,7 @@ function openDialog() {
                 key="slots"
                 :props="props"
               >
-                <div>
-                  {{ `${props.row.slots.slot1}-${props.row.slots.slot2}-${props.row.slots.slot3}` }}
-                </div>
+                <talisman-slots :talisman="props.row" />
               </q-td>
               <q-td
                 key="actions_suffix"
@@ -209,7 +212,7 @@ function openDialog() {
                     class="flex flex-center"
                     vertical
                   >
-                    <div>{{ `${item.row.slots.slot1}-${item.row.slots.slot2}-${item.row.slots.slot3}` }}</div>
+                    <talisman-slots :talisman="item.row" />
                   </q-card-section>
                 </q-card-section>
 

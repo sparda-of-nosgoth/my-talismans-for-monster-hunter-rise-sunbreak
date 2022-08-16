@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Global
+- Added a **Talisman** icon to **Talisman Manager** menu.
+-
+#### Talismans manager
+- Added a **Talisman** icon to **Talisman Manager** title.
+- Added **Slots** icons to **Talisman Manager**.
+
 ### Changed
 
 #### Talismans manager
