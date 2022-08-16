@@ -19,9 +19,9 @@ describe('components/TalismanSlots', () => {
 
     expect(typeof vm.getIconName).toBe('function');
     expect(vm.getIconName(0)).toStrictEqual('remove');
-    expect(vm.getIconName(1)).toStrictEqual('img:src/assets/images/item_slot_1.svg');
-    expect(vm.getIconName(2)).toStrictEqual('img:src/assets/images/item_slot_2.svg');
-    expect(vm.getIconName(3)).toStrictEqual('img:src/assets/images/item_slot_3.svg');
-    expect(vm.getIconName(4)).toStrictEqual('img:src/assets/images/item_slot_4.svg');
+    expect(vm.getIconName(1)).toStrictEqual('img:src/assets/images/icon_slot_1.svg');
+    expect(vm.getIconName(2)).toStrictEqual('img:src/assets/images/icon_slot_2.svg');
+    expect(vm.getIconName(3)).toStrictEqual('img:src/assets/images/icon_slot_3.svg');
+    expect(vm.getIconName(4)).toStrictEqual('img:src/assets/images/icon_slot_4.svg');
   });
 });
