@@ -77,7 +77,6 @@ describe('pages/TalismanManager', () => {
     expect(vm.filter).toStrictEqual({
       search: '',
       showFavorite: false,
-      showForMelting: false,
       showMeltingFilter: false,
       options: {
         meltingFilter: {

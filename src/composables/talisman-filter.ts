@@ -7,7 +7,6 @@ import { MeltingFilterOptions, useMeltingFilter } from 'src/composables/talisman
 export interface TalismanFilter {
   search: string
   showFavorite: boolean
-  showForMelting: boolean
   showMeltingFilter: boolean
   options: {
     meltingFilter: MeltingFilterOptions
@@ -56,8 +55,8 @@ export function useTalismanFilter() {
     filteredTalismans = _filter(filteredTalismans, (talisman: Talisman) => (
       // Search term in Skill's name or Slots
       (compareTalismanBySkill(talisman, filterOptions.search) || compareBySlots(talisman, filterOptions.search))
-      // filter options : showFavorite and showForMelting
-      && ((filterOptions.showFavorite ? talisman.favorite : true) && (filterOptions.showForMelting ? talisman.forMelting : true))));
+      // filter options : showFavorite
+      && (filterOptions.showFavorite ? talisman.favorite : true)));
 
     return filteredTalismans;
   }

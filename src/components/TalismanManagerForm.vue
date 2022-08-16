@@ -133,12 +133,12 @@ function onSubmit() {
         <q-btn
           type="submit"
           color="primary"
-          :label="$t('talisman.manager.form_add.button.submit')"
+          :label="$t('talisman.manager.form_add.button.submit.label')"
         />
         <q-space />
         <q-btn
           v-close-popup
-          :label="$t('talisman.manager.form_add.button.cancel')"
+          :label="$t('talisman.manager.form_add.button.cancel.label')"
         />
       </div>
     </q-form>

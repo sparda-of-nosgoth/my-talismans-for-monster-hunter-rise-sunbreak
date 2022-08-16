@@ -58,7 +58,6 @@ const talismanRows = ref(talismanStore.talismans.length);
 const filter = ref<TalismanFilter>({
   search: '',
   showFavorite: false,
-  showForMelting: false,
   showMeltingFilter: false,
   options: {
     meltingFilter: {
@@ -115,16 +114,22 @@ function openDialog() {
           <template #top-right>
             <q-toggle
               v-model="filter.showMeltingFilter"
-              icon="filter_alt"
-            />
+              icon="recycling"
+              :aria-label="$t('talisman.manager.tooltip.toggle_show_melting_filter')"
+            >
+              <q-tooltip delay="1000">
+                {{ $t('talisman.manager.tooltip.toggle_show_melting_filter') }}
+              </q-tooltip>
+            </q-toggle>
             <q-toggle
               v-model="filter.showFavorite"
               icon="favorite"
-            />
-            <q-toggle
-              v-model="filter.showForMelting"
-              icon="recycling"
-            />
+              :aria-label="$t('talisman.manager.tooltip.toggle_show_favorite')"
+            >
+              <q-tooltip delay="1000">
+                {{ $t('talisman.manager.tooltip.toggle_show_favorite') }}
+              </q-tooltip>
+            </q-toggle>
             <q-input
               v-model="filter.search"
               dense
@@ -181,8 +186,13 @@ function openDialog() {
                   outline
                   color="red"
                   icon="delete"
+                  :aria-label="$t('talisman.manager.tooltip.delete_talisman')"
                   @click="() => talismanStore.deleteTalisman(props.row)"
-                />
+                >
+                  <q-tooltip delay="1000">
+                    {{ $t('talisman.manager.tooltip.delete_talisman') }}
+                  </q-tooltip>
+                </q-btn>
               </q-td>
             </q-tr>
           </template>
@@ -229,8 +239,13 @@ function openDialog() {
                     outline
                     color="red"
                     icon="delete"
+                    :aria-label="$t('talisman.manager.tooltip.delete_talisman')"
                     @click="() => talismanStore.deleteTalisman(item.row)"
-                  />
+                  >
+                    <q-tooltip delay="1000">
+                      {{ $t('talisman.manager.tooltip.delete_talisman') }}
+                    </q-tooltip>
+                  </q-btn>
                 </q-card-actions>
               </q-card>
             </div>
@@ -245,8 +260,13 @@ function openDialog() {
             fab
             icon="add"
             class="bg-white"
+            :aria-label="$t('talisman.manager.tooltip.add_talisman')"
             @click="openDialog"
-          />
+          >
+            <q-tooltip delay="1000">
+              {{ $t('talisman.manager.tooltip.add_talisman') }}
+            </q-tooltip>
+          </q-btn>
         </q-page-sticky>
         <!-- Dialog: Talisman Form -->
         <q-dialog

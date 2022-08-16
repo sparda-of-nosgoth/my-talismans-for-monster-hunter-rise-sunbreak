@@ -15,11 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Talismans manager
 - Added a **Talisman** icon to **Talisman Manager** title.
 - Added **Slots** icons to **Talisman Manager**.
+- Added **tooltips** to help on buttons and toggles.
 
 ### Changed
 
 #### Talismans manager
 - In **Talisman form's** section, **Skills** are now filtered on found on talisman only.
+
+### Removed
+
+#### Talismans manager
+- Removed **toggle for melting**, to display **Talismans** toggled has _for melting_, redondant with **toggle melting filter**.
 
 ## [0.2.1] - 2022-08-16
 

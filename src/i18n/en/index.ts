@@ -87,8 +87,12 @@ export default {
           label: 'Secondary skill',
         },
         button: {
-          submit: 'Add',
-          cancel: 'Cancel',
+          cancel: {
+            label: 'Cancel',
+          },
+          submit: {
+            label: 'Add',
+          },
         },
       },
       melting_filter: {
@@ -103,6 +107,14 @@ export default {
         label: 'My talismans',
         no_data: 'No talisman to display',
         search: 'Search',
+      },
+      tooltip: {
+        add_talisman: 'Add a new talisman',
+        add_to_favorite: 'Add to favorites',
+        add_to_for_melting: 'To melt',
+        delete_talisman: 'Remove talisman',
+        toggle_show_favorite: 'Display favorites talismans',
+        toggle_show_melting_filter: 'Show talismans to melt',
       },
     },
     validation: {
