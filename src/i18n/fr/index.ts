@@ -95,8 +95,30 @@ export default {
           },
         },
       },
-      melding_filter: {
-        label: 'Fusion de talisman',
+      help: {
+        filter_favorites: {
+          title: 'Filtre : Talismans favoris',
+          content: 'Ce filtre permet d\'afficher uniquement les talismans qui ont été ajoutés en tant que favoris.',
+        },
+        filter_to_meld: {
+          title: 'Filtre : Talismans à fusionner',
+          content: 'Ce filtre permet d\'afficher les talismans qui ne sont pas assez intéressants pour être gardés, et qui devraient être utilisés dans le centre de fusion.',
+          sub_content: 'La sélection se base sur :',
+          sub_content_part_1: '- La valeur des talents en fonction du niveau, c\'est à dire que plus l\'emplacement nécessaire pour obtenir un point du talent avec un joyau est grand, plus grande est la valeur du talent.',
+          sub_content_part_2: '- La cohérence entre les deux talents, par exemple, si un talent épéiste et un talent artilleur sont sur un même talisman, cela fait chuter sa valeur.',
+          sub_content_part_3: '- La qualité des emplacements disponible sur le talisman.',
+          sub_content_part_4: '- La disponibilité des talents sur d\'autres talismans de meilleurs qualités.',
+          sub_content_part_5: '- Les talismans favoris ne sont pas pris en compte.',
+        },
+        search: {
+          title: 'Recherche',
+          content: 'Ce champ permet d\'effectuer des recherches sur :',
+          sub_title_skill: 'Le nom des talents',
+          sub_content_skill: 'Il est possible de faire une recherche dans la langue sélectionnée par l\'utilisateur mais aussi en anglais.',
+          sub_title_slots: 'Les emplacements',
+          sub_content_slots: 'La recherche s\'effectue en utilisant des chiffres et des tirets, par exemple "2-1" pour afficher les talismans avec des emplacements 2-1-0, 2-1-1, 2-2-1 ou 3-2-1.',
+        },
+        title: 'Aide',
       },
       table: {
         header: {
@@ -114,7 +136,7 @@ export default {
         add_to_for_melding: 'À fusionner',
         delete_talisman: 'Supprimer le talisman',
         toggle_show_favorite: 'Afficher les talismans favoris',
-        toggle_show_melding_filter: 'Afficher les talismans à fusionner',
+        toggle_show_to_meld: 'Afficher les talismans à fusionner',
       },
     },
     validation: {
