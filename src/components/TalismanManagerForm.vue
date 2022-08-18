@@ -42,9 +42,9 @@ function onSubmit() {
 
 <template>
   <div class="q-pa-md">
-    <h2 class="text-h6">
+    <span class="text-h5">
       {{ $t('talisman.manager.form_add.label') }}
-    </h2>
+    </span>
     <q-form
       @submit="onSubmit"
     >

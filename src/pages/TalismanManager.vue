@@ -9,6 +9,7 @@ import { Skill } from 'src/models/skill';
 import { Slots } from 'src/models/slots';
 import { Talisman } from 'src/models/talisman';
 import TalismanSlots from 'components/TalismanSlots.vue';
+import TalismanManagerHelpDialog from 'components/TalismanManagerHelpDialog.vue';
 
 const { t } = useI18n({ useScope: 'global' });
 const talismanStore = useTalismanStore();
@@ -72,10 +73,16 @@ function filterTable(talismans: Talisman[], filterOptions: TalismanFilter) {
   return filteredTalismans;
 }
 
-const dialog = ref(false);
+const talismanFormDialog = ref(false);
 
-function openDialog() {
-  dialog.value = true;
+function showTalismanFormDialog() {
+  talismanFormDialog.value = true;
+}
+
+const helpDialog = ref(false);
+
+function showHelpDialog() {
+  helpDialog.value = true;
 }
 </script>
 
@@ -83,6 +90,7 @@ function openDialog() {
   <q-page class="full-width row wrap justify-center">
     <div class="full-width q-pa-md">
       <div class="q-gutter-y-md">
+        <!-- START: QTable -->
         <q-table
           :grid="$q.screen.xs || $q.screen.sm"
           :grid-header="$q.screen.xs || $q.screen.sm"
@@ -96,7 +104,7 @@ function openDialog() {
           hide-pagination
           :pagination="{rowsPerPage: 0}"
         >
-          <!-- Top left template-->
+          <!-- START: Template: Top left -->
           <template #top-left>
             <span class="q-table__title">
               <q-icon
@@ -110,15 +118,16 @@ function openDialog() {
               >{{ talismanRows }}</q-badge>
             </span>
           </template>
-          <!-- Top right template-->
+          <!-- END: Template: Top left -->
+          <!-- START: Template: Top right -->
           <template #top-right>
             <q-toggle
               v-model="filter.showMeldingFilter"
               icon="recycling"
-              :aria-label="$t('talisman.manager.tooltip.toggle_show_melding_filter')"
+              :aria-label="$t('talisman.manager.tooltip.toggle_show_to_meld')"
             >
               <q-tooltip delay="1000">
-                {{ $t('talisman.manager.tooltip.toggle_show_melding_filter') }}
+                {{ $t('talisman.manager.tooltip.toggle_show_to_meld') }}
               </q-tooltip>
             </q-toggle>
             <q-toggle
@@ -140,8 +149,16 @@ function openDialog() {
                 <q-icon name="search" />
               </template>
             </q-input>
+            <q-btn
+              flat
+              round
+              color="primary"
+              icon="info"
+              @click="showHelpDialog"
+            />
           </template>
-          <!-- Row mode template-->
+          <!-- END: Template: Top right -->
+          <!-- START: Template: Row -->
           <template #body="props">
             <q-tr :props="props">
               <q-td
@@ -196,7 +213,8 @@ function openDialog() {
               </q-td>
             </q-tr>
           </template>
-          <!-- Grid mode template-->
+          <!-- END: Template: Row -->
+          <!-- START: Template: Grid -->
           <template #item="item">
             <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
               <q-card>
@@ -250,8 +268,10 @@ function openDialog() {
               </q-card>
             </div>
           </template>
+          <!-- END: Template: Grid -->
         </q-table>
-        <!-- Btn: To display Dialog for Talisman Form -->
+        <!-- END: QTable -->
+        <!-- START: QPageSticky: To display Dialog for Talisman Form -->
         <q-page-sticky
           position="bottom-right"
           :offset="[30, 30]"
@@ -261,16 +281,17 @@ function openDialog() {
             icon="add"
             class="bg-white"
             :aria-label="$t('talisman.manager.tooltip.add_talisman')"
-            @click="openDialog"
+            @click="showTalismanFormDialog"
           >
             <q-tooltip delay="1000">
               {{ $t('talisman.manager.tooltip.add_talisman') }}
             </q-tooltip>
           </q-btn>
         </q-page-sticky>
-        <!-- Dialog: Talisman Form -->
+        <!-- END: QPageSticky: To display Dialog for Talisman Form -->
+        <!-- START: QDialog: Talisman Form -->
         <q-dialog
-          v-model="dialog"
+          v-model="talismanFormDialog"
           position="right"
         >
           <q-card style="width: 350px">
@@ -279,6 +300,10 @@ function openDialog() {
             </q-card-section>
           </q-card>
         </q-dialog>
+        <!-- END: QDialog: Talisman Form -->
+        <!-- START: QDialog: Help -->
+        <talisman-manager-help-dialog v-model="helpDialog" />
+        <!-- END: QDialog: Help -->
       </div>
     </div>
   </q-page>

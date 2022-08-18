@@ -84,20 +84,34 @@ describe('pages/TalismanManager', () => {
         },
       },
     });
-    expect(vm.dialog).toBe(false);
+    expect(vm.talismanFormDialog).toBe(false);
+    expect(vm.helpDialog).toBe(false);
   });
 
-  it('has a function to open Dialog', () => {
+  it('has a function to open talismanFormDialog', () => {
     const { vm } = shallowMount(TalismanManager, {
       global: {
         plugins: [createTestingPinia()],
       },
     });
 
-    expect(typeof vm.openDialog).toBe('function');
-    expect(vm.dialog).toBeFalsy();
-    vm.openDialog();
-    expect(vm.dialog).toBeTruthy();
+    expect(typeof vm.showTalismanFormDialog).toBe('function');
+    expect(vm.talismanFormDialog).toBeFalsy();
+    vm.showTalismanFormDialog();
+    expect(vm.talismanFormDialog).toBeTruthy();
+  });
+
+  it('has a function to open helpDialog', () => {
+    const { vm } = shallowMount(TalismanManager, {
+      global: {
+        plugins: [createTestingPinia()],
+      },
+    });
+
+    expect(typeof vm.showHelpDialog).toBe('function');
+    expect(vm.helpDialog).toBeFalsy();
+    vm.showHelpDialog();
+    expect(vm.helpDialog).toBeTruthy();
   });
 
   it('display Talismans', async () => {

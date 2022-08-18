@@ -95,8 +95,30 @@ export default {
           },
         },
       },
-      melding_filter: {
-        label: 'Melding Talismans',
+      help: {
+        filter_favorites: {
+          title: 'Filter : Favorite talismans',
+          content: 'This filter only displays talismans that have been added as favourites.',
+        },
+        filter_to_meld: {
+          title: 'Filter : Talismans to meld',
+          content: 'This filter allows to display talismans which are not interesting enough to keep, and which should be used in the melding pot.',
+          sub_content: 'The selection is based on:',
+          sub_content_part_1: '- The skill\'s value according to the level, ie the greater slots necessary to obtain one skill\'s point with a decoration, the greater the skill\'s value.',
+          sub_content_part_2: '- Consistency between two skills, for example, if a swordsman\'s skill and a gunner\'s skill are on the same talisman, it drops its value.',
+          sub_content_part_3: '- The quality of slots available on the talisman.',
+          sub_content_part_4: '- The availability of skills on other better talismans.',
+          sub_content_part_5: '- Favorite talismans are not taken into account.',
+        },
+        search: {
+          title: 'Search',
+          content: 'This field allows you to search for:',
+          sub_title_skill: 'Skill\'s name',
+          sub_content_skill: 'It is possible to search in the user\'s selected language but also in English.',
+          sub_title_slots: 'Slots',
+          sub_content_slots: 'The search is performed by using numbers and dashes, for example "2-1" to display talismans with slots 2-1-0, 2-1-1, 2-2-1 or 3-2-1.',
+        },
+        title: 'Help',
       },
       table: {
         header: {
@@ -111,10 +133,10 @@ export default {
       tooltip: {
         add_talisman: 'Add a new talisman',
         add_to_favorite: 'Add to favorites',
-        add_to_for_melding: 'To melt',
+        add_to_for_melding: 'To meld',
         delete_talisman: 'Remove talisman',
         toggle_show_favorite: 'Display favorites talismans',
-        toggle_show_melding_filter: 'Show talismans to melt',
+        toggle_show_to_meld: 'Show talismans to meld',
       },
     },
     validation: {
