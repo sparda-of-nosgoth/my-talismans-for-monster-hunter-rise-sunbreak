@@ -3,10 +3,12 @@ import { ref, watch } from 'vue';
 import _cloneDeep from 'lodash/cloneDeep';
 import { useSkillFilter } from 'src/composables/skill-filter';
 import { useTalismanValidator } from 'src/composables/talisman-validator';
-import TalismanManagerFormErrorCaption from 'components/TalismanManagerFormErrorCaption.vue';
 import { useSkillStore } from 'stores/skills';
 import { Talisman } from 'src/models/talisman';
 import { useSlotsStore } from 'stores/slots';
+import TalismanManagerFormSlot from 'components/TalismanManagerFormSlot.vue';
+import { QField, QSelect } from 'quasar';
+import TalismanManagerFormErrorCaption from 'components/TalismanManagerFormErrorCaption.vue';
 
 const emit = defineEmits<{(e: 'created', talisman: Talisman): void}>();
 
@@ -41,12 +43,13 @@ function onSubmit() {
 </script>
 
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md full-width">
     <span class="text-h5">
       {{ $t('talisman.manager.form_add.label') }}
     </span>
     <q-form
       @submit="onSubmit"
+      greedy
     >
       <div>
         <q-select
@@ -98,35 +101,31 @@ function onSubmit() {
           marker-labels
         />
       </div>
-      <div class="row q-gutter-md q-pa-sm items-center">
+      <div class="row q-pa-sm">
+        <span class="text-bold">{{ $t('talisman.manager.form_add.slots.label') }}</span>
+        <div class="row q-pa-sm full-width justify-center">
+          <q-btn-group>
+            <talisman-manager-form-slot v-model="talisman.slots.slot1" />
+            <talisman-manager-form-slot
+              v-model="talisman.slots.slot2"
+              :options="[
+                { label: '0', value: 0 },
+                { label: '1', value: 1 },
+                { label: '2', value: 2 },
+              ]"
+            />
+            <talisman-manager-form-slot
+              v-model="talisman.slots.slot3"
+              :options="[
+                { label: '0', value: 0 },
+                { label: '1', value: 1 },
+              ]"
+            />
+          </q-btn-group>
+        </div>
         <talisman-manager-form-error-caption
           v-if="errors.slots.notFound"
           message="talisman.validation.slots.not_found"
-        />
-        <q-btn-toggle
-          v-model="talisman.slots.slot1"
-          :options="[
-            {label: '0', value: 0},
-            {label: '1', value: 1},
-            {label: '2', value: 2},
-            {label: '3', value: 3},
-            {label: '4', value: 4},
-          ]"
-        />
-        <q-btn-toggle
-          v-model="talisman.slots.slot2"
-          :options="[
-            {label: '0', value: 0},
-            {label: '1', value: 1},
-            {label: '2', value: 2},
-          ]"
-        />
-        <q-btn-toggle
-          v-model="talisman.slots.slot3"
-          :options="[
-            {label: '0', value: 0},
-            {label: '1', value: 1},
-          ]"
         />
       </div>
       <div class="row items-center no-wrap">

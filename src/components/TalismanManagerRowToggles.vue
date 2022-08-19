@@ -22,7 +22,7 @@ const emit = defineEmits<{
       :aria-label="$t('talisman.manager.tooltip.add_to_favorite')"
       @click="() => emit('toggle-favorite', talisman)"
     >
-      <q-tooltip delay="1000">
+      <q-tooltip :delay="1000">
         {{ $t('talisman.manager.tooltip.add_to') }}
       </q-tooltip>
     </q-btn>
@@ -33,7 +33,7 @@ const emit = defineEmits<{
       :aria-label="$t('talisman.manager.tooltip.add_to_for_melding')"
       @click="() => emit('toggle-for-melding', talisman)"
     >
-      <q-tooltip delay="1000">
+      <q-tooltip :delay="1000">
         {{ $t('talisman.manager.tooltip.add_to_for_melding') }}
       </q-tooltip>
     </q-btn>

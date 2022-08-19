@@ -126,7 +126,7 @@ function showHelpDialog() {
               icon="recycling"
               :aria-label="$t('talisman.manager.tooltip.toggle_show_to_meld')"
             >
-              <q-tooltip delay="1000">
+              <q-tooltip :delay="1000">
                 {{ $t('talisman.manager.tooltip.toggle_show_to_meld') }}
               </q-tooltip>
             </q-toggle>
@@ -135,7 +135,7 @@ function showHelpDialog() {
               icon="favorite"
               :aria-label="$t('talisman.manager.tooltip.toggle_show_favorite')"
             >
-              <q-tooltip delay="1000">
+              <q-tooltip :delay="1000">
                 {{ $t('talisman.manager.tooltip.toggle_show_favorite') }}
               </q-tooltip>
             </q-toggle>
@@ -206,7 +206,7 @@ function showHelpDialog() {
                   :aria-label="$t('talisman.manager.tooltip.delete_talisman')"
                   @click="() => talismanStore.deleteTalisman(props.row)"
                 >
-                  <q-tooltip delay="1000">
+                  <q-tooltip :delay="1000">
                     {{ $t('talisman.manager.tooltip.delete_talisman') }}
                   </q-tooltip>
                 </q-btn>
@@ -260,7 +260,7 @@ function showHelpDialog() {
                     :aria-label="$t('talisman.manager.tooltip.delete_talisman')"
                     @click="() => talismanStore.deleteTalisman(item.row)"
                   >
-                    <q-tooltip delay="1000">
+                    <q-tooltip :delay="1000">
                       {{ $t('talisman.manager.tooltip.delete_talisman') }}
                     </q-tooltip>
                   </q-btn>
@@ -283,7 +283,7 @@ function showHelpDialog() {
             :aria-label="$t('talisman.manager.tooltip.add_talisman')"
             @click="showTalismanFormDialog"
           >
-            <q-tooltip delay="1000">
+            <q-tooltip :delay="1000">
               {{ $t('talisman.manager.tooltip.add_talisman') }}
             </q-tooltip>
           </q-btn>

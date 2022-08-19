@@ -10,12 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Global
-- Added a **Talisman** icon to **Talisman Manager** menu.
-- Added a **Skill** icon to **Skill's Translation** menu.
+- Added a **Talisman's icon** to **Talisman Manager** menu.
+- Added a **Skill's icon** to **Skill's Translation** menu.
 
 #### Talismans manager
-- Added a **Talisman** icon to **Talisman Manager** title.
-- Added **Slots** icons to **Talisman Manager**.
+- Added a **Talisman's icon** to **Talisman Manager** title.
+- Added **Slots icons** to **Talisman Manager**.
 - Added **tooltips** to help on buttons and toggles.
 - Added a button to display a **help dialog** that explain how to use filters.
 
@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Talismans manager
 - In **Talisman form's** section, **Skills** are now filtered on found on talisman only.
+- In **Talisman form's** section, **Slots** are now displayed with select buttons, icons added.
 
 ### Removed
 
