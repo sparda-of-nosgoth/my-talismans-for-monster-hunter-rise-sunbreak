@@ -10,7 +10,7 @@ import { Talisman } from 'src/models/talisman';
 import { createTestingPinia } from '@pinia/testing';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
-import { QBtnToggle, QSelect, QSlider } from 'quasar';
+import { QSelect } from 'quasar';
 import { useSlotsStore } from 'stores/slots';
 
 installQuasarPlugin();
@@ -94,21 +94,21 @@ describe('components/TalismanManagerForm', () => {
     const { vm } = wrapper;
 
     expect(vm.talisman).toStrictEqual(new Talisman({}));
-    // Select Skills
-    const selects = wrapper.findAllComponents(QSelect);
-    await selects[0].setValue(getSkillById('charge-master'));
-    await selects[1].setValue(getSkillById('good-luck'));
-    // Select Skill's levels
-    const sliders = wrapper.findAllComponents(QSlider);
-    await sliders[0].setValue(2);
-    await sliders[1].setValue(1);
-    // Select Slots
-    const btnToggles = wrapper.findAllComponents(QBtnToggle);
-    await btnToggles[0].setValue(3);
+    vm.talisman = new Talisman({
+      skill1Level: 2,
+      skill2: getSkillById('good-luck'),
+      skill2Level: 1,
+      slots: getSlotsById('3-2-1'),
+    });
     await vm.$nextTick();
-    await btnToggles[1].setValue(2);
-    await vm.$nextTick();
-    await btnToggles[2].setValue(1);
+    expect(vm.false).toBeFalsy();
+    vm.talisman = new Talisman({
+      skill1: getSkillById('charge-master'),
+      skill1Level: 2,
+      skill2: getSkillById('good-luck'),
+      skill2Level: 1,
+      slots: getSlotsById('3-2-1'),
+    });
     await vm.$nextTick();
     expect(vm.isValid).toBeTruthy();
     expect(vm.talisman).toStrictEqual(new Talisman({
@@ -126,6 +126,5 @@ describe('components/TalismanManagerForm', () => {
   // it('filter skills list when a needle is typed in q-select', async () => {
   //   // TODO: Test with cypress
   // });
-
 //  TODO: errors display
 });

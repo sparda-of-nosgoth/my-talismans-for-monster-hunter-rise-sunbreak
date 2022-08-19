@@ -86,6 +86,9 @@ export default {
         skill2: {
           label: 'Talent secondaire',
         },
+        slots: {
+          label: 'Emplacements',
+        },
         button: {
           cancel: {
             label: 'Annuler',

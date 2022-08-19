@@ -7,7 +7,7 @@ import { useSkillStore } from 'stores/skills';
 
 jest.mock('boot/i18n');
 
-describe('composables/skill', () => {
+describe('composables/skill-filter', () => {
   setActivePinia(createPinia());
 
   it('has a function to to filter skills by name', () => {

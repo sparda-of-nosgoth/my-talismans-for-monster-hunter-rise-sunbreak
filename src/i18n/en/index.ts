@@ -86,6 +86,9 @@ export default {
         skill2: {
           label: 'Secondary skill',
         },
+        slots: {
+          label: 'Slots',
+        },
         button: {
           cancel: {
             label: 'Cancel',
