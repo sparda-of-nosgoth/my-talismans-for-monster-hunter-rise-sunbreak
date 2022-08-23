@@ -47,8 +47,8 @@ export function useTalismanFilter() {
   function filterTalismans(talismans: Talisman[], filterOptions: TalismanFilter) {
     let filteredTalismans = talismans;
 
-    const { applyMeldingFilter } = useMeldingFilter(filteredTalismans, filterOptions.options.meldingFilter);
     if (filterOptions.showMeldingFilter) {
+      const { applyMeldingFilter } = useMeldingFilter(filteredTalismans, filterOptions.options.meldingFilter);
       filteredTalismans = applyMeldingFilter();
     }
 

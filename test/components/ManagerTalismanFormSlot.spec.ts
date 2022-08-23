@@ -3,13 +3,13 @@ import {
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { shallowMount } from '@vue/test-utils';
-import TalismanManagerFormSlot from 'components/TalismanManagerFormSlot.vue';
+import ManagerTalismanFormSlot from '../../src/components/ManagerTalismanFormSlot.vue';
 
 installQuasarPlugin();
 
-describe('components/TalismanManagerFormSlot', () => {
+describe('components/ManagerTalismanFormSlot', () => {
   it('sets the correct default data', () => {
-    const { vm } = shallowMount(TalismanManagerFormSlot, { props: { modelValue: 0 } });
+    const { vm } = shallowMount(ManagerTalismanFormSlot, { props: { modelValue: 0 } });
 
     expect(vm.options).toStrictEqual([
       { label: '0', value: 0 },

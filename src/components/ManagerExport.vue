@@ -19,7 +19,7 @@ function exportTable() {
 
   if (status !== true) {
     notify({
-      message: t('talisman.export.to_file.error'),
+      message: t('manager.export.to_file.error'),
       color: 'negative',
       icon: 'warning',
     });
@@ -32,7 +32,7 @@ function exportTable() {
     <div class="row">
       <div class="col-6">
         <h2 class="text-h6">
-          {{ $t('talisman.export.title') }}
+          {{ $t('manager.export.title') }}
         </h2>
       </div>
       <div class="col-6 text-right">
@@ -40,15 +40,17 @@ function exportTable() {
           square
           color="primary"
           icon="file_download"
-          :label="$t('talisman.export.to_file.label')"
-          :aria-label="$t('talisman.export.to_file.label')"
+          :label="$t('manager.export.to_file.label')"
+          :aria-label="$t('manager.export.to_file.label')"
           @click="exportTable"
         />
       </div>
     </div>
     <q-input
       v-model="exportedTalismans"
+      style="height: 100%"
       type="textarea"
+      autogrow
       outlined
       readonly
     />

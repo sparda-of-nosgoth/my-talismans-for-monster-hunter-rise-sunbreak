@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppEssentialLink from 'components/AppEssentialLink.vue';
+import AppMenuEssentialLink from 'components/AppMenuEssentialLink.vue';
 import SettingsClearData from 'components/SettingsClearData.vue';
 import SettingsLocaleSelector from 'components/SettingsLocaleSelector.vue';
 import AppVersion from 'components/AppVersion.vue';
@@ -7,18 +7,12 @@ import AppVersion from 'components/AppVersion.vue';
 const essentialLinks = [
   {
     title: 'menu.talisman_manager.label',
-    icon: 'img:src/assets/images/icon_talisman_white.svg',
-    link: '/talismans/manager',
-  },
-  {
-    title: 'menu.talisman_import_export.label',
-    icon: 'drive_folder_upload',
-    link: '/talismans/import_export',
-    separator: true,
+    icon: 'img:images/icon_talisman_white.svg',
+    link: '/',
   },
   {
     title: 'menu.skills_translation.label',
-    icon: 'img:src/assets/images/icon_skill.svg',
+    icon: 'img:images/icon_skill.svg',
     link: '/skills/translation',
     separator: true,
   },
@@ -31,7 +25,7 @@ const essentialLinks = [
       {{ $t('menu.header') }}
     </q-item-label>
 
-    <app-essential-link
+    <app-menu-essential-link
       v-for="link in essentialLinks"
       :key="link.title"
       v-bind="link"

@@ -12,23 +12,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Global
 - Added a **Talisman's icon** to **Talisman Manager** menu.
 - Added a **Skill's icon** to **Skill's Translation** menu.
+- Added a **Talisman's icon** to header title.
+- Added a button in header's toolbar, to open **Import / Export Talismans** modal.
+- Added **tooltips** to help on buttons and toggles in header's toolbar.
+- Added a button to display a **help dialog** that explain how to use filters.
 
 #### Talismans manager
-- Added a **Talisman's icon** to **Talisman Manager** title.
 - Added **Slots icons** to **Talisman Manager**.
-- Added **tooltips** to help on buttons and toggles.
-- Added a button to display a **help dialog** that explain how to use filters.
 
 ### Changed
 
+#### Global
+- **Talismans Manager** is now the homepage.
+- App temporary name by **My Talismans**, or **Mes Talismans** in French, a badge display current **Talismans rows**.
+- Upgraded header with **Talismans Manager's toolbar**, which include a button to open **Talisman's form**, filters like **Melding**, **Favorite** and input **search** and a button to display **help**.
+
 #### Talismans manager
-- In **Talisman form's** section, **Skills** are now filtered on found on talisman only.
-- In **Talisman form's** section, **Slots** are now displayed with select buttons, icons added.
+- In **Talisman form**, **Skills** are now filtered on found on talisman only.
+- In **Talisman form**, **Slots** are now displayed with select buttons, icons added.
+
+#### Misc
+- Refactoring on components names, changes applied on tests.
 
 ### Removed
 
+#### Global
+- Removed **Import / Export Talismans** from menu.
+
 #### Talismans manager
-- Removed **toggle for melting**, to display **Talismans** toggled has _for melting_, redondant with **toggle melting filter**.
+- Removed page name.
+- Removed all **filters toggles**, **input search** and **sticky button** to display **Talisman's form**.
 
 ### Fixed
 

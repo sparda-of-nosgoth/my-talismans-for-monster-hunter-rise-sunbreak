@@ -40,7 +40,7 @@ export default {
       },
     },
   },
-  talisman: {
+  manager: {
     export: {
       label: 'Export',
       title: 'Talismans exported',
@@ -77,7 +77,7 @@ export default {
       talismans_to_import: 'No talisman will be imported. | Only one talisman will be imported. | {count} talismans will be imported.',
       title: 'Talismans to import',
     },
-    manager: {
+    talisman: {
       form_add: {
         label: 'Add a talisman',
         skill1: {
@@ -138,29 +138,30 @@ export default {
         add_to_favorite: 'Add to favorites',
         add_to_for_melding: 'To meld',
         delete_talisman: 'Remove talisman',
+        import_export_talismans: 'Import / Export talismans',
         toggle_show_favorite: 'Display favorites talismans',
         toggle_show_to_meld: 'Show talismans to meld',
       },
-    },
-    validation: {
-      skill1: {
-        not_found: 'Primary skill doesn\'t exist.',
-        is_empty: 'Primary skill can\'t be empty.',
-      },
-      skill1Level: {
-        is_empty: 'Primary skill\'s level can\'t be empty or zero.',
-        exceeds_maximum: 'Primary skill\'s level ({level}) is above the level cap for that skill ({level_maximum}).',
-      },
-      skill2: {
-        not_found: 'Secondary skill doesn\'t exist.',
-        is_empty: 'Secondary skill can\'t be empty, his level being filled.',
-      },
-      skill2Level: {
-        is_empty: 'Secondary skill\'s level can\'t be empty or zero.',
-        exceeds_maximum: 'Secondary skill\'s level ({level}) is above the level cap for that skill ({level_maximum}).',
-      },
-      slots: {
-        not_found: 'Slots doesn\'t exist.',
+      validation: {
+        skill1: {
+          not_found: 'Primary skill doesn\'t exist.',
+          is_empty: 'Primary skill can\'t be empty.',
+        },
+        skill1Level: {
+          is_empty: 'Primary skill\'s level can\'t be empty or zero.',
+          exceeds_maximum: 'Primary skill\'s level ({level}) is above the level cap for that skill ({level_maximum}).',
+        },
+        skill2: {
+          not_found: 'Secondary skill doesn\'t exist.',
+          is_empty: 'Secondary skill can\'t be empty, his level being filled.',
+        },
+        skill2Level: {
+          is_empty: 'Secondary skill\'s level can\'t be empty or zero.',
+          exceeds_maximum: 'Secondary skill\'s level ({level}) is above the level cap for that skill ({level_maximum}).',
+        },
+        slots: {
+          not_found: 'Slots doesn\'t exist.',
+        },
       },
     },
   },

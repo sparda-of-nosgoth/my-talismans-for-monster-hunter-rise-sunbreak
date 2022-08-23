@@ -9,16 +9,16 @@ export function useSlotIcon(slot: Ref<number> | number) {
     const value = unref(slot);
     switch (value) {
       case 4:
-        slotIcon.value = 'img:src/assets/images/icon_slot_4.svg';
+        slotIcon.value = 'img:images/icon_slot_4.svg';
         break;
       case 3:
-        slotIcon.value = 'img:src/assets/images/icon_slot_3.svg';
+        slotIcon.value = 'img:images/icon_slot_3.svg';
         break;
       case 2:
-        slotIcon.value = 'img:src/assets/images/icon_slot_2.svg';
+        slotIcon.value = 'img:images/icon_slot_2.svg';
         break;
       case 1:
-        slotIcon.value = 'img:src/assets/images/icon_slot_1.svg';
+        slotIcon.value = 'img:images/icon_slot_1.svg';
         break;
       case 0:
       default:

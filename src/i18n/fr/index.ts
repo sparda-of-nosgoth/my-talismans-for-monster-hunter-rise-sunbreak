@@ -40,7 +40,7 @@ export default {
       },
     },
   },
-  talisman: {
+  manager: {
     export: {
       label: 'Export',
       title: 'Talismans exportées',
@@ -77,7 +77,7 @@ export default {
       talismans_to_import: 'Aucun talisman ne sera importé. | Un seul talisman sera importé. | {count} talismans seront importés.',
       title: 'Talismans à importer',
     },
-    manager: {
+    talisman: {
       form_add: {
         label: 'Ajouter un talisman',
         skill1: {
@@ -138,29 +138,30 @@ export default {
         add_to_favorite: 'Ajouter aux favoris',
         add_to_for_melding: 'À fusionner',
         delete_talisman: 'Supprimer le talisman',
+        import_export_talismans: 'Import/Export des talismans',
         toggle_show_favorite: 'Afficher les talismans favoris',
         toggle_show_to_meld: 'Afficher les talismans à fusionner',
       },
-    },
-    validation: {
-      skill1: {
-        not_found: 'Le talent principal n\'existe pas.',
-        is_empty: 'Le talent principal ne peut être vide.',
-      },
-      skill1Level: {
-        is_empty: 'Le niveau du talent principal ne peut être vide ou zéro.',
-        exceeds_maximum: 'Le niveau du talent principal ({level}) est supérieur au niveau maximum pour ce talent ({level_maximum}).',
-      },
-      skill2: {
-        not_found: 'Le talent secondaire n\'existe pas.',
-        is_empty: 'Le talent secondaire ne peut être vide, son niveau étant renseigné.',
-      },
-      skill2Level: {
-        is_empty: 'Le niveau du talent secondaire ne peut être vide ou zéro.',
-        exceeds_maximum: 'Le niveau du talent secondaire ({level}) est supérieur au niveau maximum pour ce talent ({level_maximum}).',
-      },
-      slots: {
-        not_found: 'L\'emplacement {slots} n\'existe pas.',
+      validation: {
+        skill1: {
+          not_found: 'Le talent principal n\'existe pas.',
+          is_empty: 'Le talent principal ne peut être vide.',
+        },
+        skill1Level: {
+          is_empty: 'Le niveau du talent principal ne peut être vide ou zéro.',
+          exceeds_maximum: 'Le niveau du talent principal ({level}) est supérieur au niveau maximum pour ce talent ({level_maximum}).',
+        },
+        skill2: {
+          not_found: 'Le talent secondaire n\'existe pas.',
+          is_empty: 'Le talent secondaire ne peut être vide, son niveau étant renseigné.',
+        },
+        skill2Level: {
+          is_empty: 'Le niveau du talent secondaire ne peut être vide ou zéro.',
+          exceeds_maximum: 'Le niveau du talent secondaire ({level}) est supérieur au niveau maximum pour ce talent ({level_maximum}).',
+        },
+        slots: {
+          not_found: 'L\'emplacement {slots} n\'existe pas.',
+        },
       },
     },
   },

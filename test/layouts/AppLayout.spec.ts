@@ -1,10 +1,11 @@
 import {
   describe, expect, it, jest,
 } from '@jest/globals';
-import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
-import { config, mount, shallowMount } from '@vue/test-utils';
+import {
+  installQuasarPlugin,
+} from '@quasar/quasar-app-extension-testing-unit-jest';
+import { config, shallowMount } from '@vue/test-utils';
 import AppLayout from 'layouts/AppLayout.vue';
-import { QBtn, QToolbarTitle } from 'quasar';
 import { i18n } from 'boot/i18n';
 import { createTestingPinia } from '@pinia/testing';
 
@@ -20,47 +21,12 @@ describe('layouts/AppLayout', () => {
     const { vm } = shallowMount(AppLayout, {
       global: {
         plugins: [createTestingPinia()],
+        stubs: ['router-view'],
       },
     });
 
-    expect(typeof vm.leftDrawerOpen).toBe('boolean');
-    expect(vm.leftDrawerOpen).toBeFalsy();
-  });
-
-  it('has toggleLeftDrawer method', () => {
-    const { vm } = shallowMount(AppLayout, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(typeof vm.toggleLeftDrawer).toBe('function');
-  });
-
-  it('correctly toggle LeftDrawer when menu button is pressed', async () => {
-    const wrapper = mount(AppLayout, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-    const { vm } = wrapper;
-
-    expect(vm.leftDrawerOpen).toBeFalsy();
-    const button = wrapper.findComponent(QBtn);
-    await button.trigger('click');
-    expect(vm.leftDrawerOpen).toBeTruthy();
-    await button.trigger('click');
-    expect(vm.leftDrawerOpen).toBeFalsy();
-  });
-
-  it('display application name in header', async () => {
-    const wrapper = mount(AppLayout, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    const toolbarTitle = wrapper.findComponent(QToolbarTitle);
-    expect(toolbarTitle.vm.$el.textContent).toContain('MHRS - Gestionnaire de talismans');
+    expect(vm.dialogs.showHelp).toBeFalsy();
+    expect(vm.dialogs.showTalismanForm).toBeFalsy();
+    expect(vm.drawers.showSettings).toBeFalsy();
   });
 });

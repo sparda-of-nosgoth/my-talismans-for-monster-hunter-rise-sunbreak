@@ -45,7 +45,7 @@ describe('composables/talisman', () => {
     }),
   ];
 
-  it('has a function to filter Talisman with different options', () => {
+  it('can filter Talisman with different options', () => {
     const { filterTalismans } = useTalismanFilter();
     const filter: TalismanFilter = {
       search: '',

@@ -17,12 +17,12 @@ export const useSkillStore = defineStore('skills', {
     // To get one skill by his id
     getSkillById: (state) => (id: string): Skill | undefined => _cloneDeep(_find(state.skills, { id })),
     // To get one skill by his translated name
-    getSkillByName: (state) => (skillName: string) => _cloneDeep(_find(state.skills, (skill: Skill) => searchInLocales(skill.id, skillName))),
+    getSkillByName: (state) => (skillName: string): Skill | undefined => _cloneDeep(_find(state.skills, (skill: Skill) => searchInLocales(skill.id, skillName))),
     // To filter skillList by SkillType
-    filterByType: (state) => (skillType: SkillType) => _filter(state.skills, { type: skillType.id }),
+    filterByType: (state) => (skillType: SkillType): Skill[] | undefined => _filter(state.skills, { type: skillType.id }),
     // Sorted skillList by translated names
-    sortedSkills: (state) => _sortBy(state.skills, [(skill) => translate(skill.id)]),
+    sortedSkills: (state): Skill[] => _sortBy(state.skills, [(skill) => translate(skill.id)]),
     // SkillList found on talisman only, sorted by translated names
-    sortedSkillsFoundOnTalismanOnly: (state) => _sortBy(_filter(state.skills, { foundOnTalismans: true }), [(skill) => translate(skill.id)]),
+    sortedSkillsFoundOnTalismanOnly: (state): Skill[] => _sortBy(_filter(state.skills, { foundOnTalismans: true }), [(skill) => translate(skill.id)]),
   },
 });

@@ -3,8 +3,8 @@ import {
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { config, mount, shallowMount } from '@vue/test-utils';
-import TalismanImport from 'components/TalismanImport.vue';
-import TalismanImportListError from 'components/TalismanImportListError.vue';
+import ManagerImport from 'components/ManagerImport.vue';
+import ManagerImportListError from 'components/ManagerImportListError.vue';
 import { Notify, QBtn, QInput } from 'quasar';
 import { i18n } from 'boot/i18n';
 import { initFakeTimers } from 'app/test/mocks';
@@ -34,7 +34,7 @@ jest.mock('quasar', () => {
   };
 });
 
-describe('components/TalismanImport', () => {
+describe('components/ManagerImport', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
 
@@ -43,7 +43,7 @@ describe('components/TalismanImport', () => {
   const { getSlotsById } = useSlotsStore();
 
   it('sets the correct default data', () => {
-    const { vm } = shallowMount(TalismanImport, {
+    const { vm } = shallowMount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -53,18 +53,8 @@ describe('components/TalismanImport', () => {
     expect(vm.submitDisabled).toStrictEqual(true);
   });
 
-  it('has a function to submitImport', () => {
-    const { vm } = shallowMount(TalismanImport, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(typeof vm.submitImport).toBe('function');
-  });
-
   it('update talismanList when input change', () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -77,7 +67,7 @@ describe('components/TalismanImport', () => {
   });
 
   it('can\'t submit with empty data', async () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -93,7 +83,7 @@ describe('components/TalismanImport', () => {
   });
 
   it('can\'t submit with no valid talismans to import', async () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -109,7 +99,7 @@ describe('components/TalismanImport', () => {
   });
 
   it('can submit when talismanList contain valid data', async () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -125,7 +115,7 @@ describe('components/TalismanImport', () => {
   });
 
   it('display number of talismans to import', async () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -141,7 +131,7 @@ describe('components/TalismanImport', () => {
   });
 
   it('display errors with invalid talismans', async () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia()],
       },
@@ -160,7 +150,7 @@ describe('components/TalismanImport', () => {
       + 'Master Mounter,8,Slugger,1,1,1,0\r\n'
       + 'Agitator,2,,,4,4,4');
     expect(vm.$el.textContent).toContain('Aucun talisman ne sera importé.');
-    const talismanImportListErrors = wrapper.findAllComponents(TalismanImportListError);
+    const talismanImportListErrors = wrapper.findAllComponents(ManagerImportListError);
     expect(talismanImportListErrors[0].vm.$el.textContent).toContain('Le talent principal n\'existe pas pour le talisman suivant :');
     expect(talismanImportListErrors[0].vm.$el.textContent).toContain('Speed,1,Weakness Exploit,1,0,0,0');
     expect(talismanImportListErrors[1].vm.$el.textContent).toContain('Le talent principal ne peut être vide pour le talisman suivant :');
@@ -182,7 +172,7 @@ describe('components/TalismanImport', () => {
   });
 
   it('update store when form is submitted', async () => {
-    const wrapper = mount(TalismanImport, {
+    const wrapper = mount(ManagerImport, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
       },

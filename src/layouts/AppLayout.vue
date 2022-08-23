@@ -1,42 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import AppMenu from 'components/AppMenu.vue';
+import AppHeader from 'components/AppHeader.vue';
+import AppHeaderForMobile from 'components/AppHeaderForMobile.vue';
+import ManagerHelp from 'components/ManagerHelp.vue';
+import ManagerTalismanForm from 'components/ManagerTalismanForm.vue';
+import ManagerImportExport from 'components/ManagerImportExport.vue';
+import { useManagerStore } from 'stores/manager';
 
-const leftDrawerOpen = ref(false);
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
+const { dialogs, drawers } = useManagerStore();
 </script>
 
 <template>
-  <q-layout view="hHh lpR lfr">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          id="main-menu"
-          flat
-          dense
-          round
-          icon="menu"
-          :aria-label="$t('menu.header')"
-          @click="toggleLeftDrawer"
-        />
-        <q-separator
-          dark
-          vertical
-          inset
-        />
-        <q-toolbar-title>
-          <h1 class="text-h6">
-            {{ $t('app_title') }}
-          </h1>
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
+  <q-layout view="hHh lpR lFr">
+    <app-header v-if="!$q.screen.xs" />
+    <app-header-for-mobile v-else />
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="drawers.showSettings"
       side="left"
       overlay
       bordered
@@ -46,6 +26,25 @@ function toggleLeftDrawer() {
 
     <q-page-container>
       <router-view />
+      <!-- QDialog: Help -->
+      <q-dialog v-model="dialogs.showHelp">
+        <manager-help />
+      </q-dialog>
+      <!-- QDialog: Talisman Form -->
+      <q-dialog
+        v-model="dialogs.showTalismanForm"
+        position="right"
+      >
+        <manager-talisman-form />
+      </q-dialog>
+      <!-- QDialog: Import / Export -->
+      <q-dialog
+        v-model="dialogs.showImportExport"
+        full-width
+        full-height
+      >
+        <manager-import-export />
+      </q-dialog>
     </q-page-container>
   </q-layout>
 </template>
