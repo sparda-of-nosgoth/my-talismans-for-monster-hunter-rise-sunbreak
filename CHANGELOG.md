@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Talismans manager
 - Removed search on English Skill's name when current locale is not English, source of misunderstandings.
+- Removed table header on mobile device.
 
 ## [0.3.0] - 2022-08-24
 

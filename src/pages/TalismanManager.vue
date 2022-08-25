@@ -72,7 +72,6 @@ onMounted(() => {
     <!-- START: QTable -->
     <q-table
       :grid="$q.screen.xs || $q.screen.sm"
-      :grid-header="$q.screen.xs || $q.screen.sm"
       :rows="talismans"
       :row-key="row => `${row.skill1?.id}-${row.skill1Level}-${row.skill2?.id}-${row.skill2Level}-${row.slots?.id}`"
       :columns="columns"
