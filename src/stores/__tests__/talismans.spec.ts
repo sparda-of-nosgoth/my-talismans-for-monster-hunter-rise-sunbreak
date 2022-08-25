@@ -3,12 +3,13 @@ import {
 } from '@jest/globals';
 import { createPinia, setActivePinia } from 'pinia';
 import { useTalismanStore } from 'stores/talismans';
-import { initFakeTimers } from 'app/test/mocks';
 import { Talisman } from 'src/models/talisman';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 
-initFakeTimers();
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 
@@ -30,11 +31,11 @@ describe('stores/talismans', () => {
 
   it('add a new Talisman', () => {
     const talismanStore = useTalismanStore();
-    expect(talismanStore.talismans.length).toBe(0);
+    expect(talismanStore.talismans).toHaveLength(0);
 
     talismanStore.addTalisman(talisman);
 
-    expect(talismanStore.talismans.length).toBe(1);
+    expect(talismanStore.talismans).toHaveLength(1);
     expect(talismanStore.talismans).toStrictEqual([talisman]);
   });
 
@@ -43,12 +44,12 @@ describe('stores/talismans', () => {
     talismanStore.talismans.push(talisman);
 
     expect(talismanStore.talismans).toStrictEqual([talisman]);
-    expect(talismanStore.talismans.length).toBe(1);
+    expect(talismanStore.talismans).toHaveLength(1);
 
     talismanStore.deleteTalisman(talismanStore.talismans[0]);
 
     expect(talismanStore.talismans).toStrictEqual([]);
-    expect(talismanStore.talismans.length).toBe(0);
+    expect(talismanStore.talismans).toHaveLength(0);
   });
 
   it('toggle favorite on a Talisman with favorite at false and forMelding at false', () => {
@@ -161,11 +162,11 @@ describe('stores/talismans', () => {
     talismanStore.talismans.push(talisman);
 
     expect(talismanStore.talismans).toStrictEqual([talisman, talisman]);
-    expect(talismanStore.talismans.length).toBe(2);
+    expect(talismanStore.talismans).toHaveLength(2);
 
     talismanStore.clear();
 
     expect(talismanStore.talismans).toStrictEqual([]);
-    expect(talismanStore.talismans.length).toBe(0);
+    expect(talismanStore.talismans).toHaveLength(0);
   });
 });

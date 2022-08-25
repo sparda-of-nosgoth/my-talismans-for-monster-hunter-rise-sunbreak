@@ -26,7 +26,7 @@ const columns = computed(() => [
     name: 'skill1',
     style: 'width: 25em',
     required: true,
-    label: t('manager.talisman.table.header.skill1'),
+    label: t('manager.talisman.list.header.skill1'),
     field: 'skill1',
     sortable: true,
     sort: (skillA:Skill, skillB:Skill) => t(skillA.id).localeCompare(t(skillB.id)),
@@ -35,7 +35,7 @@ const columns = computed(() => [
     name: 'skill2',
     style: 'width: 25em',
     required: true,
-    label: t('manager.talisman.table.header.skill2'),
+    label: t('manager.talisman.list.header.skill2'),
     field: 'skill2',
     sortable: true,
     sort: (skillA:Skill, skillB:Skill) => t(skillA.id).localeCompare(t(skillB.id)),
@@ -43,7 +43,7 @@ const columns = computed(() => [
   {
     name: 'slots',
     style: 'width: 20em',
-    label: t('manager.talisman.table.header.slots'),
+    label: t('manager.talisman.list.header.slots'),
     align: 'center',
     field: 'slots',
     sortable: true,
@@ -78,8 +78,8 @@ onMounted(() => {
       :columns="columns"
       :filter="filters"
       :filter-method="filterTable"
-      :no-data-label="$t('manager.talisman.table.no_data')"
-      :no-results-label="$t('manager.talisman.table.no_data')"
+      :no-data-label="$t('manager.talisman.list.no_data')"
+      :no-results-label="$t('manager.talisman.list.no_data')"
       hide-pagination
       :pagination="{rowsPerPage: 0}"
     >
@@ -124,11 +124,11 @@ onMounted(() => {
               outline
               color="red"
               icon="delete"
-              :aria-label="$t('manager.talisman.tooltip.delete_talisman')"
+              :aria-label="$t('manager.tooltip.delete_talisman')"
               @click="() => deleteTalisman(props.row)"
             >
               <q-tooltip :delay="1000">
-                {{ $t('manager.talisman.tooltip.delete_talisman') }}
+                {{ $t('manager.tooltip.delete_talisman') }}
               </q-tooltip>
             </q-btn>
           </q-td>
@@ -174,11 +174,11 @@ onMounted(() => {
                 outline
                 color="red"
                 icon="delete"
-                :aria-label="$t('manager.talisman.tooltip.delete_talisman')"
+                :aria-label="$t('manager.tooltip.delete_talisman')"
                 @click="() => deleteTalisman(item.row)"
               >
                 <q-tooltip :delay="1000">
-                  {{ $t('manager.talisman.tooltip.delete_talisman') }}
+                  {{ $t('manager.tooltip.delete_talisman') }}
                 </q-tooltip>
               </q-btn>
             </q-card-actions>

@@ -103,5 +103,16 @@ module.exports = {
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+  },
+  overrides: [
+    {
+      files: [
+        "**/*.spec.ts"
+      ],
+      env: {
+        jest: true,
+      },
+      "extends": ["plugin:jest/recommended", "plugin:jest/style"],
+    }
+  ],
 }

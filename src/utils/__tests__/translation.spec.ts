@@ -11,12 +11,14 @@ jest.mock('boot/i18n');
 describe('utils/translation', () => {
   it('can translate in current locale', () => {
     expect(typeof translate).toBe('function');
-    expect(translate('quest')).toStrictEqual('Quête');
+    expect(translate('quest')).toBe('Quête');
+    expect(translate(null)).toBe('');
   });
 
   it('can translate in current English', () => {
     expect(typeof translateInEn).toBe('function');
-    expect(translateInEn('quest')).toStrictEqual('Quest');
+    expect(translateInEn('quest')).toBe('Quest');
+    expect(translateInEn(null)).toBe('');
   });
 
   it('can search if a translation exist in each locales', () => {

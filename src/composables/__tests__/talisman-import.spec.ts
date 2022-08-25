@@ -4,13 +4,14 @@ import {
 } from '@jest/globals';
 import { useTalismanImport } from 'src/composables/talisman-import';
 import { ref } from 'vue';
-import { initFakeTimers } from 'app/test/mocks';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 import { Talisman } from 'src/models/talisman';
 
-initFakeTimers();
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 

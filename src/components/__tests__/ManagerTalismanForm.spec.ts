@@ -5,7 +5,6 @@ import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-j
 import { config, mount, shallowMount } from '@vue/test-utils';
 import ManagerTalismanForm from 'components/ManagerTalismanForm.vue';
 import { i18n } from 'boot/i18n';
-import { initFakeTimers } from 'app/test/mocks';
 import { Talisman } from 'src/models/talisman';
 import { createTestingPinia } from '@pinia/testing';
 import { createPinia, setActivePinia } from 'pinia';
@@ -14,7 +13,10 @@ import { useSlotsStore } from 'stores/slots';
 import { useTalismanStore } from 'stores/talismans';
 
 installQuasarPlugin();
-initFakeTimers();
+
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 

@@ -23,7 +23,7 @@ describe('components/ManagerImportExport', () => {
   it('sets the correct default data', () => {
     const { vm } = shallowMount(ManagerImportExport);
 
-    expect(vm.currentTab).toStrictEqual('import');
+    expect(vm.currentTab).toBe('import');
   });
 
   it('has a section to import talismans', async () => {
@@ -63,13 +63,13 @@ describe('components/ManagerImportExport', () => {
 
     vm.currentTab = 'import';
     await vm.$nextTick();
-    expect(vm.currentTab).toStrictEqual('import');
+    expect(vm.currentTab).toBe('import');
     const importTabPanel = wrapper.findComponent(QTabPanel);
     expect(importTabPanel.vm.name).toBe('import');
 
     vm.currentTab = 'export';
     await vm.$nextTick();
-    expect(vm.currentTab).toStrictEqual('export');
+    expect(vm.currentTab).toBe('export');
     const exportTabPanel = wrapper.findComponent(QTabPanel);
     expect(exportTabPanel.vm.name).toBe('export');
   });

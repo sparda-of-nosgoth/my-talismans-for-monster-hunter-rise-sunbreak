@@ -35,7 +35,7 @@ describe('utils/local-storage-settings', () => {
       localforage.__setMockData__('');
       initLocalStorageForSettingsStore();
       await flushPromises();
-      expect(settingsStore.locale).toStrictEqual('fr');
+      expect(settingsStore.locale).toBe('fr');
     });
   });
 
@@ -47,7 +47,7 @@ describe('utils/local-storage-settings', () => {
       localforage.__setMockData__(JSON.stringify({ locale: 'en' }));
       initLocalStorageForSettingsStore();
       await flushPromises();
-      expect(settingsStore.locale).toStrictEqual('en');
+      expect(settingsStore.locale).toBe('en');
     });
   });
 

@@ -63,8 +63,8 @@ describe('components/SettingsClearData', () => {
       slots: getSlotsById('2-1-0'),
     }));
     expect(typeof vm.clearAllData).toBe('function');
-    expect(vm.talismanStore.talismans.length).toBe(3);
+    expect(vm.talismanStore.talismans).toHaveLength(3);
     vm.clearAllData();
-    expect(vm.talismanStore.talismans.length).toBe(0);
+    expect(vm.talismanStore.talismans).toHaveLength(0);
   });
 });

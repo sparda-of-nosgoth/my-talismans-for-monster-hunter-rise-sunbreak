@@ -15,22 +15,22 @@ const { toggleFavorite, toggleForMelding } = useTalismanStore();
       flat
       :color="talisman.favorite === true ? 'pink-8' : 'grey'"
       icon="favorite"
-      :aria-label="$t('manager.talisman.tooltip.add_to_favorite')"
+      :aria-label="$t('manager.tooltip.add_to_favorite')"
       @click="() => toggleFavorite(talisman)"
     >
       <q-tooltip :delay="1000">
-        {{ $t('manager.talisman.tooltip.add_to_favorite') }}
+        {{ $t('manager.tooltip.add_to_favorite') }}
       </q-tooltip>
     </q-btn>
     <q-btn
       flat
       :color="talisman.forMelding === true ? 'green-10' : 'grey'"
       icon="recycling"
-      :aria-label="$t('manager.talisman.tooltip.add_to_for_melding')"
+      :aria-label="$t('manager.tooltip.add_to_for_melding')"
       @click="() => toggleForMelding(talisman)"
     >
       <q-tooltip :delay="1000">
-        {{ $t('manager.talisman.tooltip.add_to_for_melding') }}
+        {{ $t('manager.tooltip.add_to_for_melding') }}
       </q-tooltip>
     </q-btn>
   </q-btn-group>
