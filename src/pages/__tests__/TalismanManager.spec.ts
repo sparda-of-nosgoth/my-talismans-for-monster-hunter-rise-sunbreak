@@ -84,7 +84,7 @@ describe('pages/TalismanManager', () => {
     await vm.$nextTick();
 
     const rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
   });
 
   it('has a favorite toggle button on a Talisman row', async () => {
@@ -159,14 +159,14 @@ describe('pages/TalismanManager', () => {
     await vm.$nextTick();
 
     let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     const btn = rows[0].findAllComponents(QBtn);
     expect(btn[2].exists()).toBeTruthy();
     expect(btn[2].props().icon).toBe('delete');
     await btn[2].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(3);
+    expect(rows).toHaveLength(3);
   });
 
   it('can sort by skill1', async () => {
@@ -185,18 +185,18 @@ describe('pages/TalismanManager', () => {
 
     // No sorting
     let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.$el.textContent).toContain('Affûtage rapide');
     expect(rows[1].vm.$el.textContent).toContain('Ébullition');
     expect(rows[2].vm.$el.textContent).toContain('Témérité');
     expect(rows[3].vm.$el.textContent).toContain('Maître-cavalier');
     // Sorting ASC
     const headerColumns = wrapper.findAllComponents(QTh);
-    expect(headerColumns.length).toBe(5);
+    expect(headerColumns).toHaveLength(5);
     await headerColumns[1].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.$el.textContent).toContain('Affûtage rapide');
     expect(rows[1].vm.$el.textContent).toContain('Ébullition');
     expect(rows[2].vm.$el.textContent).toContain('Maître-cavalier');
@@ -205,7 +205,7 @@ describe('pages/TalismanManager', () => {
     await headerColumns[1].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.$el.textContent).toContain('Témérité');
     expect(rows[1].vm.$el.textContent).toContain('Maître-cavalier');
     expect(rows[2].vm.$el.textContent).toContain('Ébullition');
@@ -228,18 +228,18 @@ describe('pages/TalismanManager', () => {
 
     // No sorting
     let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.$el.textContent).toContain('Mise à mort');
     expect(rows[1].vm.$el.textContent).toContain('');
     expect(rows[2].vm.$el.textContent).toContain('');
     expect(rows[3].vm.$el.textContent).toContain('Cogneur');
     // Sorting ASC
     const headerColumns = wrapper.findAllComponents(QTh);
-    expect(headerColumns.length).toBe(5);
+    expect(headerColumns).toHaveLength(5);
     await headerColumns[2].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.$el.textContent).toContain(' ');
     expect(rows[1].vm.$el.textContent).toContain(' ');
     expect(rows[2].vm.$el.textContent).toContain('Cogneur');
@@ -248,7 +248,7 @@ describe('pages/TalismanManager', () => {
     await headerColumns[2].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.$el.textContent).toContain('Mise à mort');
     expect(rows[1].vm.$el.textContent).toContain('Cogneur');
     expect(rows[2].vm.$el.textContent).toContain(' ');
@@ -271,18 +271,18 @@ describe('pages/TalismanManager', () => {
 
     // No sorting
     let rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.props.row).toStrictEqual(talisman1);
     expect(rows[1].vm.props.row).toStrictEqual(talisman2);
     expect(rows[2].vm.props.row).toStrictEqual(talisman3);
     expect(rows[3].vm.props.row).toStrictEqual(talisman4);
     // Sorting ASC
     const headerColumns = wrapper.findAllComponents(QTh);
-    expect(headerColumns.length).toBe(5);
+    expect(headerColumns).toHaveLength(5);
     await headerColumns[3].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.props.row).toStrictEqual(talisman1);
     expect(rows[1].vm.props.row).toStrictEqual(talisman4);
     expect(rows[2].vm.props.row).toStrictEqual(talisman3);
@@ -291,7 +291,7 @@ describe('pages/TalismanManager', () => {
     await headerColumns[3].trigger('click');
     await vm.$nextTick();
     rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(4);
+    expect(rows).toHaveLength(4);
     expect(rows[0].vm.props.row).toStrictEqual(talisman2);
     expect(rows[1].vm.props.row).toStrictEqual(talisman3);
     expect(rows[2].vm.props.row).toStrictEqual(talisman4);
@@ -317,7 +317,7 @@ describe('pages/TalismanManager', () => {
     });
 
     const rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(1);
+    expect(rows).toHaveLength(1);
   });
 
   it('show filtered rows for showFavorite filter', async () => {
@@ -339,7 +339,7 @@ describe('pages/TalismanManager', () => {
     });
 
     const rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(2);
+    expect(rows).toHaveLength(2);
   });
 
   it('show filtered rows for showMeldingFilter filter', async () => {
@@ -361,7 +361,7 @@ describe('pages/TalismanManager', () => {
     });
 
     const rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(1);
+    expect(rows).toHaveLength(1);
   });
 
   it('show filtered rows with multiple filters', async () => {
@@ -384,6 +384,6 @@ describe('pages/TalismanManager', () => {
     });
 
     const rows = wrapper.findAllComponents(QTr);
-    expect(rows.length).toBe(1);
+    expect(rows).toHaveLength(1);
   });
 });

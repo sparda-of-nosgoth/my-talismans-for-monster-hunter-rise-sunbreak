@@ -1,6 +1,8 @@
 import _lowercase from 'lodash/lowerCase';
+import _each from 'lodash/each';
 import _filter from 'lodash/filter';
-import { translate, translateInEn } from 'src/utils/translation';
+import _split from 'lodash/split';
+import { translate } from 'src/utils/translation';
 import { Talisman } from 'src/models/talisman';
 import { MeldingFilterOptions, useMeldingFilter } from 'src/composables/talisman-filter-melding';
 
@@ -17,25 +19,25 @@ export interface TalismanFilter {
  * Comparison function to find terms in skill1 or skill2 name of a talisman
  * Mostly used on Talisman's filter
  * @param talisman Talisman used for comparison
- * @param terms Terms to find
+ * @param term Term to find
  */
-function compareTalismanBySkill(talisman: Talisman, terms: string): boolean {
+function compareTalismanBySkill(talisman: Talisman, term: string): boolean {
   // Always search into current locale translations
-  return _lowercase(translate(talisman.skill1?.id)).includes(_lowercase(terms))
-    || _lowercase(translate(talisman.skill2?.id)).includes(_lowercase(terms))
-    // Always search into english translations
-    || _lowercase(translateInEn(talisman.skill1?.id)).includes(_lowercase(terms))
-    || _lowercase(translateInEn(talisman.skill2?.id)).includes(_lowercase(terms));
+  return _lowercase(translate(talisman.skill1?.id)).includes(_lowercase(term))
+    || _lowercase(translate(talisman.skill2?.id)).includes(_lowercase(term));
+  // // Always search into english translations (Disabled) TODO: maybe return has an option
+  // || _lowercase(translateInEn(talisman.skill1?.id)).includes(_lowercase(terms))
+  // || _lowercase(translateInEn(talisman.skill2?.id)).includes(_lowercase(terms));
 }
 
 /**
  * Comparison function to find terms in slots of a talisman
  * Mostly used on Talisman's filter
  * @param talisman Talisman used for comparison
- * @param terms Terms to find
+ * @param term Term to find
  */
-function compareBySlots(talisman: Talisman, terms: string): boolean {
-  return _lowercase(talisman.slots?.id).includes(_lowercase(terms));
+function compareBySlots(talisman: Talisman, term: string): boolean {
+  return _lowercase(talisman.slots?.id).includes(_lowercase(term));
 }
 
 export function useTalismanFilter() {
@@ -52,11 +54,13 @@ export function useTalismanFilter() {
       filteredTalismans = applyMeldingFilter();
     }
 
-    filteredTalismans = _filter(filteredTalismans, (talisman: Talisman) => (
-      // Search term in Skill's name or Slots
-      (compareTalismanBySkill(talisman, filterOptions.search) || compareBySlots(talisman, filterOptions.search))
-      // filter options : showFavorite
-      && (filterOptions.showFavorite ? talisman.favorite : true)));
+    _each(_split(filterOptions.search, ','), (term: string) => {
+      filteredTalismans = _filter(filteredTalismans, (talisman: Talisman) => (
+        // Search term in Skill's name or Slots
+        (compareTalismanBySkill(talisman, term) || compareBySlots(talisman, term))
+        // filter options : showFavorite
+        && (filterOptions.showFavorite ? talisman.favorite : true)));
+    });
 
     return filteredTalismans;
   }

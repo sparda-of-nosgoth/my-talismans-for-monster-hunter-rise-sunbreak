@@ -13,13 +13,13 @@ const {
     round
     icon="add"
     color="grey"
-    :aria-label="$t('manager.talisman.tooltip.add_talisman')"
+    :aria-label="$t('manager.tooltip.add_talisman')"
     @click="toggleTalismanForm"
   >
     <q-tooltip
       :delay="1000"
     >
-      {{ $t('manager.talisman.tooltip.add_talisman') }}
+      {{ $t('manager.tooltip.add_talisman') }}
     </q-tooltip>
   </q-btn>
   <q-btn
@@ -27,13 +27,13 @@ const {
     round
     icon="drive_folder_upload"
     color="grey"
-    :aria-label="$t('manager.talisman.tooltip.import_export_talismans')"
+    :aria-label="$t('manager.tooltip.import_export_talismans')"
     @click="toggleImportExport"
   >
     <q-tooltip
       :delay="1000"
     >
-      {{ $t('manager.talisman.tooltip.import_export_talismans') }}
+      {{ $t('manager.tooltip.import_export_talismans') }}
     </q-tooltip>
   </q-btn>
   <!-- END: Actions -->
@@ -45,26 +45,26 @@ const {
   <q-toggle
     v-model="filters.showMeldingFilter"
     icon="recycling"
-    :aria-label="$t('manager.talisman.tooltip.toggle_show_to_meld')"
+    :aria-label="$t('manager.tooltip.toggle_show_to_meld')"
   >
     <q-tooltip :delay="1000">
-      {{ $t('manager.talisman.tooltip.toggle_show_to_meld') }}
+      {{ $t('manager.tooltip.toggle_show_to_meld') }}
     </q-tooltip>
   </q-toggle>
   <q-toggle
     v-model="filters.showFavorite"
     icon="favorite"
-    :aria-label="$t('manager.talisman.tooltip.toggle_show_favorite')"
+    :aria-label="$t('manager.tooltip.toggle_show_favorite')"
   >
     <q-tooltip :delay="1000">
-      {{ $t('manager.talisman.tooltip.toggle_show_favorite') }}
+      {{ $t('manager.tooltip.toggle_show_favorite') }}
     </q-tooltip>
   </q-toggle>
   <q-input
     v-model="filters.search"
     dense
     debounce="300"
-    :placeholder="$t('manager.talisman.table.search')"
+    :placeholder="$t('manager.talisman.list.search')"
   >
     <template #append>
       <q-icon name="search" />

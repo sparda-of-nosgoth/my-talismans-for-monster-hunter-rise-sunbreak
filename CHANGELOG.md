@@ -5,31 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+#### Global
+- Cleaning on translations keys.
+- Updated help with new feature on search filter.
+
+#### Talismans manager
+- Updated search filter to use combine terms to refine search, using comma to separate each term.
+
+### Removed
+
+#### Talismans manager
+- Removed search on English Skill's name when current locale is not English, source of misunderstandings.
+
 ## [0.3.0] - 2022-08-24
 
 ### Added
 
 #### Global
-- Added a **Talisman's icon** to **Talisman Manager** menu.
-- Added a **Skill's icon** to **Skill's Translation** menu.
-- Added a **Talisman's icon** to header title.
-- Added a button in header's toolbar, to open **Import / Export Talismans** modal.
-- Added **tooltips** to help on buttons and toggles in header's toolbar.
-- Added a button to display a **help dialog** that explain how to use filters.
+- Added a Talisman's icon to Talisman Manager menu.
+- Added a Skill's icon to Skill's Translation menu.
+- Added a Talisman's icon to header title.
+- Added a button in header's toolbar, to open Import / Export Talismans modal.
+- Added tooltips to help on buttons and toggles in header's toolbar.
+- Added a button to display a help dialog that explain how to use filters.
 
 #### Talismans manager
-- Added **Slots icons** to **Talisman Manager**.
+- Added Slots icons to Talisman Manager.
 
 ### Changed
 
 #### Global
-- **Talismans Manager** is now the homepage.
-- App temporary name by **My Talismans**, or **Mes Talismans** in French, a badge display current **Talismans rows**.
-- Upgraded header with **Talismans Manager's toolbar**, which include a button to open **Talisman's form**, filters like **Melding**, **Favorite** and input **search** and a button to display **help**.
+- Talismans Manager is now the homepage.
+- App temporary name by My Talismans, or Mes Talismans in French, a badge display current Talismans rows.
+- Upgraded header with Talismans Manager's toolbar, which include a button to open Talisman's form, filters like Melding, Favorite and input search and a button to display help.
 
 #### Talismans manager
-- In **Talisman form**, **Skills** are now filtered on found on talisman only.
-- In **Talisman form**, **Slots** are now displayed with select buttons, icons added.
+- In Talisman form, Skills are now filtered on found on talisman only.
+- In Talisman form, Slots are now displayed with select buttons, icons added.
 
 #### Misc
 - Refactoring on components names, changes applied on tests.
@@ -37,27 +53,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 #### Global
-- Removed **Import / Export Talismans** from menu.
+- Removed Import / Export Talismans from menu.
 
 #### Talismans manager
 - Removed page name.
-- Removed all **filters toggles**, **input search** and **sticky button** to display **Talisman's form**.
+- Removed all filters toggles, input search and sticky button to display Talisman's form.
 
 ### Fixed
 
 #### Misc
-- Fixed misreading in translations, like replaced **melting** by **melding**, and others.
+- Fixed misreading in translations, like replaced melting by melding, and others.
 
 ## [0.2.1] - 2022-08-16
 
 ### Added
 
 #### Global
-- In **settings** section, a button to **clear all data** was added.
-- **Settings** are now saved into a store, and local storage.
+- In settings section, a button to clear all data was added.
+- Settings are now saved into a store, and local storage.
 
 #### Talismans manager
-- A badge to display **Talismans** number, changes according to filters.
+- A badge to display Talismans number, changes according to filters.
 
 ### Changed
 
@@ -79,43 +95,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Global
 
-- **Options** section in menu, with locale selector, and display app current version.
+- Options section in menu, with locale selector, and display app current version.
 - Full support of English translation.
 
 #### Talismans manager
 
-- **Talismans** are now displayed on **rows** when screen size is more than sm.
-- **Talisman**'s list can be filtered by favorite or for melting, combined with search.
-- On **Talisman**'s form, a filter to easily find skill's was added to selectors.
-- On each **Skill**, **Decoration** props was added, used for melting filter for now.
-- A button to filter **Talismans** to melt.
+- Talismans are now displayed on rows when screen size is more than sm.
+- Talisman's list can be filtered by favorite or for melting, combined with search.
+- On Talisman's form, a filter to easily find skill's was added to selectors.
+- On each Skill, Decoration props was added, used for melting filter for now.
+- A button to filter Talismans to melt.
 
 #### Talismans Import/Export
 
-- A button to export **Talismans** on CSV file.
+- A button to export Talismans on CSV file.
 
 #### Misc
 
-- A new boot file **config**, to add a global properties **$appVersion** with the package version.
+- A new boot file config, to add a global properties $appVersion with the package version.
 - More unit tests for components, composables, layout, pages, stores and utils.
-- Added Sunbreak data for **Skill**, **Decoration** and **Slots**.
+- Added Sunbreak data for Skill, Decoration and Slots.
 
 ### Changed
 
 #### Talismans manager
-- **Talismans** are displayed on **cards** when screen size is **xs** or **sm**.
-- On **Talisman**'s form, **Skills** select now display a list in alphabetical order.
+- Talismans are displayed on cards when screen size is xs or sm.
+- On Talisman's form, Skills select now display a list in alphabetical order.
 
 #### Misc
-- Improved **CHANGELOG** with some subsections to be easily read where modifications happen.
-- Improved **Talisman** interface to class, with **weight** props for **Melting Filter**.
+- Improved CHANGELOG with some subsections to be easily read where modifications happen.
+- Improved Talisman interface to class, with weight props for Melting Filter.
 - Refactoring on composables, stores, models and tests.
 
 ### Fixed
 
 #### Misc
-- Fixed missing **Skills** translations.
-- Fixed a bug that display null instead of an empty string in **import**.
+- Fixed missing Skills translations.
+- Fixed a bug that display null instead of an empty string in import.
 - Fixed some minor bugs.
 
 ## [0.1.1] - 2022-07-28
@@ -123,19 +139,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Misc
-- Some unit tests for **Talisman** store.
+- Some unit tests for Talisman store.
 
 ### Changed
 
 #### Misc
 - Minor adjustments to release-it configuration.
-- Improved **README** with some highlighting, coverage badge, and minor changes on **Support** section.
+- Improved README with some highlighting, coverage badge, and minor changes on Support section.
 
 ### Fixed
 
 #### Talismans manager
 
-- Fixed a bug that prevent to remove **favorite** or **to melting** to be marked.
+- Fixed a bug that prevent to remove favorite or to melting to be marked.
 
 ## [0.1.0] - 2022-07-28
 
@@ -145,27 +161,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Main layout, and menu to select app sections.
 
 #### Talismans manager
-- A new page to manage **Talismans**, where users can :
-  - add a new **Talisman**, with some validations.
-  - delete a **Talisman**.
-  - mark a **Talisman** has a **favorite**.
-  - mark a **Talisman** has **to melting**.
-  - search for **Talisman** based on **Skills** names, or by **Slots**.
-  - sort **Talismans** by primary **skill**, secondary **Skill** or **Slots**.
+- A new page to manage Talismans, where users can :
+  - add a new Talisman, with some validations.
+  - delete a Talisman.
+  - mark a Talisman has a favorite.
+  - mark a Talisman has to melting.
+  - search for Talisman based on Skills names, or by Slots.
+  - sort Talismans by primary skill, secondary Skill or Slots.
 
 #### Talismans Import/Export
-- A new page to exports **Talismans** and to import **Talismans**, with some validations.
+- A new page to exports Talismans and to import Talismans, with some validations.
 
 #### Skills Translation
-- A new page to display **Skills** translation, based on current locale to english.
+- A new page to display Skills translation, based on current locale to english.
 
 #### Misc
 
-- **README** for usage, install and contributing.
-- **CHANGELOG** based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
-- **French** translation.
+- README for usage, install and contributing.
+- CHANGELOG based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+- French translation.
 - QA, CI, scripts and others.
-- Some unit tests for **Talisman** export, import and validation.
+- Some unit tests for Talisman export, import and validation.
 
 
 [unreleased]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/compare/0.3.0...main

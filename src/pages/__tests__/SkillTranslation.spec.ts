@@ -49,10 +49,10 @@ describe('pages/SkillTranslation', () => {
 
     await flushPromises();
     const cards = wrapper.findAllComponents(QCard);
-    expect(vm.skillTypes.length).toBe(9);
-    expect(cards.length).toBe(9);
+    expect(vm.skillTypes).toHaveLength(9);
+    expect(cards).toHaveLength(9);
     const items = wrapper.findAllComponents(QItem);
-    expect(items.length).toBe(132);
+    expect(items).toHaveLength(132);
     // display skillType id, and one skill translation by skill type
     expect(vm.$el.textContent).toContain('Quête');
     expect(vm.$el.textContent).toContain('Affinity Sliding');

@@ -2,7 +2,6 @@ import skillTranslation from './skill';
 import skillTypeTranslation from './skill-type';
 
 export default {
-  app_title: 'MHRS - Gestionnaire de talismans',
   dialog: {
     button: {
       confirm: 'Confirmer',
@@ -13,9 +12,6 @@ export default {
     header: 'Menu principal',
     talisman_manager: {
       label: 'Mes talismans',
-    },
-    talisman_import_export: {
-      label: 'Import/Export des talismans',
     },
     skills_translation: {
       label: 'Traduction des talents',
@@ -49,6 +45,32 @@ export default {
         error: 'Le navigateur a refusé le téléchargement du fichier.',
       },
     },
+    help: {
+      filter_favorites: {
+        title: 'Filtre : Talismans favoris',
+        content: 'Ce filtre permet d\'afficher uniquement les talismans qui ont été ajoutés en tant que favoris.',
+      },
+      filter_to_meld: {
+        title: 'Filtre : Talismans à fusionner',
+        content: 'Ce filtre permet d\'afficher les talismans qui ne sont pas assez intéressants pour être gardés, et qui devraient être utilisés dans le centre de fusion.',
+        sub_content: 'La sélection se base sur :',
+        sub_content_part_1: '- La valeur des talents en fonction du niveau, c\'est à dire que plus l\'emplacement nécessaire pour obtenir un point du talent avec un joyau est grand, plus grande est la valeur du talent.',
+        sub_content_part_2: '- La cohérence entre les deux talents, par exemple, si un talent épéiste et un talent artilleur sont sur un même talisman, cela fait chuter sa valeur.',
+        sub_content_part_3: '- La qualité des emplacements disponible sur le talisman.',
+        sub_content_part_4: '- La disponibilité des talents sur d\'autres talismans de meilleurs qualités.',
+        sub_content_part_5: '- Les talismans favoris ne sont pas pris en compte.',
+      },
+      search: {
+        title: 'Recherche',
+        content: 'Ce champ permet d\'effectuer des recherches sur :',
+        sub_title_skill: 'Le nom des talents',
+        sub_content_skill: 'La recherche s\'effectue dans la langue sélectionnée par l\'utilisateur, il n\'est pas nécessaire de renseigner le nom complet du talent, par exemple "mort" va afficher les talismans avec les talents "Trompe-la-mort", "Salve mortelle" ou "Mise à mort".',
+        sub_title_slots: 'Les emplacements',
+        sub_content_slots: 'La recherche s\'effectue en utilisant des chiffres et des tirets, par exemple "2-1" pour afficher les talismans avec des emplacements 2-1-0, 2-1-1, 2-2-1 ou 3-2-1.',
+        sub_content_combine_search: 'Il est possible de combiner les recherches en utilisant une virgule, par exemple "mort, 2-1" pour afficher les talismans ayant les talents "Trompe-la-mort", "Salve mortelle" ou "Mise à mort", et avec les emplacements 2-1-0, 2-1-1, 2-2-1 ou 3-2-1.',
+      },
+      title: 'Aide',
+    },
     import: {
       errors: {
         skill1: {
@@ -78,7 +100,7 @@ export default {
       title: 'Talismans à importer',
     },
     talisman: {
-      form_add: {
+      form: {
         label: 'Ajouter un talisman',
         skill1: {
           label: 'Talent principal',
@@ -98,32 +120,7 @@ export default {
           },
         },
       },
-      help: {
-        filter_favorites: {
-          title: 'Filtre : Talismans favoris',
-          content: 'Ce filtre permet d\'afficher uniquement les talismans qui ont été ajoutés en tant que favoris.',
-        },
-        filter_to_meld: {
-          title: 'Filtre : Talismans à fusionner',
-          content: 'Ce filtre permet d\'afficher les talismans qui ne sont pas assez intéressants pour être gardés, et qui devraient être utilisés dans le centre de fusion.',
-          sub_content: 'La sélection se base sur :',
-          sub_content_part_1: '- La valeur des talents en fonction du niveau, c\'est à dire que plus l\'emplacement nécessaire pour obtenir un point du talent avec un joyau est grand, plus grande est la valeur du talent.',
-          sub_content_part_2: '- La cohérence entre les deux talents, par exemple, si un talent épéiste et un talent artilleur sont sur un même talisman, cela fait chuter sa valeur.',
-          sub_content_part_3: '- La qualité des emplacements disponible sur le talisman.',
-          sub_content_part_4: '- La disponibilité des talents sur d\'autres talismans de meilleurs qualités.',
-          sub_content_part_5: '- Les talismans favoris ne sont pas pris en compte.',
-        },
-        search: {
-          title: 'Recherche',
-          content: 'Ce champ permet d\'effectuer des recherches sur :',
-          sub_title_skill: 'Le nom des talents',
-          sub_content_skill: 'Il est possible de faire une recherche dans la langue sélectionnée par l\'utilisateur mais aussi en anglais.',
-          sub_title_slots: 'Les emplacements',
-          sub_content_slots: 'La recherche s\'effectue en utilisant des chiffres et des tirets, par exemple "2-1" pour afficher les talismans avec des emplacements 2-1-0, 2-1-1, 2-2-1 ou 3-2-1.',
-        },
-        title: 'Aide',
-      },
-      table: {
+      list: {
         header: {
           skill1: 'Talent principal',
           skill2: 'Talent secondaire',
@@ -132,15 +129,6 @@ export default {
         label: 'Mes talismans',
         no_data: 'Aucun talisman à afficher',
         search: 'Rechercher',
-      },
-      tooltip: {
-        add_talisman: 'Ajouter un talisman',
-        add_to_favorite: 'Ajouter aux favoris',
-        add_to_for_melding: 'À fusionner',
-        delete_talisman: 'Supprimer le talisman',
-        import_export_talismans: 'Import/Export des talismans',
-        toggle_show_favorite: 'Afficher les talismans favoris',
-        toggle_show_to_meld: 'Afficher les talismans à fusionner',
       },
       validation: {
         skill1: {
@@ -163,6 +151,16 @@ export default {
           not_found: 'L\'emplacement {slots} n\'existe pas.',
         },
       },
+    },
+    title: 'Mes talismans',
+    tooltip: {
+      add_talisman: 'Ajouter un talisman',
+      add_to_favorite: 'Ajouter aux favoris',
+      add_to_for_melding: 'À fusionner',
+      delete_talisman: 'Supprimer le talisman',
+      import_export_talismans: 'Import/Export des talismans',
+      toggle_show_favorite: 'Afficher les talismans favoris',
+      toggle_show_to_meld: 'Afficher les talismans à fusionner',
     },
   },
   ...skillTranslation,

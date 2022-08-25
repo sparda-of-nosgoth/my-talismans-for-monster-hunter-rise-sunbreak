@@ -46,7 +46,7 @@ function onSubmit() {
     <q-card-section class="row items-center no-wrap">
       <div class="q-pa-md full-width">
         <span class="text-h5">
-          {{ $t('manager.talisman.form_add.label') }}
+          {{ $t('manager.talisman.form.label') }}
         </span>
         <q-form
           @submit="onSubmit"
@@ -57,7 +57,7 @@ function onSubmit() {
               v-model="talisman.skill1"
               :options="filteredSkills"
               :option-label="(skill) => $t(skill.id)"
-              :label="$t('manager.talisman.form_add.skill1.label')"
+              :label="$t('manager.talisman.form.skill1.label')"
               class="q-pa-sm"
               lazy-rules
               :rules="[
@@ -81,7 +81,7 @@ function onSubmit() {
               v-model="talisman.skill2"
               :options="filteredSkills"
               :option-label="(skill) => $t(skill.id)"
-              :label="$t('manager.talisman.form_add.skill2.label')"
+              :label="$t('manager.talisman.form.skill2.label')"
               class="q-pa-sm"
               lazy-rules
               :rules="[
@@ -103,7 +103,7 @@ function onSubmit() {
             />
           </div>
           <div class="row q-pa-sm">
-            <span class="text-bold">{{ $t('manager.talisman.form_add.slots.label') }}</span>
+            <span class="text-bold">{{ $t('manager.talisman.form.slots.label') }}</span>
             <div class="row q-pa-sm full-width justify-center">
               <q-btn-group>
                 <manager-talisman-form-dialog-slot v-model="talisman.slots.slot1" />
@@ -137,12 +137,12 @@ function onSubmit() {
             <q-btn
               type="submit"
               color="primary"
-              :label="$t('manager.talisman.form_add.button.submit.label')"
+              :label="$t('manager.talisman.form.button.submit.label')"
             />
             <q-space />
             <q-btn
               v-close-popup
-              :label="$t('manager.talisman.form_add.button.cancel.label')"
+              :label="$t('manager.talisman.form.button.cancel.label')"
             />
           </div>
         </q-form>

@@ -57,12 +57,12 @@ describe('composables/talisman', () => {
         },
       },
     };
-    // Find with a Skill name translated in French
+    // Find with a Skill name translated in current locale (French)
     filter.search = 'Mise à mort';
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[0], allTalismans[2]]);
-    // Find with a Skill name translated in English
-    filter.search = 'Weakness Exploit';
-    expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[0], allTalismans[2]]);
+    // Find with a Skill name translated in English (Disabled) TODO: maybe return has an option
+    // filter.search = 'Weakness Exploit';
+    // expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[0], allTalismans[2]]);
     // Find with a Slots
     filter.search = '1-1-0';
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[1], allTalismans[3]]);
@@ -88,5 +88,8 @@ describe('composables/talisman', () => {
     filter.search = '1-1';
     filter.showMeldingFilter = true;
     expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[3]]);
+    // Find result with combined search filters
+    filter.search = 'Mise à mort, 2-1';
+    expect(filterTalismans(allTalismans, filter)).toStrictEqual([allTalismans[0]]);
   });
 });

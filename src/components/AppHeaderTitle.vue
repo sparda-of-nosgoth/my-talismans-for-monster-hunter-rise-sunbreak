@@ -12,7 +12,7 @@ const { filteredTalismans } = storeToRefs(useManagerStore());
         name="img:images/icon_talisman_white.svg"
         size="lg"
       />
-      {{ $t('manager.talisman.table.label') }}
+      {{ $t('manager.title') }}
       <q-badge
         v-if="filteredTalismans > 0"
         color="blue-4"

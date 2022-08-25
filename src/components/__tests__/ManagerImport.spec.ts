@@ -7,7 +7,6 @@ import ManagerImport from 'components/ManagerImport.vue';
 import ManagerImportListError from 'components/ManagerImportListError.vue';
 import { Notify, QBtn, QInput } from 'quasar';
 import { i18n } from 'boot/i18n';
-import { initFakeTimers } from 'app/test/mocks';
 import { createTestingPinia } from '@pinia/testing';
 import { Talisman } from 'src/models/talisman';
 import { createPinia, setActivePinia } from 'pinia';
@@ -15,7 +14,10 @@ import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 
 installQuasarPlugin({ plugins: { Notify } });
-initFakeTimers();
+
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 
@@ -49,8 +51,8 @@ describe('components/ManagerImport', () => {
       },
     });
 
-    expect(vm.talismanList).toStrictEqual('');
-    expect(vm.submitDisabled).toStrictEqual(true);
+    expect(vm.talismanList).toBe('');
+    expect(vm.submitDisabled).toBe(true);
   });
 
   it('update talismanList when input change', () => {
@@ -63,7 +65,7 @@ describe('components/ManagerImport', () => {
 
     const textarea = wrapper.getComponent(QInput);
     textarea.setValue('Affûtage rapide,1,Mise à mort,1,0,0,0');
-    expect(vm.talismanList).toStrictEqual('Affûtage rapide,1,Mise à mort,1,0,0,0');
+    expect(vm.talismanList).toBe('Affûtage rapide,1,Mise à mort,1,0,0,0');
   });
 
   it('can\'t submit with empty data', async () => {
@@ -78,7 +80,7 @@ describe('components/ManagerImport', () => {
     await textarea.setValue('');
     const submit = wrapper.getComponent(QBtn);
     expect(submit.vm.$el.disabled).toBeTruthy();
-    expect(vm.talismanList).toStrictEqual('');
+    expect(vm.talismanList).toBe('');
     expect(vm.talismansToImport).toStrictEqual([]);
   });
 
@@ -94,7 +96,7 @@ describe('components/ManagerImport', () => {
     await textarea.setValue('Affoûtage rapide,1,Mise à mort,1,0,0,0');
     const submit = wrapper.getComponent(QBtn);
     expect(submit.vm.$el.disabled).toBeTruthy();
-    expect(vm.talismanList).toStrictEqual('Affoûtage rapide,1,Mise à mort,1,0,0,0');
+    expect(vm.talismanList).toBe('Affoûtage rapide,1,Mise à mort,1,0,0,0');
     expect(vm.talismansToImport).toStrictEqual([]);
   });
 
@@ -110,8 +112,8 @@ describe('components/ManagerImport', () => {
     await textarea.setValue('Affûtage rapide,1,Mise à mort,1,0,0,0');
     const submit = wrapper.getComponent(QBtn);
     expect(submit.vm.$el.disabled).toBeFalsy();
-    expect(vm.talismanList).toStrictEqual('Affûtage rapide,1,Mise à mort,1,0,0,0');
-    expect(vm.talismansToImport.length).toBe(1);
+    expect(vm.talismanList).toBe('Affûtage rapide,1,Mise à mort,1,0,0,0');
+    expect(vm.talismansToImport).toHaveLength(1);
   });
 
   it('display number of talismans to import', async () => {
@@ -179,7 +181,7 @@ describe('components/ManagerImport', () => {
     });
     const { vm } = wrapper;
 
-    expect(vm.talismanStore.talismans.length).toBe(0);
+    expect(vm.talismanStore.talismans).toHaveLength(0);
     const textarea = wrapper.getComponent(QInput);
     await textarea.setValue(''
       + 'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
@@ -208,7 +210,7 @@ describe('components/ManagerImport', () => {
         slots: getSlotsById('2-1-0'),
       }),
     ]);
-    expect(vm.talismanStore.talismans.length).toBe(3);
+    expect(vm.talismanStore.talismans).toHaveLength(3);
     expect(vm.talismanStore.talismans).toStrictEqual([
       new Talisman({
         skill1: getSkillById('speed-sharpening'),

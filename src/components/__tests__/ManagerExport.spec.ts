@@ -8,7 +8,6 @@ import ManagerExport from 'components/ManagerExport.vue';
 import { Notify, QInput } from 'quasar';
 import _now from 'lodash/now';
 import { i18n } from 'boot/i18n';
-import { initFakeTimers } from 'app/test/mocks';
 import { createTestingPinia } from '@pinia/testing';
 import { Talisman } from 'src/models/talisman';
 import { createPinia, setActivePinia } from 'pinia';
@@ -16,7 +15,10 @@ import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 
 installQuasarPlugin({ plugins: { Notify } });
-initFakeTimers();
+
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 

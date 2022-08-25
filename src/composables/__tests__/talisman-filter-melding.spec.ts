@@ -2,16 +2,15 @@ import {
   beforeEach,
   describe, expect, it, jest,
 } from '@jest/globals';
-import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { useMeldingFilter } from 'src/composables/talisman-filter-melding';
 import { Talisman } from 'src/models/talisman';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
-import { initFakeTimers } from 'app/test/mocks';
 
-installQuasarPlugin();
-initFakeTimers();
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 

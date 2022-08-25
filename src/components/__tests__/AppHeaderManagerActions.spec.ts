@@ -163,8 +163,8 @@ describe('components/AppHeaderManagerActions', () => {
     expect(filters.search).toBeFalsy();
     const input = wrapper.getComponent(QInput);
     await input.setValue('weak');
-    expect(filters.search).toEqual('weak');
+    expect(filters.search).toBe('weak');
     await input.setValue('weakness');
-    expect(filters.search).toEqual('weakness');
+    expect(filters.search).toBe('weakness');
   });
 });

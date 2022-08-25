@@ -2,13 +2,14 @@ import {
   describe, expect, it, jest,
 } from '@jest/globals';
 import { useTalismanExport } from 'src/composables/talisman-export';
-import { initFakeTimers } from 'app/test/mocks';
 import { Talisman } from 'src/models/talisman';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 import { createPinia, setActivePinia } from 'pinia';
 
-initFakeTimers();
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 

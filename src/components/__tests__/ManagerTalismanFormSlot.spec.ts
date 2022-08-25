@@ -3,7 +3,7 @@ import {
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { shallowMount } from '@vue/test-utils';
-import ManagerTalismanFormSlot from '../../src/components/ManagerTalismanFormSlot.vue';
+import ManagerTalismanFormSlot from '../ManagerTalismanFormSlot.vue';
 
 installQuasarPlugin();
 
