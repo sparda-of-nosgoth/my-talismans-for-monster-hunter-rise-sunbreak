@@ -4,15 +4,17 @@ import { TalismanFilter, useTalismanFilter } from 'src/composables/talisman-filt
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
 import TalismanActionToggles from 'components/TalismanActionToggles.vue';
+import TalismanDeleteButton from 'components/TalismanDeleteButton.vue';
 import { Skill } from 'src/models/skill';
 import { Slots } from 'src/models/slots';
 import { Talisman } from 'src/models/talisman';
 import TalismanSlots from 'components/TalismanSlots.vue';
+import TalismanCard from 'components/TalismanCard.vue';
 import { useManagerStore } from 'stores/manager';
 import { storeToRefs } from 'pinia';
 
 const { t } = useI18n({ useScope: 'global' });
-const { talismans, deleteTalisman } = useTalismanStore();
+const { talismans } = useTalismanStore();
 const { filteredTalismans, filters } = storeToRefs(useManagerStore());
 const { filterTalismans } = useTalismanFilter();
 
@@ -119,17 +121,7 @@ onMounted(() => {
             key="actions_suffix"
             :props="props"
           >
-            <q-btn
-              outline
-              color="red"
-              icon="delete"
-              :aria-label="$t('manager.tooltip.delete_talisman')"
-              @click="() => deleteTalisman(props.row)"
-            >
-              <q-tooltip :delay="1000">
-                {{ $t('manager.tooltip.delete_talisman') }}
-              </q-tooltip>
-            </q-btn>
+            <talisman-delete-button :talisman="props.row" />
           </q-td>
         </q-tr>
       </template>
@@ -137,51 +129,7 @@ onMounted(() => {
       <!-- START: Template: Grid -->
       <template #item="item">
         <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-          <q-card>
-            <q-card-section horizontal>
-              <!-- TODO : MOVE STYLE ELSEWHERE-->
-              <q-card-section
-                vertical
-                style="min-height: 138px;"
-              >
-                <q-card-section vertical>
-                  <span>
-                    {{ `${$t(item.row.skill1.id)} ${item.row.skill1Level}` }}
-                  </span>
-                </q-card-section>
-                <q-card-section vertical>
-                  <span v-if="item.row.skill2 != null">
-                    {{ `${$t(item.row.skill2.id)} ${item.row.skill2Level}` }}
-                  </span>
-                </q-card-section>
-              </q-card-section>
-              <q-separator vertical></q-separator>
-              <q-card-section
-                class="flex flex-center"
-                vertical
-              >
-                <talisman-slots :talisman="item.row" />
-              </q-card-section>
-            </q-card-section>
-
-            <q-separator></q-separator>
-
-            <q-card-actions>
-              <talisman-action-toggles :talisman="item.row" />
-              <q-space />
-              <q-btn
-                outline
-                color="red"
-                icon="delete"
-                :aria-label="$t('manager.tooltip.delete_talisman')"
-                @click="() => deleteTalisman(item.row)"
-              >
-                <q-tooltip :delay="1000">
-                  {{ $t('manager.tooltip.delete_talisman') }}
-                </q-tooltip>
-              </q-btn>
-            </q-card-actions>
-          </q-card>
+          <talisman-card :talisman="item.row" />
         </div>
       </template>
       <!-- END: Template: Grid -->
