@@ -2,7 +2,7 @@
 withDefaults(defineProps<{
   title: string,
   link: string,
-  icon: string,
+  icon?: string,
   separator?: boolean,
 }>(), {
   link: '#',

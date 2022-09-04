@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import AppMenuEssentialLink from 'components/AppMenuEssentialLink.vue';
+import AppMenuLink from 'components/AppMenuLink.vue';
 import SettingsClearData from 'components/SettingsClearData.vue';
 import SettingsLocaleSelector from 'components/SettingsLocaleSelector.vue';
 import AppVersion from 'components/AppVersion.vue';
 
-const essentialLinks = [
+const menuLinks = [
   {
     title: 'menu.talisman_manager.label',
     icon: 'img:icons/talisman_white.svg',
@@ -25,8 +25,8 @@ const essentialLinks = [
       {{ $t('menu.header') }}
     </q-item-label>
 
-    <app-menu-essential-link
-      v-for="link in essentialLinks"
+    <app-menu-link
+      v-for="link in menuLinks"
       :key="link.title"
       v-bind="link"
     />

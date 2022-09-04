@@ -42,6 +42,22 @@ export default {
         sub_content_combine_search: 'It\'s possible to combine searches using a comma, for example "sharp, 2-1" to display talismans with the talents "Razor Sharp" or "Speed Sharpening", and with slots 2-1-0, 2-1-1, 2-2-1 or 3-2-1.',
       },
       title: 'Help',
+      externals_tools: {
+        title: 'External tools',
+        content: 'Exported data can be used on the following tools :',
+        link_1: {
+          title: 'Monster Hunter Rise : Sunbreak Armorset Search',
+          caption: 'Tool to optimize armor builds through a powerful search engine.',
+        },
+        link_2: {
+          title: 'MHR Builder',
+          caption: 'Tool to create builds.',
+        },
+        link_3: {
+          title: 'Ping\'s MHRS Dex',
+          caption: 'A software that includes a tool to optimize armor builds, but require a skill\'s IDs conversion.',
+        },
+      },
     },
     import: {
       errors: {
