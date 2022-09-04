@@ -1,8 +1,8 @@
 {
-  "name": "mhrs-talismans-manager",
+  "name": "my-talismans-for-monster-hunter-rise-sunbreak",
   "version": "0.3.0",
   "description": "A tool to manage talismans for Monster Hunter Rise/Sunbreak",
-  "productName": "Monster Hunter Rise/Sunbreak - Talismans manager",
+  "productName": "My Talismans for Monster Hunter Rise Sunbreak",
   "author": "Maxime Bailleux <max.bailleux.13@gmail.com>",
   "private": true,
   "scripts": {

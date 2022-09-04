@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Changed project name to My Talismans for Monster Hunter Rise Sunbreak.
 - Updated help with new feature on search filter.
 - Updated search filter to use combine terms to refine search, using comma to separate each term.
 - Cleaning on translations keys.
@@ -138,9 +139,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QA, CI, scripts and others.
 - Some unit tests for Talisman export, import and validation.
 
-[unreleased]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/compare/0.3.0...main
-[0.3.0]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/compare/0.2.1...0.3.0
-[0.2.1]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/compare/0.2.0...0.2.1
-[0.2.0]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/compare/0.1.1...0.2.0
-[0.1.1]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/compare/0.1.0...0.1.1
-[0.1.0]: https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/tags/0.1.0
+[unreleased]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.3.0...main
+[0.3.0]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.2.1...0.3.0
+[0.2.1]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.2.0...0.2.1
+[0.2.0]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.1.1...0.2.0
+[0.1.1]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.1.0...0.1.1
+[0.1.0]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/tags/0.1.0
