@@ -31,22 +31,22 @@ describe('composables/slot-icon', () => {
 
     it('has a value to return if slot equals 1', async () => {
       await updateSlot(1);
-      expect(slotIcon.value).toBe('img:images/icon_slot_1.svg');
+      expect(slotIcon.value).toBe('img:icons/slot_1.svg');
     });
 
     it('has a value to return if slot equals 2', async () => {
       await updateSlot(2);
-      expect(slotIcon.value).toBe('img:images/icon_slot_2.svg');
+      expect(slotIcon.value).toBe('img:icons/slot_2.svg');
     });
 
     it('has a value to return if slot equals 3', async () => {
       await updateSlot(3);
-      expect(slotIcon.value).toBe('img:images/icon_slot_3.svg');
+      expect(slotIcon.value).toBe('img:icons/slot_3.svg');
     });
 
     it('has a value to return if slot equals 4', async () => {
       await updateSlot(4);
-      expect(slotIcon.value).toBe('img:images/icon_slot_4.svg');
+      expect(slotIcon.value).toBe('img:icons/slot_4.svg');
     });
   });
 
@@ -60,19 +60,19 @@ describe('composables/slot-icon', () => {
     });
 
     it('has a value to return if slot equals 1', () => {
-      expect(useSlotIcon(1).slotIcon.value).toBe('img:images/icon_slot_1.svg');
+      expect(useSlotIcon(1).slotIcon.value).toBe('img:icons/slot_1.svg');
     });
 
     it('has a value to return if slot equals 2', () => {
-      expect(useSlotIcon(2).slotIcon.value).toBe('img:images/icon_slot_2.svg');
+      expect(useSlotIcon(2).slotIcon.value).toBe('img:icons/slot_2.svg');
     });
 
     it('has a value to return if slot equals 3', () => {
-      expect(useSlotIcon(3).slotIcon.value).toBe('img:images/icon_slot_3.svg');
+      expect(useSlotIcon(3).slotIcon.value).toBe('img:icons/slot_3.svg');
     });
 
     it('has a value to return if slot equals 4', () => {
-      expect(useSlotIcon(4).slotIcon.value).toBe('img:images/icon_slot_4.svg');
+      expect(useSlotIcon(4).slotIcon.value).toBe('img:icons/slot_4.svg');
     });
   });
 });

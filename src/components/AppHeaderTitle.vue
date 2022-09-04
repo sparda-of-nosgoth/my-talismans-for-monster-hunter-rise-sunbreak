@@ -9,7 +9,7 @@ const { filteredTalismans } = storeToRefs(useManagerStore());
   <q-toolbar-title class="bg-primary">
     <h1 class="text-h6">
       <q-icon
-        name="img:images/icon_talisman_white.svg"
+        name="img:icons/talisman_white.svg"
         size="lg"
       />
       {{ $t('manager.title') }}

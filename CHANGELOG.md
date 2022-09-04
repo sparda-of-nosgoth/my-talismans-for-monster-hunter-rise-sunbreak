@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated search filter to use combine terms to refine search, using comma to separate each term.
 - Cleaning on translations keys.
 - Cleaning on Changelog: removed sections separators, added more details.
+- Changed icons from images folder to icons folder.
+- Updated Favicon.
 
 ### Removed
 

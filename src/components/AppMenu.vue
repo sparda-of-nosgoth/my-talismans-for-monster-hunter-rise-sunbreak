@@ -7,12 +7,12 @@ import AppVersion from 'components/AppVersion.vue';
 const essentialLinks = [
   {
     title: 'menu.talisman_manager.label',
-    icon: 'img:images/icon_talisman_white.svg',
+    icon: 'img:icons/talisman_white.svg',
     link: '/',
   },
   {
     title: 'menu.skills_translation.label',
-    icon: 'img:images/icon_skill.svg',
+    icon: 'img:icons/skill.svg',
     link: '/skills/translation',
     separator: true,
   },
