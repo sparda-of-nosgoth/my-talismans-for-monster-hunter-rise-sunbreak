@@ -79,7 +79,7 @@ module.exports = configure((/* ctx */) => ({
     // distDir
 
     extendViteConf(viteConf) {
-      viteConf.base = process.env.PROD ? '/mhrs-talismans-manager/' : '';
+      viteConf.base = process.env.PROD ? '/my-talismans-for-monster-hunter-rise-sunbreak/' : '';
     },
     // viteVuePluginOptions: {},
 

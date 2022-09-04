@@ -19,7 +19,7 @@ plugins:
     strictLatest: false
     addVersionUrl: true
     versionUrlFormats:
-      repositoryUrl: 'https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager'
+      repositoryUrl: 'https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak'
       unreleasedUrl: '{repositoryUrl}/-/compare/{tagName}...{head}'
       versionUrl: '{repositoryUrl}/-/compare/{previousTag}...{tagName}'
       firstVersionUrl: '{repositoryUrl}/-/tags/{tagName}'

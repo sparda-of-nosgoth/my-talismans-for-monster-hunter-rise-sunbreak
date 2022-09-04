@@ -1,10 +1,10 @@
-# Monster Hunter Rise Sunbreak - Talismans Manager
+# My Talismans for Monster Hunter Rise Sunbreak
 
-[![Latest Release](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/badges/release.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/releases)
-[![pipeline status](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/pipeline.svg)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/commits/main)
-[![coverage](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/badges/main/coverage.svg?job=test-jest)](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/tree/main)
+[![Latest Release](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/badges/release.svg)](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/releases)
+[![pipeline status](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/badges/main/pipeline.svg)](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/commits/main)
+[![coverage](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/badges/main/coverage.svg?job=test-jest)](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/tree/main)
 
-This repository generates [Talismans Manager](https://sparda-of-nosgoth.gitlab.io/mhrs-talismans-manager).
+This repository generates [Talismans Manager](https://sparda-of-nosgoth.gitlab.io/my-talismans-for-monster-hunter-rise-sunbreak).
 
 ## Usage
 A tool for Monster Hunter Rise, and his expansion Sunbreak, you can use it to :
@@ -53,10 +53,10 @@ yarn build:debug # for debugging purpose
 - [Material Icons](https://fonts.google.com/icons)
 
 ## Support
-If you encounter a bug, or had a problem with the tool, do not hesitate to send a mail, or open an [issue](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/issues), to discuss or solve it.
+If you encounter a bug, or had a problem with the tool, do not hesitate to send a mail, or open an [issue](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/issues), to discuss or solve it.
 
 ## Contributing
-If you want to contribute to this project, please feel free to open an [issue](https://gitlab.com/sparda-of-nosgoth/mhrs-talismans-manager/-/issues) or directly submit a merge request.
+If you want to contribute to this project, please feel free to open an [issue](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/issues) or directly submit a merge request.
 
 ## Licence
 [MIT](./LICENCE)
