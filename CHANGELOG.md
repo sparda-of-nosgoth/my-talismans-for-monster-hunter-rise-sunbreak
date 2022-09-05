@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- A new section for external tools into help modal.
+
 ### Changed
 
 - Changed project name to My Talismans for Monster Hunter Rise Sunbreak.

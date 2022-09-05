@@ -70,6 +70,22 @@ export default {
         sub_content_combine_search: 'Il est possible de combiner les recherches en utilisant une virgule, par exemple "mort, 2-1" pour afficher les talismans ayant les talents "Trompe-la-mort", "Salve mortelle" ou "Mise à mort", et avec les emplacements 2-1-0, 2-1-1, 2-2-1 ou 3-2-1.',
       },
       title: 'Aide',
+      externals_tools: {
+        title: 'Outils externes',
+        content: 'Les données exportées peuvent être utilisés sur les outils suivant :',
+        link_1: {
+          title: 'Monster Hunter Rise : Sunbreak Armorset Search',
+          caption: 'Outil permettant d\'optimiser les builds d\'armures via un moteur de recherche puissant.',
+        },
+        link_2: {
+          title: 'MHR Builder',
+          caption: 'Interface permettant de créer des builds.',
+        },
+        link_3: {
+          title: 'Ping\'s MHRS Dex',
+          caption: 'Ce logiciel intègre un outil permettant d\'optimiser les builds d\'armures, mais une conversion avec les ID des talents est nécessaire.',
+        },
+      },
     },
     import: {
       errors: {
