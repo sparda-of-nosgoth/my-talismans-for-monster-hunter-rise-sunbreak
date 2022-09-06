@@ -50,6 +50,9 @@ const menuLinks = [
       <q-separator />
     </q-list>
     <div class="row items-center no-wrap">
+      <span class="text-caption">
+        &copy; 2022 <a href="https://gitlab.com/sparda-of-nosgoth">Sparda of Nosgoth</a>
+      </span>
       <q-space />
       <app-version />
     </div>
