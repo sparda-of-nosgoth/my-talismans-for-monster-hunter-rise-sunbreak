@@ -28,14 +28,14 @@ const { dialogs, drawers } = useManagerStore();
       <router-view />
       <!-- QDialog: Help -->
       <q-dialog v-model="dialogs.showHelp">
-        <manager-help />
+        <manager-help class="manager-dialog-help" />
       </q-dialog>
       <!-- QDialog: Talisman Form -->
       <q-dialog
         v-model="dialogs.showTalismanForm"
         position="right"
       >
-        <manager-talisman-form />
+        <manager-talisman-form class="manager-dialog-talisman-form" />
       </q-dialog>
       <!-- QDialog: Import / Export -->
       <q-dialog

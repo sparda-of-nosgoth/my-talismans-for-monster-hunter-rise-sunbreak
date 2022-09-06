@@ -48,7 +48,7 @@ function exportTable() {
     </div>
     <q-input
       v-model="exportedTalismans"
-      style="height: 100%"
+      class="manager-export-textarea"
       type="textarea"
       autogrow
       outlined

@@ -13,8 +13,7 @@ defineProps<{
   <q-card>
     <q-card-section horizontal>
       <q-card-section
-        class="row col-6 items-center"
-        style="min-height: 140px"
+        class="talisman-card-skills row col-6 items-center"
         vertical
       >
         <span class="col-12">

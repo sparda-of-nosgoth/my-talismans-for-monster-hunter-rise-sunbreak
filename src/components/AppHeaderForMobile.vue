@@ -21,10 +21,7 @@ import AppHeaderMenuButton from 'components/AppHeaderMenuButton.vue';
     </q-toolbar>
     <!-- END: QToolbar -->
     <!-- START: Inset QToolbar Actions -->
-    <q-toolbar
-      class="bg-white wrap"
-      inset
-    >
+    <q-toolbar class="bg-white justify-center">
       <app-header-manager-actions />
     </q-toolbar>
     <!-- END: Inset QToolbar Actions -->

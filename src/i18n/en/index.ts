@@ -2,6 +2,17 @@ import skillTranslation from './skill';
 import skillTypeTranslation from './skill-type';
 
 export default {
+  error: {
+    not_found: {
+      code: '404',
+      caption: 'The requested page couldn\'t be found',
+    },
+    button: {
+      return_to_homepage: {
+        label: 'Return to homepage',
+      },
+    },
+  },
   dialog: {
     button: {
       confirm: 'Confirm',

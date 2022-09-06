@@ -2,38 +2,21 @@ import skillTranslation from './skill';
 import skillTypeTranslation from './skill-type';
 
 export default {
+  error: {
+    not_found: {
+      code: '404',
+      caption: 'La page demandée n\'a pas pu être localisée',
+    },
+    button: {
+      return_to_homepage: {
+        label: 'Retourner vers la page principale',
+      },
+    },
+  },
   dialog: {
     button: {
       confirm: 'Confirmer',
       cancel: 'Annuler',
-    },
-  },
-  menu: {
-    header: 'Menu principal',
-    talisman_manager: {
-      label: 'Mes talismans',
-    },
-    skills_translation: {
-      label: 'Traduction des talents',
-    },
-    settings: 'Options',
-  },
-  settings: {
-    clear_data: {
-      dialog: {
-        warning_title: 'Attention !',
-        warning_message: 'Cette action est irréversible, voulez-vous vraiment supprimer l\'intégralité des données ?',
-      },
-      label: 'Supprimer les données',
-    },
-    language: {
-      label: 'Langue',
-      en: {
-        label: 'Anglais',
-      },
-      fr: {
-        label: 'Français',
-      },
     },
   },
   manager: {
@@ -177,6 +160,34 @@ export default {
       import_export_talismans: 'Import/Export des talismans',
       toggle_show_favorite: 'Afficher les talismans favoris',
       toggle_show_to_meld: 'Afficher les talismans à fusionner',
+    },
+  },
+  menu: {
+    header: 'Menu principal',
+    talisman_manager: {
+      label: 'Mes talismans',
+    },
+    skills_translation: {
+      label: 'Traduction des talents',
+    },
+    settings: 'Options',
+  },
+  settings: {
+    clear_data: {
+      dialog: {
+        warning_title: 'Attention !',
+        warning_message: 'Cette action est irréversible, voulez-vous vraiment supprimer l\'intégralité des données ?',
+      },
+      label: 'Supprimer les données',
+    },
+    language: {
+      label: 'Langue',
+      en: {
+        label: 'Anglais',
+      },
+      fr: {
+        label: 'Français',
+      },
     },
   },
   ...skillTranslation,

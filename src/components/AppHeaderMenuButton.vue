@@ -10,6 +10,7 @@ const { toggleSettings } = useManagerStore();
     flat
     round
     icon="menu"
+    color="white"
     :aria-label="$t('menu.header')"
     @click="toggleSettings"
   />

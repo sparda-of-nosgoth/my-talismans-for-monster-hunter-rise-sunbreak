@@ -42,12 +42,16 @@ function onSubmit() {
 </script>
 
 <template>
-  <q-card style="width: 350px">
-    <q-card-section class="row items-center no-wrap">
-      <div class="q-pa-md full-width">
+  <q-card>
+    <q-toolbar class="bg-primary text-white">
+      <q-toolbar-title>
         <span class="text-h5">
           {{ $t('manager.talisman.form.label') }}
         </span>
+      </q-toolbar-title>
+    </q-toolbar>
+    <q-card-section class="row items-center no-wrap">
+      <div class="q-pa-md full-width">
         <q-form
           @submit="onSubmit"
           greedy
