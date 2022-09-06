@@ -1,28 +1,27 @@
 <script setup lang="ts" />
 
 <template>
-  <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
-    <div>
-      <div style="font-size: 30vh">
-        404
-      </div>
+  <div class="fullscreen bg-primary text-primary text-center q-pa-md flex flex-center row">
+    <q-card>
+      <q-card-section>
+        <div class="app-error-code">
+          {{ $t('error.not_found.code') }}
+        </div>
 
-      <div
-        class="text-h2"
-        style="opacity:.4"
-      >
-        Oops. Nothing here...
-      </div>
+        <div class="text-h2 app-error-caption">
+          {{ $t('error.not_found.caption') }}
+        </div>
 
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        to="/"
-        label="Go Home"
-        no-caps
-      />
-    </div>
+        <q-btn
+          class="q-mt-xl"
+          color="primary"
+          text-color="white"
+          unelevated
+          to="/"
+          :label="$t('error.button.return_to_homepage.label')"
+          no-caps
+        />
+      </q-card-section>
+    </q-card>
   </div>
 </template>

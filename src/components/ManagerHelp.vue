@@ -20,7 +20,7 @@ const externalLinks = [
 </script>
 
 <template>
-  <q-card style="width: 700px; max-width: 80vw;">
+  <q-card>
     <q-toolbar class="bg-primary text-white">
       <q-toolbar-title>
         <span class="text-h5">
@@ -41,7 +41,7 @@ const externalLinks = [
       <q-list>
         <!-- START: Search Section -->
         <q-expansion-item
-          group="filters"
+          group="help-sections"
           expand-separator
           icon="search"
           :label="$t('manager.help.search.title')"
@@ -86,7 +86,7 @@ const externalLinks = [
         <!-- END: Search Section -->
         <!-- START: Filter favorites Section -->
         <q-expansion-item
-          group="filters"
+          group="help-sections"
           expand-separator
           icon="favorite"
           :label="$t('manager.help.filter_favorites.title')"
@@ -104,7 +104,7 @@ const externalLinks = [
         <!-- END: Filter favorites Section -->
         <!-- START: Filter to meld Section -->
         <q-expansion-item
-          group="filters"
+          group="help-sections"
           expand-separator
           icon="recycling"
           :label="$t('manager.help.filter_to_meld.title')"
@@ -156,7 +156,7 @@ const externalLinks = [
         <!-- END: Filter to meld Section -->
         <!-- START: Useful tools Section -->
         <q-expansion-item
-          group="externals_tools"
+          group="help-sections"
           expand-separator
           icon="construction"
           :label="$t('manager.help.externals_tools.title')"

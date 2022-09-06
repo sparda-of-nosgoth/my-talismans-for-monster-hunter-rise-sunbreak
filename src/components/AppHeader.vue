@@ -6,7 +6,6 @@ import AppHeaderMenuButton from 'components/AppHeaderMenuButton.vue';
 
 <template>
   <q-header
-    class="bg-white"
     reveal
     elevated
   >
@@ -18,8 +17,9 @@ import AppHeaderMenuButton from 'components/AppHeaderMenuButton.vue';
         inset
       />
       <app-header-title />
-      <q-space />
-      <app-header-manager-actions />
+      <div class="toolbar-action row bg-white q-pa-xs">
+        <app-header-manager-actions />
+      </div>
     </q-toolbar>
   </q-header>
 </template>

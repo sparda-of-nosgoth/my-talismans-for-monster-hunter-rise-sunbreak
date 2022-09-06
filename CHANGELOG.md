@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A new section for external tools into help modal.
+- A new page for 404 Not Found error.
 
 ### Changed
 
 - Changed project name to My Talismans for Monster Hunter Rise Sunbreak.
+- Changed primary and secondary colors, to fit with Sunbreak style.
 - Updated help with new feature on search filter.
 - Updated search filter to use combine terms to refine search, using comma to separate each term.
 - Cleaning on translations keys.
@@ -25,9 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed search on English Skill's name when current locale is not English, source of misunderstandings.
 - Removed table header on mobile device.
+- Removed unused images and icons.
 
 ### Fixed
 
+- Fixed app header style.
 - Fixed Talisman card style.
 - Fixed Talisman Import tab style.
 
