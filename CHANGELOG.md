@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed app header style.
 - Fixed Talisman card style.
 - Fixed Talisman Import tab style.
+- Fixed table update when data is cleared.
 
 ## [0.3.0] - 2022-08-24
 

@@ -14,7 +14,7 @@ import { useManagerStore } from 'stores/manager';
 import { storeToRefs } from 'pinia';
 
 const { t } = useI18n({ useScope: 'global' });
-const { talismans } = useTalismanStore();
+const { talismans } = storeToRefs(useTalismanStore());
 const { filteredTalismans, filters } = storeToRefs(useManagerStore());
 const { filterTalismans } = useTalismanFilter();
 
