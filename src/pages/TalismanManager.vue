@@ -65,7 +65,7 @@ function filterTable(rows: Talisman[], filterOptions: TalismanFilter) {
 }
 
 onMounted(() => {
-  filteredTalismans.value = talismans.length;
+  filteredTalismans.value = talismans.value.length;
 });
 </script>
 

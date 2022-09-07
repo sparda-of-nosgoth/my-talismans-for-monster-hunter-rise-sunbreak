@@ -6,11 +6,10 @@ import {
   useTemporaryTalismanValidator,
 } from 'src/composables/talisman-validator';
 import { ref } from 'vue';
-import type { TemporaryTalisman } from 'src/composables/talisman-import';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
-import { Talisman } from 'src/models/talisman';
+import { Talisman, TemporaryTalisman } from 'src/models/talisman';
 import { Skill } from 'src/models/skill';
 import { Slots } from 'src/models/slots';
 
@@ -641,11 +640,11 @@ describe('composables/talisman-validator', () => {
         talisman.value.slot3 = 0;
       });
 
-      const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
+      const { isValid, errors } = useTemporaryTalismanValidator(talisman);
 
       it('can invalidate empty talisman', () => {
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -672,8 +671,8 @@ describe('composables/talisman-validator', () => {
         await updateTalisman({
           skill1: 'Capture Master',
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -701,8 +700,8 @@ describe('composables/talisman-validator', () => {
           skill1: 'Capture Master',
           skill1Level: 1,
         });
-        expect(talismanIsValid.value).toBeTruthy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeTruthy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -731,8 +730,8 @@ describe('composables/talisman-validator', () => {
           skill1Level: 1,
           skill2Level: 3,
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -761,8 +760,8 @@ describe('composables/talisman-validator', () => {
           skill1Level: 1,
           skill2: 'Spartiate',
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -790,8 +789,8 @@ describe('composables/talisman-validator', () => {
           skill1: 'Capture Master',
           skill1Level: 2,
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -819,8 +818,8 @@ describe('composables/talisman-validator', () => {
           skill2: 'Spartiate',
           skill2Level: 4,
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -847,8 +846,8 @@ describe('composables/talisman-validator', () => {
         await updateTalisman({
           skill1: 'unknown-name',
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: true,
@@ -875,8 +874,8 @@ describe('composables/talisman-validator', () => {
         await updateTalisman({
           skill2: 'unknown-name',
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -905,8 +904,8 @@ describe('composables/talisman-validator', () => {
           slot2: 4,
           slot3: 4,
         });
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -939,8 +938,8 @@ describe('composables/talisman-validator', () => {
           slot2: 1,
           slot3: 0,
         });
-        expect(talismanIsValid.value).toBeTruthy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        expect(isValid.value).toBeTruthy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -976,9 +975,9 @@ describe('composables/talisman-validator', () => {
           slot3: 0,
         };
 
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -1011,9 +1010,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -1046,9 +1045,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeTruthy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeTruthy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -1081,9 +1080,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -1116,9 +1115,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -1151,9 +1150,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,
@@ -1186,9 +1185,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -1221,9 +1220,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: true,
@@ -1256,9 +1255,9 @@ describe('composables/talisman-validator', () => {
           slot2: 0,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -1291,9 +1290,9 @@ describe('composables/talisman-validator', () => {
           slot2: 4,
           slot3: 4,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeFalsy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeFalsy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: true,
             notFound: false,
@@ -1326,9 +1325,9 @@ describe('composables/talisman-validator', () => {
           slot2: 1,
           slot3: 0,
         };
-        const { talismanIsValid, errorsFromTalisman } = useTemporaryTalismanValidator(talisman);
-        expect(talismanIsValid.value).toBeTruthy();
-        expect(errorsFromTalisman.value).toStrictEqual({
+        const { isValid, errors } = useTemporaryTalismanValidator(talisman);
+        expect(isValid.value).toBeTruthy();
+        expect(errors.value).toStrictEqual({
           skill1: {
             isEmpty: false,
             notFound: false,

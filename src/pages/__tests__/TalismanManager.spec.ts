@@ -8,9 +8,7 @@ import {
 import { config, mount } from '@vue/test-utils';
 import TalismanManager from 'pages/TalismanManager.vue';
 import { i18n } from 'boot/i18n';
-import {
-  QBtn, QTh, QTr,
-} from 'quasar';
+import { QTh, QTr } from 'quasar';
 import { createTestingPinia } from '@pinia/testing';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
@@ -85,88 +83,6 @@ describe('pages/TalismanManager', () => {
 
     const rows = wrapper.findAllComponents(QTr);
     expect(rows).toHaveLength(4);
-  });
-
-  it('has a favorite toggle button on a Talisman row', async () => {
-    const wrapper = mount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia({
-          initialState: {
-            talismans: { talismans },
-          },
-          stubActions: false,
-        })],
-        provide: qLayoutInjections(),
-      },
-    });
-    const { vm } = wrapper;
-    await vm.$nextTick();
-
-    const rows = wrapper.findAllComponents(QTr);
-    let btn = rows[0].findAllComponents(QBtn);
-    expect(btn[0].exists()).toBeTruthy();
-    expect(btn[0].props().icon).toBe('favorite');
-    expect(btn[0].props().color).toBe('grey');
-    await btn[0].trigger('click');
-    await vm.$nextTick();
-    btn = rows[0].findAllComponents(QBtn);
-    expect(btn[0].exists()).toBeTruthy();
-    expect(btn[0].props().icon).toBe('favorite');
-    expect(btn[0].props().color).toBe('pink-8');
-  });
-
-  it('has a recycling toggle button on a Talisman row', async () => {
-    const wrapper = mount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia({
-          initialState: {
-            talismans: { talismans },
-          },
-          stubActions: false,
-        })],
-        provide: qLayoutInjections(),
-      },
-    });
-    const { vm } = wrapper;
-    await vm.$nextTick();
-
-    const rows = wrapper.findAllComponents(QTr);
-    let btn = rows[0].findAllComponents(QBtn);
-    expect(btn[1].exists()).toBeTruthy();
-    expect(btn[1].props().icon).toBe('recycling');
-    expect(btn[1].props().color).toBe('grey');
-    await btn[1].trigger('click');
-    await vm.$nextTick();
-    btn = rows[0].findAllComponents(QBtn);
-    expect(btn[1].exists()).toBeTruthy();
-    expect(btn[1].props().icon).toBe('recycling');
-    expect(btn[1].props().color).toBe('green-10');
-  });
-
-  it('has a delete button on a Talisman row', async () => {
-    const wrapper = mount(TalismanManager, {
-      global: {
-        plugins: [createTestingPinia({
-          initialState: {
-            talismans: { talismans },
-          },
-          stubActions: false,
-        })],
-        provide: qLayoutInjections(),
-      },
-    });
-    const { vm } = wrapper;
-    await vm.$nextTick();
-
-    let rows = wrapper.findAllComponents(QTr);
-    expect(rows).toHaveLength(4);
-    const btn = rows[0].findAllComponents(QBtn);
-    expect(btn[2].exists()).toBeTruthy();
-    expect(btn[2].props().icon).toBe('delete');
-    await btn[2].trigger('click');
-    await vm.$nextTick();
-    rows = wrapper.findAllComponents(QTr);
-    expect(rows).toHaveLength(3);
   });
 
   it('can sort by skill1', async () => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useManagerStore } from 'stores/manager';
 
-const { toggleSettings } = useManagerStore();
+const { toggleSettingsDialog } = useManagerStore();
 </script>
 
 <template>
@@ -12,6 +12,6 @@ const { toggleSettings } = useManagerStore();
     icon="menu"
     color="white"
     :aria-label="$t('menu.header')"
-    @click="toggleSettings"
+    @click="toggleSettingsDialog"
   />
 </template>

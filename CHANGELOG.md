@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A new section for external tools into help modal.
 - A new page for 404 Not Found error.
+- A remote save management, with a Google account sign-in button.
 
 ### Changed
 
@@ -22,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cleaning on Changelog: removed sections separators, added more details.
 - Changed icons from images folder to icons folder.
 - Updated Favicon.
+- Some refactoring on components.
 
 ### Removed
 

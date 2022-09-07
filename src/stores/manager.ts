@@ -26,13 +26,13 @@ export const useManagerStore = defineStore('manager', {
     toggleHelp() {
       this.dialogs.showHelp = !this.dialogs.showHelp;
     },
-    toggleImportExport() {
+    toggleImportExportDialog() {
       this.dialogs.showImportExport = !this.dialogs.showImportExport;
     },
-    toggleSettings() {
+    toggleSettingsDialog() {
       this.drawers.showSettings = !this.drawers.showSettings;
     },
-    toggleTalismanForm() {
+    toggleTalismanFormDialog() {
       this.dialogs.showTalismanForm = !this.dialogs.showTalismanForm;
     },
   },

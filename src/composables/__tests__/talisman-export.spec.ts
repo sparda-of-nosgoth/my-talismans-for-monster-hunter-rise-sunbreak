@@ -8,7 +8,6 @@ import { useSlotsStore } from 'stores/slots';
 import { createPinia, setActivePinia } from 'pinia';
 
 jest
-  .useFakeTimers('modern')
   .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');

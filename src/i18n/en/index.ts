@@ -189,6 +189,27 @@ export default {
         label: 'French',
       },
     },
+    remote_save: {
+      conflict_dialog: {
+        content: 'There are one or more conflicts between local save and remote save, please select a resolution.',
+        local_save_title: 'Local save :',
+        remote_save_title: 'Remote save :',
+        title: 'Conflicts between saves',
+        button: {
+          keep_remote: 'Keep remote save',
+          keep_local: 'Keep local save',
+        },
+      },
+      enabled: 'Backup enabled with account : {account}',
+      login: {
+        error: 'Unable to sign in with Google account',
+      },
+      logout: {
+        label: 'Logout',
+      },
+      title: 'Data saving',
+      tooltip: 'Login with an account to be able to retrieve your data on other devices',
+    },
   },
   ...skillTranslation,
   ...skillTypeTranslation,

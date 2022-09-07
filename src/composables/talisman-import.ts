@@ -5,19 +5,9 @@ import { parse } from 'papaparse';
 import { useTemporaryTalismanValidator } from 'src/composables/talisman-validator';
 import _each from 'lodash/each';
 import _cloneDeep from 'lodash/cloneDeep';
-import { Talisman, TalismanConstructor } from 'src/models/talisman';
+import { Talisman, TalismanConstructor, TemporaryTalisman } from 'src/models/talisman';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
-
-export interface TemporaryTalisman {
-  skill1: string | null
-  skill1Level: number
-  skill2: string | null
-  skill2Level: number
-  slot1: number
-  slot2: number
-  slot3: number
-}
 
 export interface ImportErrors {
   skill1IsEmpty: TemporaryTalisman[]
@@ -88,14 +78,14 @@ export function useTalismanImport(csvData: Ref<string> | string) {
     });
 
     _each(result.data, (temporaryTalisman: TemporaryTalisman) => {
-      const { errorsFromTalisman, talismanIsValid } = useTemporaryTalismanValidator(temporaryTalisman);
+      const { errors, isValid } = useTemporaryTalismanValidator(temporaryTalisman);
 
-      if (talismanIsValid.value) {
+      if (isValid.value) {
         talismansToImport.value.push(createTalisman(temporaryTalisman));
       } else {
         const {
           skill1, skill1Level, skill2, skill2Level, slots,
-        } = errorsFromTalisman.value;
+        } = errors.value;
         if (skill1.isEmpty) {
           errorsFromImport.value.skill1IsEmpty.push(temporaryTalisman);
         }

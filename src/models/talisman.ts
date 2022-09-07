@@ -53,3 +53,13 @@ export class Talisman {
     return this;
   }
 }
+
+export interface TemporaryTalisman {
+  skill1: string | null
+  skill1Level: number
+  skill2: string | null
+  skill2Level: number
+  slot1: number
+  slot2: number
+  slot3: number
+}

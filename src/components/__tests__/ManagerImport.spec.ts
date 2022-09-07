@@ -16,13 +16,12 @@ import { useSlotsStore } from 'stores/slots';
 installQuasarPlugin({ plugins: { Notify } });
 
 jest
-  .useFakeTimers('modern')
   .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
 
 const notifyMocked = jest.fn();
-// To test export to file and notification, exportFile and useQuasar needs to be mocked
+// To test notification, useQuasar needs to be mocked
 jest.mock('quasar', () => {
   // Original functions and props, used to get normal use of Quasar, and mock only few functions.
   const original = jest.requireActual('quasar') as Record<string, unknown>;

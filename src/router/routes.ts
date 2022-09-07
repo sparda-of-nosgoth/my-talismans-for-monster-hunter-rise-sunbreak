@@ -9,16 +9,11 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/talismans/',
+    path: '/skills',
     component: () => import('layouts/AppLayout.vue'),
     children: [
-      { path: 'import_export', component: () => import('components/ManagerImportExport.vue') },
+      { path: '/translation', component: () => import('pages/SkillTranslation.vue') },
     ],
-  },
-  {
-    path: '/skills/translation',
-    component: () => import('layouts/AppLayout.vue'),
-    children: [{ path: '', component: () => import('pages/SkillTranslation.vue') }],
   },
 
   // Always leave this as last one,

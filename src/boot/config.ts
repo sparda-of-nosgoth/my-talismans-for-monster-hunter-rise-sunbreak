@@ -1,5 +1,4 @@
-import { boot } from 'quasar/wrappers';
+const appVersion = import.meta.env.PACKAGE_VERSION;
+const remoteSaveSpreadsheetId = import.meta.env.VITE_REMOTE_SAVE_SPREADSHEET_ID;
 
-export default boot(async ({ app }) => {
-  app.config.globalProperties.$appVersion = import.meta.env.PACKAGE_VERSION;
-});
+export { appVersion, remoteSaveSpreadsheetId };

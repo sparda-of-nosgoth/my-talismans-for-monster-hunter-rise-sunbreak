@@ -3,11 +3,11 @@ import { useI18n } from 'vue-i18n';
 import { useSettingsStore } from 'stores/settings';
 import { watch } from 'vue';
 
-const settingsStore = useSettingsStore();
+const settings = useSettingsStore();
 const { locale, availableLocales } = useI18n({ useScope: 'global' });
 
 watch(locale, (newLocale: string) => {
-  settingsStore.updateLocale(newLocale);
+  settings.updateLocale(newLocale);
 });
 </script>
 

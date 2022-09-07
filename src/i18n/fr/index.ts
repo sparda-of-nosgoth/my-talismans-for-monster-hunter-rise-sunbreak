@@ -189,6 +189,27 @@ export default {
         label: 'Français',
       },
     },
+    remote_save: {
+      conflict_dialog: {
+        content: 'Il y a un ou plusieurs conflits entre la sauvegarde locale et la sauvegarde distante, veuillez-sélectionner une résolution.',
+        local_save_title: 'Sauvegarde locale :',
+        remote_save_title: 'Sauvegarde distante :',
+        title: 'Conflits entre les sauvegardes',
+        button: {
+          keep_remote: 'Conserver la modification distante',
+          keep_local: 'Conserver la modification locale',
+        },
+      },
+      enabled: 'Sauvegarde activée avec le compte : {account}',
+      login: {
+        error: 'Impossible de se connecter avec le compte Google',
+      },
+      logout: {
+        label: 'Se déconnecter',
+      },
+      title: 'Sauvegarde des données',
+      tooltip: 'Se connecter avec un compte permet de retrouver ses données sur d\'autres appareils',
+    },
   },
   ...skillTranslation,
   ...skillTypeTranslation,

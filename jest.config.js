@@ -15,6 +15,8 @@ module.exports = {
       isolatedModules: true,
     },
   },
+  timers: 'modern',
+  setupFilesAfterEnv: ['./jest.setup.js'],
   // Jest assumes we are testing in node environment, specify jsdom environment instead
   testEnvironment: 'jsdom',
   // noStackTrace: true,

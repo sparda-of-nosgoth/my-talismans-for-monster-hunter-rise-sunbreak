@@ -37,11 +37,11 @@ describe('components/SettingsLocaleSelector', () => {
 
     expect(i18n.global.locale.value).toBe('fr');
     expect(vm.locale).toBe('fr');
-    expect(vm.settingsStore.locale).toBe('fr');
+    expect(vm.settings.locale).toBe('fr');
     const select = wrapper.getComponent(QSelect);
     await select.setValue('en');
     expect(i18n.global.locale.value).toBe('en');
     expect(vm.locale).toBe('en');
-    expect(vm.settingsStore.locale).toBe('en');
+    expect(vm.settings.locale).toBe('en');
   });
 });
