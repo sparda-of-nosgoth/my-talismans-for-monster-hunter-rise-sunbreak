@@ -15,6 +15,12 @@ const { dialogs, drawers } = useManagerStore();
     <app-header v-if="!$q.screen.xs" />
     <app-header-for-mobile v-else />
 
+    <q-ajax-bar
+      position="bottom"
+      color="secondary"
+      size="10px"
+    />
+
     <q-drawer
       v-model="drawers.showSettings"
       side="left"

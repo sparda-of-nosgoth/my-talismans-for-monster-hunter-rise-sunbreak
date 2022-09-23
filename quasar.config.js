@@ -32,7 +32,9 @@ module.exports = configure((/* ctx */) => ({
   // https://v2.quasar.dev/quasar-cli-vite/boot-files
   boot: [
     'config',
-    'local-storage',
+    'data-storage',
+    'google-api',
+    'google-signin',
     'i18n',
   ],
 
@@ -62,7 +64,7 @@ module.exports = configure((/* ctx */) => ({
       node: 'node16',
     },
 
-    vueRouterMode: 'hash', // available values: 'hash', 'history'
+    vueRouterMode: 'history', // available values: 'hash', 'history'
     // vueRouterBase,
     // vueDevtools,
     // vueOptionsAPI: false,
@@ -117,6 +119,7 @@ module.exports = configure((/* ctx */) => ({
 
     // Quasar plugins
     plugins: [
+      'Dialog',
       'Notify',
     ],
   },

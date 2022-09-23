@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TemporaryTalisman } from 'src/composables/talisman-import';
+import { TemporaryTalisman } from 'src/models/talisman';
 
 defineProps<{
   message: string

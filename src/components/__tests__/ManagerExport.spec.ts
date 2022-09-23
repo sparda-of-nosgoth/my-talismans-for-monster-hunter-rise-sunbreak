@@ -17,7 +17,6 @@ import { useSlotsStore } from 'stores/slots';
 installQuasarPlugin({ plugins: { Notify } });
 
 jest
-  .useFakeTimers('modern')
   .setSystemTime(new Date('2022-07-26').getTime());
 
 jest.mock('boot/i18n');
@@ -89,7 +88,7 @@ describe('components/ManagerExport', () => {
     await vm.exportTable();
     expect(exportFileMocked)
       .toHaveBeenCalledWith(
-        `mhrs_talismansvue--${_now()}.csv`,
+        `mhrs_talismans-${_now()}.csv`,
         'Speed Sharpening,1,Weakness Exploit,1,0,0,0\r\n'
         + 'Master Mounter,1,Slugger,1,1,1,0\r\n'
         + 'Agitator,2,,,2,1,0',

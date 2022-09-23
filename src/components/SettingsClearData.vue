@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useTalismanStore } from 'stores/talismans';
 
-const talismanStore = useTalismanStore();
+const { clear } = useTalismanStore();
 
 const confirmDialog = ref(false);
 function showConfirmDialog() {
@@ -10,7 +10,7 @@ function showConfirmDialog() {
 }
 
 function clearAllData() {
-  talismanStore.clear();
+  clear();
   confirmDialog.value = false;
 }
 </script>

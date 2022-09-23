@@ -7,10 +7,6 @@ import { Talisman } from 'src/models/talisman';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
 
-jest
-  .useFakeTimers('modern')
-  .setSystemTime(new Date('2022-07-26').getTime());
-
 jest.mock('boot/i18n');
 
 describe('stores/talismans', () => {
@@ -154,6 +150,20 @@ describe('stores/talismans', () => {
       slots: getSlotsById('2-1-0'),
       forMelding: true,
     }));
+  });
+
+  it('load new talismans', () => {
+    const talismanStore = useTalismanStore();
+    talismanStore.talismans.push(talisman);
+    talismanStore.talismans.push(talisman);
+
+    expect(talismanStore.talismans).toStrictEqual([talisman, talisman]);
+    expect(talismanStore.talismans).toHaveLength(2);
+
+    talismanStore.loadTalismans([talisman, talisman, talisman]);
+
+    expect(talismanStore.talismans).toStrictEqual([talisman, talisman, talisman]);
+    expect(talismanStore.talismans).toHaveLength(3);
   });
 
   it('clear all data', () => {

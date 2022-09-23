@@ -11,9 +11,9 @@ describe('stores/manager', () => {
   });
 
   it('toggle settings drawer', () => {
-    const { toggleSettings, drawers } = useManagerStore();
+    const { toggleSettingsDialog, drawers } = useManagerStore();
     expect(drawers.showSettings).toBeFalsy();
-    toggleSettings();
+    toggleSettingsDialog();
     expect(drawers.showSettings).toBeTruthy();
   });
 
@@ -25,16 +25,16 @@ describe('stores/manager', () => {
   });
 
   it('toggle import export dialog', () => {
-    const { toggleImportExport, dialogs } = useManagerStore();
+    const { toggleImportExportDialog, dialogs } = useManagerStore();
     expect(dialogs.showImportExport).toBeFalsy();
-    toggleImportExport();
+    toggleImportExportDialog();
     expect(dialogs.showImportExport).toBeTruthy();
   });
 
   it('toggle talisman\'s form dialog', () => {
-    const { toggleTalismanForm, dialogs } = useManagerStore();
+    const { toggleTalismanFormDialog, dialogs } = useManagerStore();
     expect(dialogs.showTalismanForm).toBeFalsy();
-    toggleTalismanForm();
+    toggleTalismanFormDialog();
     expect(dialogs.showTalismanForm).toBeTruthy();
   });
 });

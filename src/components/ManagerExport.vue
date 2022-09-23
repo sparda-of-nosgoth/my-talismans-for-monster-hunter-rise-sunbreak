@@ -12,7 +12,7 @@ const { exportedTalismans } = useTalismanExport(talismans);
 
 function exportTable() {
   const status = exportFile(
-    `mhrs_talismansvue--${_now()}.csv`,
+    `mhrs_talismans-${_now()}.csv`,
     exportedTalismans.value,
     'text/csv',
   );

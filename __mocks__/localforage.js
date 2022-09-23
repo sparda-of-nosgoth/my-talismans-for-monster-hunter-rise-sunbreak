@@ -9,11 +9,11 @@ localforage.__setMockData__ = (data) => { mockData = data; };
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line no-underscore-dangle
-localforage.getItem = () => new Promise((resolve, reject) => {
+localforage.getItem = () => new Promise((resolve) => {
   if (mockData !== null) {
     resolve(mockData);
   } else {
-    reject(false);
+    resolve(null);
   }
 });
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

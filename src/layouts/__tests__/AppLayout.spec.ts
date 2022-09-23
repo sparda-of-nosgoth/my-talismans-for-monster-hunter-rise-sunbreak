@@ -11,6 +11,9 @@ import { createTestingPinia } from '@pinia/testing';
 
 installQuasarPlugin();
 
+jest.mock('boot/config');
+jest.mock('boot/google-api');
+jest.mock('boot/google-signin');
 jest.mock('boot/i18n');
 
 describe('layouts/AppLayout', () => {

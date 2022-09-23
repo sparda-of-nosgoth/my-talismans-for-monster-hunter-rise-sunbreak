@@ -1,9 +1,9 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
-  title: string,
-  link: string,
-  icon?: string,
-  separator?: boolean,
+  title: string
+  link?: string
+  icon?: string
+  separator?: boolean
 }>(), {
   link: '#',
   icon: '',

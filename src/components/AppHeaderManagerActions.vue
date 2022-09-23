@@ -2,7 +2,7 @@
 import { useManagerStore } from 'stores/manager';
 
 const {
-  filters, toggleHelp, toggleImportExport, toggleTalismanForm,
+  filters, toggleHelp, toggleImportExportDialog, toggleTalismanFormDialog,
 } = useManagerStore();
 </script>
 
@@ -14,7 +14,7 @@ const {
     icon="add"
     color="grey"
     :aria-label="$t('manager.tooltip.add_talisman')"
-    @click="toggleTalismanForm"
+    @click="toggleTalismanFormDialog"
   >
     <q-tooltip
       :delay="1000"
@@ -28,7 +28,7 @@ const {
     icon="drive_folder_upload"
     color="grey"
     :aria-label="$t('manager.tooltip.import_export_talismans')"
-    @click="toggleImportExport"
+    @click="toggleImportExportDialog"
   >
     <q-tooltip
       :delay="1000"

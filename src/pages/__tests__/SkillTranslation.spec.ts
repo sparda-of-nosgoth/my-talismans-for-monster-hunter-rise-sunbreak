@@ -3,7 +3,7 @@ import {
 } from '@jest/globals';
 import { installQuasarPlugin, qLayoutInjections } from '@quasar/quasar-app-extension-testing-unit-jest';
 import {
-  config, flushPromises, mount, shallowMount,
+  config, mount, shallowMount,
 } from '@vue/test-utils';
 import TranslationSkill from 'pages/SkillTranslation.vue';
 import { QCard, QItem } from 'quasar';
@@ -47,7 +47,6 @@ describe('pages/SkillTranslation', () => {
     });
     const { vm } = wrapper;
 
-    await flushPromises();
     const cards = wrapper.findAllComponents(QCard);
     expect(vm.skillTypes).toHaveLength(9);
     expect(cards).toHaveLength(9);

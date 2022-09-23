@@ -4,9 +4,12 @@ import TalismanActionToggles from 'components/TalismanActionToggles.vue';
 import TalismanSlots from 'components/TalismanSlots.vue';
 import TalismanDeleteButton from 'components/TalismanDeleteButton.vue';
 
-defineProps<{
+withDefaults(defineProps<{
   talisman: Talisman
-}>();
+  readonly?: boolean
+}>(), {
+  readonly: false,
+});
 </script>
 
 <template>
@@ -38,9 +41,15 @@ defineProps<{
     <q-separator></q-separator>
 
     <q-card-actions>
-      <talisman-action-toggles :talisman="talisman" />
+      <talisman-action-toggles
+        :talisman="talisman"
+        :readonly="readonly"
+      />
       <q-space />
-      <talisman-delete-button :talisman="talisman" />
+      <talisman-delete-button
+        v-if="!readonly"
+        :talisman="talisman"
+      />
     </q-card-actions>
   </q-card>
 </template>

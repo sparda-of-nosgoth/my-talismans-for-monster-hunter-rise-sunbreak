@@ -2,7 +2,7 @@ import {
   describe, expect, it, jest,
 } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
-import { config, shallowMount } from '@vue/test-utils';
+import { config, mount, shallowMount } from '@vue/test-utils';
 import SettingsClearData from 'components/SettingsClearData.vue';
 import { i18n } from 'boot/i18n';
 import { createTestingPinia } from '@pinia/testing';
@@ -10,6 +10,7 @@ import { Talisman } from 'src/models/talisman';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSkillStore } from 'stores/skills';
 import { useSlotsStore } from 'stores/slots';
+import { useTalismanStore } from 'stores/talismans';
 
 installQuasarPlugin();
 
@@ -36,35 +37,50 @@ describe('components/SettingsClearData', () => {
     expect(vm.confirmDialog).toBeTruthy();
   });
 
-  it('can clear data from stores', () => {
-    const { vm } = shallowMount(SettingsClearData, {
+  it('can clear data from stores', async () => {
+    const { vm } = mount(SettingsClearData, {
       global: {
-        plugins: [createTestingPinia({ stubActions: false })],
+        plugins: [createTestingPinia({
+          initialState: {
+            talismans: {
+              talismans: [
+                new Talisman({
+                  skill1: getSkillById('speed-sharpening'),
+                  skill1Level: 1,
+                  skill2: getSkillById('weakness-exploit'),
+                  skill2Level: 1,
+                }),
+                new Talisman({
+                  skill1: getSkillById('bubbly-dance'),
+                  skill1Level: 1,
+                  slots: getSlotsById('2-2-1'),
+                  favorite: true,
+                }),
+                new Talisman({
+                  skill1: getSkillById('agitator'),
+                  skill1Level: 2,
+                  slots: getSlotsById('2-1-0'),
+                  favorite: true,
+                }),
+                new Talisman({
+                  skill1: getSkillById('master-mounter'),
+                  skill1Level: 1,
+                  skill2: getSkillById('slugger'),
+                  skill2Level: 1,
+                  slots: getSlotsById('1-1-0'),
+                }),
+              ],
+            },
+          },
+          stubActions: false,
+        })],
       },
     });
+    const talismanStore = useTalismanStore();
 
-    vm.talismanStore.addTalisman(new Talisman({
-      skill1: getSkillById('speed-sharpening'),
-      skill1Level: 1,
-      skill2: getSkillById('weakness-exploit'),
-      skill2Level: 1,
-      slots: getSlotsById('0-0-0'),
-    }));
-    vm.talismanStore.addTalisman(new Talisman({
-      skill1: getSkillById('master-mounter'),
-      skill1Level: 1,
-      skill2: getSkillById('slugger'),
-      skill2Level: 1,
-      slots: getSlotsById('1-1-0'),
-    }));
-    vm.talismanStore.addTalisman(new Talisman({
-      skill1: getSkillById('agitator'),
-      skill1Level: 2,
-      slots: getSlotsById('2-1-0'),
-    }));
     expect(typeof vm.clearAllData).toBe('function');
-    expect(vm.talismanStore.talismans).toHaveLength(3);
+    expect(talismanStore.talismans).toHaveLength(4);
     vm.clearAllData();
-    expect(vm.talismanStore.talismans).toHaveLength(0);
+    expect(talismanStore.talismans).toHaveLength(0);
   });
 });
