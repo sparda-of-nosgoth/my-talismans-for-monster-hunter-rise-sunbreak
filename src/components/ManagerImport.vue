@@ -3,7 +3,6 @@ import { computed, ref } from 'vue';
 import { useTalismanImport } from 'src/composables/talisman-import';
 import ManagerImportListError from 'components/ManagerImportListError.vue';
 import { useQuasar } from 'quasar';
-import _each from 'lodash/each';
 import { useTalismanStore } from 'stores/talismans';
 import { useI18n } from 'vue-i18n';
 
@@ -17,9 +16,7 @@ const submitDisabled = computed(() => talismansToImport.value.length <= 0);
 
 function submitImport() {
   if (talismansToImport.value) {
-    _each(talismansToImport.value, (talisman) => {
-      talismanStore.addTalisman(talisman);
-    });
+    talismanStore.addTalismans(talismansToImport.value);
     notify({
       color: 'positive',
       position: 'bottom',
