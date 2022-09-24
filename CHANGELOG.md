@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed icons from images folder to icons folder.
 - Updated Favicon.
 - Some refactoring on components.
+- Some changes to skill's type :
+  - Defiance change from Survival to Stats Defensive.
+  - Element Exploit change from Survival to Battle.
 
 ### Removed
 
