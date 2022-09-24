@@ -19,9 +19,8 @@ const handleOnError = () => {
 };
 
 const handleOnSuccess = async (response: CredentialResponse) => {
-  const { email } = decodeJwt(String(response.credential));
-
   try {
+    const { email } = decodeJwt(String(response.credential));
     await initRemoteStorage(String(email));
   } catch (e) {
     handleOnError();
