@@ -35,6 +35,16 @@ describe('stores/talismans', () => {
     expect(talismanStore.talismans).toStrictEqual([talisman]);
   });
 
+  it('add many Talismans', () => {
+    const talismanStore = useTalismanStore();
+    expect(talismanStore.talismans).toHaveLength(0);
+
+    talismanStore.addTalismans([talisman, talisman]);
+
+    expect(talismanStore.talismans).toHaveLength(2);
+    expect(talismanStore.talismans).toStrictEqual([talisman, talisman]);
+  });
+
   it('delete a Talisman', () => {
     const talismanStore = useTalismanStore();
     talismanStore.talismans.push(talisman);

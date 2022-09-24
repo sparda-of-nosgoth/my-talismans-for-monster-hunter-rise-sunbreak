@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cleaning on Changelog: removed sections separators, added more details.
 - Changed icons from images folder to icons folder.
 - Updated Favicon.
+- Import improvement.
 - Some refactoring on components.
 - Some changes to skill's type :
   - Defiance change from Survival to Stats Defensive.

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import _concat from 'lodash/concat';
 import _findIndex from 'lodash/findIndex';
 import _pull from 'lodash/pull';
 import { Talisman } from 'src/models/talisman';
@@ -11,6 +12,9 @@ export const useTalismanStore = defineStore('talismans', {
   actions: {
     addTalisman(talisman: Talisman) {
       this.talismans.push(talisman);
+    },
+    addTalismans(talismans: Talisman[]) {
+      this.talismans = _concat(this.talismans, talismans);
     },
     deleteTalisman(talisman: Talisman) {
       _pull(this.talismans, talisman);
