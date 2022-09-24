@@ -37,7 +37,7 @@ function submitImport() {
     </h2>
     <div class="row">
       <div class="q-pa-md col-sm-12 col-md-6">
-        <q-form>
+        <q-form @submit.prevent>
           <q-input
             v-model="talismanList"
             outlined
