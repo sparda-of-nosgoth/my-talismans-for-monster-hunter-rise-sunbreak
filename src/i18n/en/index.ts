@@ -205,7 +205,7 @@ export default {
         error: 'Unable to sign in with Google account',
       },
       logout: {
-        label: 'Logout',
+        label: 'Log out',
       },
       title: 'Data saving',
       tooltip: 'Login with an account to be able to retrieve your data on other devices',
