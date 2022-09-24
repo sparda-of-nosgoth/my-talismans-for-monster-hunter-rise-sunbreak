@@ -10,7 +10,7 @@ import AppHeaderMenuButton from 'components/AppHeaderMenuButton.vue';
     elevated
   >
     <q-toolbar>
-      <app-header-menu-button class="text-primary" />
+      <app-header-menu-button />
       <q-separator
         dark
         vertical
