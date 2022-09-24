@@ -1101,21 +1101,21 @@ export const skillList: Skill[] = [
   },
   {
     id: 'defiance',
-    type: 'survival', // TODO : verify ?
+    type: 'stats-defensive',
     levelMaximum: 5,
     foundOnTalismans: false,
     decorations: [],
   },
   {
     id: 'sneak-attack',
-    type: 'battle', // TODO : verify ?
+    type: 'battle',
     levelMaximum: 3,
     foundOnTalismans: false,
     decorations: [],
   },
   {
     id: 'adrenaline-rush',
-    type: 'battle', // TODO : verify ?
+    type: 'battle',
     levelMaximum: 3,
     foundOnTalismans: false,
     decorations: [],
@@ -1199,7 +1199,7 @@ export const skillList: Skill[] = [
   },
   {
     id: 'element-exploit',
-    type: 'survival', // TODO : verify ?
+    type: 'battle',
     levelMaximum: 3,
     foundOnTalismans: false,
     decorations: [],
