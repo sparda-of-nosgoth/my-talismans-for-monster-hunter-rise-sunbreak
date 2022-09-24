@@ -9,10 +9,10 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/skills',
+    path: '/skills/',
     component: () => import('layouts/AppLayout.vue'),
     children: [
-      { path: '/translation', component: () => import('pages/SkillTranslation.vue') },
+      { path: 'translation', component: () => import('pages/SkillTranslation.vue') },
     ],
   },
 
