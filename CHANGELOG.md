@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Some changes to skill's type :
   - Defiance change from Survival to Stats Defensive.
   - Element Exploit change from Survival to Battle.
+- Updated readme.
 
 ### Removed
 

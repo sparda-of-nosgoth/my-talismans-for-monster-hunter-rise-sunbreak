@@ -33,6 +33,17 @@ yarn install
 yarn dev
 ```
 
+### Tests
+```bash
+yarn test:unit
+```
+```bash
+yarn test:unit:ui # use Majestic UI
+```
+```bash
+yarn test:unit:coverage # generate coverage report
+```
+
 ### Lint the files
 ```bash
 yarn lint
