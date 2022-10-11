@@ -1,27 +1,26 @@
 import {
-  beforeEach,
   describe, expect, it, jest,
 } from '@jest/globals';
-import { useSkillStore } from 'stores/skills';
-import { createPinia, setActivePinia } from 'pinia';
+import {
+  filterByType,
+  getSkillById,
+  getSkillByName,
+  sortedSkills,
+  sortedSkillsFoundOnTalismanOnly,
+} from 'src/models/skill';
 
 jest.mock('boot/i18n');
 
-describe('stores/skill', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia());
-  });
-
+describe('models/skill', () => {
   it('can get skill by id', () => {
-    const { getSkillById } = useSkillStore();
     expect(getSkillById('botanist')).toStrictEqual({
       id: 'botanist',
       type: 'quest',
       levelMaximum: 4,
       foundOnTalismans: true,
       decorations: [
-        { id: 'botany-jewel-1', requiredSlot: 1, skillPoints: 1 },
-        { id: 'botany-jewel-4', requiredSlot: 4, skillPoints: 3 },
+        { id: 'botanist-jewel+1', requiredSlot: 1, skillPoints: 1 },
+        { id: 'botanist-jewel+3', requiredSlot: 4, skillPoints: 3 },
       ],
     });
 
@@ -30,7 +29,6 @@ describe('stores/skill', () => {
   });
 
   it('can get a Skill by a translated name', () => {
-    const { getSkillByName } = useSkillStore();
     // Find with a name translated in French
     expect(getSkillByName('Mise à mort')).toStrictEqual({
       id: 'weakness-exploit',
@@ -38,7 +36,7 @@ describe('stores/skill', () => {
       levelMaximum: 3,
       foundOnTalismans: true,
       decorations: [
-        { id: 'tenderizer-jewel-2', requiredSlot: 2, skillPoints: 1 },
+        { id: 'weakness-exploit-jewel+1', requiredSlot: 2, skillPoints: 1 },
       ],
     });
 
@@ -49,8 +47,8 @@ describe('stores/skill', () => {
       levelMaximum: 3,
       foundOnTalismans: true,
       decorations: [
-        { id: 'grinder-jewel-2', requiredSlot: 1, skillPoints: 1 },
-        { id: 'grinder-jewel-4', requiredSlot: 4, skillPoints: 3 },
+        { id: 'speed-sharpening-jewel+1', requiredSlot: 1, skillPoints: 1 },
+        { id: 'speed-sharpening-jewel+3', requiredSlot: 4, skillPoints: 3 },
       ],
     });
 
@@ -59,7 +57,6 @@ describe('stores/skill', () => {
   });
 
   it('can filter skills by SkillType', () => {
-    const { filterByType, getSkillById } = useSkillStore();
     expect(filterByType({ id: 'quest' })).toStrictEqual([
       getSkillById('affinity-sliding'),
       getSkillById('botanist'),
@@ -81,7 +78,6 @@ describe('stores/skill', () => {
   });
 
   it('has a computed to sort skills by translated name', () => {
-    const { getSkillById, sortedSkills } = useSkillStore();
     // Sorted in French
     expect(sortedSkills).toStrictEqual([
       getSkillById('dereliction'),
@@ -105,6 +101,7 @@ describe('stores/skill', () => {
       getSkillById('critical-boost'),
       getSkillById('ice-attack'),
       getSkillById('bombardier'),
+      getSkillById('buildup-boost'),
       getSkillById('botanist'),
       getSkillById('earplugs'),
       getSkillById('divine-blessing'),
@@ -117,6 +114,7 @@ describe('stores/skill', () => {
       getSkillById('recovery-up'),
       getSkillById('good-luck'),
       getSkillById('item-prolonger'),
+      getSkillById('intrepid-heart'),
       getSkillById('slugger'),
       getSkillById('focus'),
       getSkillById('counterstrike'),
@@ -209,7 +207,8 @@ describe('stores/skill', () => {
       getSkillById('guard-up'),
       getSkillById('wide-range'),
       getSkillById('coalescence'),
-      getSkillById('chain-crit'),
+      getSkillById('embolden'),
+      getSkillById('burst'),
       getSkillById('resentment'),
       getSkillById('reload-speed'),
       getSkillById('stamina-thief'),
@@ -221,7 +220,6 @@ describe('stores/skill', () => {
   });
 
   it('has a computed to filter skills found on talisman only, sorted by translated names', () => {
-    const { getSkillById, sortedSkillsFoundOnTalismanOnly } = useSkillStore();
     // Sorted in French
     expect(sortedSkillsFoundOnTalismanOnly).toStrictEqual([
       getSkillById('protective-polish'),
@@ -328,7 +326,6 @@ describe('stores/skill', () => {
       getSkillById('guard-up'),
       getSkillById('wide-range'),
       getSkillById('coalescence'),
-      getSkillById('chain-crit'),
       getSkillById('resentment'),
       getSkillById('reload-speed'),
       getSkillById('stamina-thief'),

@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import _cloneDeep from 'lodash/cloneDeep';
 import { useSkillFilter } from 'src/composables/skill-filter';
 import { useTalismanValidator } from 'src/composables/talisman-validator';
-import { useSkillStore } from 'stores/skills';
 import { Talisman } from 'src/models/talisman';
-import { useSlotsStore } from 'stores/slots';
-import ManagerTalismanFormDialogSlot from 'components/ManagerTalismanFormSlot.vue';
+import ManagerTalismanFormSlots from 'components/ManagerTalismanFormSlots.vue';
 import { QSelect } from 'quasar';
 import { useTalismanStore } from 'stores/talismans';
+import { sortedSkillsFoundOnTalismanOnly } from 'src/models/skill';
 
 const { addTalisman } = useTalismanStore();
-const { sortedSkillsFoundOnTalismanOnly } = useSkillStore();
-const { getSlotsById } = useSlotsStore();
 const talisman = ref<Talisman>(new Talisman({
-  slots: getSlotsById('0-0-0'),
+  slotsId: '0-0-0',
 }));
 const { filteredSkills, filterSkillByName } = useSkillFilter(sortedSkillsFoundOnTalismanOnly);
 const { errors, isValid } = useTalismanValidator(talisman);
@@ -24,14 +21,6 @@ function filterSkills(needle: string, update: (callback: () => void) => void): v
     filterSkillByName(needle);
   });
 }
-
-watch(
-  [() => talisman.value.slots.slot1, () => talisman.value.slots.slot2, () => talisman.value.slots.slot3],
-  ([slot1, slot2, slot3]) => {
-    talisman.value.slots.id = `${slot1}-${slot2}-${slot3}`;
-  },
-  { deep: true },
-);
 
 function onSubmit() {
   // If there is no errors, we add talisman to list
@@ -58,48 +47,48 @@ function onSubmit() {
         >
           <div>
             <q-select
-              v-model="talisman.skill1"
+              v-model="talisman.primarySkill"
               :options="filteredSkills"
               :option-label="(skill) => $t(skill.id)"
-              :label="$t('manager.talisman.form.skill1.label')"
+              :label="$t('manager.talisman.form.primary_skill.label')"
               class="q-pa-sm"
               lazy-rules
               :rules="[
-                () => !errors.skill1.isEmpty || $t('manager.talisman.validation.skill1.is_empty'),
-                () => !errors.skill1.notFound || $t('manager.talisman.validation.skill1.not_found'),
-                () => !errors.skill1Level.isEmpty || $t('manager.talisman.validation.skill1Level.is_empty'),
-                () => !errors.skill1Level.exceedsMaximum || $t('manager.talisman.validation.skill1Level.exceeds_maximum', { level: talisman.skill1Level, level_maximum: talisman.skill1?.levelMaximum }),
+                () => !errors.primarySkill.isEmpty || $t('manager.talisman.validation.primary_skill.is_empty'),
+                () => !errors.primarySkill.notFound || $t('manager.talisman.validation.primary_skill.not_found'),
+                () => !errors.primarySkillLevel.isEmpty || $t('manager.talisman.validation.primarySkillLevel.is_empty'),
+                () => !errors.primarySkillLevel.exceedsMaximum || $t('manager.talisman.validation.primarySkillLevel.exceeds_maximum', { level: talisman.primarySkillLevel, level_maximum: talisman.primarySkill?.levelMaximum }),
               ]"
               input-debounce="0"
               use-input
               @filter="filterSkills"
             />
             <q-slider
-              v-model="talisman.skill1Level"
+              v-model="talisman.primarySkillLevel"
               :min="1"
               :max="4"
               class="q-pa-sm"
               marker-labels
             />
             <q-select
-              v-model="talisman.skill2"
+              v-model="talisman.secondarySkill"
               :options="filteredSkills"
               :option-label="(skill) => $t(skill.id)"
-              :label="$t('manager.talisman.form.skill2.label')"
+              :label="$t('manager.talisman.form.secondary_skill.label')"
               class="q-pa-sm"
               lazy-rules
               :rules="[
-                () => !errors.skill2.notFound || $t('manager.talisman.validation.skill2.not_found'),
-                () => !errors.skill2.isEmpty || $t('manager.talisman.validation.skill2.is_empty'),
-                () => !errors.skill2Level.isEmpty || $t('manager.talisman.validation.skill2Level.is_empty'),
-                () => !errors.skill2Level.exceedsMaximum || $t('manager.talisman.validation.skill2Level.exceeds_maximum', { level: talisman.skill2Level, level_maximum: talisman.skill2?.levelMaximum }),
+                () => !errors.secondarySkill.notFound || $t('manager.talisman.validation.secondary_skill.not_found'),
+                () => !errors.secondarySkill.isEmpty || $t('manager.talisman.validation.secondary_skill.is_empty'),
+                () => !errors.secondarySkillLevel.isEmpty || $t('manager.talisman.validation.secondarySkillLevel.is_empty'),
+                () => !errors.secondarySkillLevel.exceedsMaximum || $t('manager.talisman.validation.secondarySkillLevel.exceeds_maximum', { level: talisman.secondarySkillLevel, level_maximum: talisman.secondarySkill?.levelMaximum }),
               ]"
               input-debounce="0"
               use-input
               @filter="filterSkills"
             />
             <q-slider
-              v-model="talisman.skill2Level"
+              v-model="talisman.secondarySkillLevel"
               :min="0"
               :max="4"
               class="q-pa-sm"
@@ -109,24 +98,7 @@ function onSubmit() {
           <div class="row q-pa-sm">
             <span class="text-bold">{{ $t('manager.talisman.form.slots.label') }}</span>
             <div class="row q-pa-sm full-width justify-center">
-              <q-btn-group>
-                <manager-talisman-form-dialog-slot v-model="talisman.slots.slot1" />
-                <manager-talisman-form-dialog-slot
-                  v-model="talisman.slots.slot2"
-                  :options="[
-                    { label: '0', value: 0 },
-                    { label: '1', value: 1 },
-                    { label: '2', value: 2 },
-                  ]"
-                />
-                <manager-talisman-form-dialog-slot
-                  v-model="talisman.slots.slot3"
-                  :options="[
-                    { label: '0', value: 0 },
-                    { label: '1', value: 1 },
-                  ]"
-                />
-              </q-btn-group>
+              <manager-talisman-form-slots v-model="talisman.slots" />
             </div>
             <div v-if="errors.slots.notFound">
               <q-icon

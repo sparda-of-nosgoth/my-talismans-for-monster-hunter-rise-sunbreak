@@ -117,7 +117,6 @@ export default {
   bloodlust: 'Bloodlust',
   'blood-rite': 'Blood Rite',
   burst: 'Burst',
-  'chain-crit': 'Chain Crit',
   'charge-master': 'Charge Master',
   coalescence: 'Coalescence',
   dereliction: 'Dereliction',

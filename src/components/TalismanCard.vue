@@ -20,13 +20,13 @@ withDefaults(defineProps<{
         vertical
       >
         <span class="col-12">
-          {{ `${$t(talisman.skill1.id)} ${talisman.skill1Level}` }}
+          {{ `${$t(talisman.primarySkillId)} ${talisman.primarySkillLevel}` }}
         </span>
         <span
           class="col-12"
-          v-if="talisman.skill2 != null"
+          v-if="talisman.secondarySkillId != null"
         >
-          {{ `${$t(talisman.skill2.id)} ${talisman.skill2Level}` }}
+          {{ `${$t(talisman.secondarySkillId)} ${talisman.secondarySkillLevel}` }}
         </span>
       </q-card-section>
       <q-separator vertical></q-separator>

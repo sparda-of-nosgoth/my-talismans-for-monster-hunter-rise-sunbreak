@@ -25,13 +25,13 @@ const columns = computed(() => [
     name: 'actions_prefix',
   },
   {
-    name: 'skill1',
+    name: 'primarySkill',
     required: true,
-    field: 'skill1',
+    field: 'primarySkill',
   },
   {
-    name: 'skill2',
-    field: 'skill2',
+    name: 'secondarySkill',
+    field: 'secondarySkill',
   },
   {
     name: 'slots',
@@ -95,19 +95,19 @@ const {
                     </div>
                   </q-td>
                   <q-td
-                    key="skill1"
+                    key="primarySkill"
                     :props="rowProps"
                   >
                     <span>
-                      {{ `${$t(rowProps.row.skill1.id)} ${rowProps.row.skill1Level}` }}
+                      {{ `${$t(rowProps.row.primarySkillId)} ${rowProps.row.primarySkillLevel}` }}
                     </span>
                   </q-td>
                   <q-td
-                    key="skill2"
+                    key="secondarySkill"
                     :props="rowProps"
                   >
-                    <span v-if="rowProps.row.skill2 != null">
-                      {{ `${$t(rowProps.row.skill2.id)} ${rowProps.row.skill2Level}` }}
+                    <span v-if="rowProps.row.secondarySkill != null">
+                      {{ `${$t(rowProps.row.secondarySkillId)} ${rowProps.row.secondarySkillLevel}` }}
                     </span>
                   </q-td>
                   <q-td
@@ -160,19 +160,19 @@ const {
                     </div>
                   </q-td>
                   <q-td
-                    key="skill1"
+                    key="primarySkill"
                     :props="rowProps"
                   >
                     <span>
-                      {{ `${$t(rowProps.row.skill1.id)} ${rowProps.row.skill1Level}` }}
+                      {{ `${$t(rowProps.row.primarySkillId)} ${rowProps.row.primarySkillLevel}` }}
                     </span>
                   </q-td>
                   <q-td
-                    key="skill2"
+                    key="secondarySkill"
                     :props="rowProps"
                   >
-                    <span v-if="rowProps.row.skill2 != null">
-                      {{ `${$t(rowProps.row.skill2.id)} ${rowProps.row.skill2Level}` }}
+                    <span v-if="rowProps.row.secondarySkill != null">
+                      {{ `${$t(rowProps.row.secondarySkillId)} ${rowProps.row.secondarySkillLevel}` }}
                     </span>
                   </q-td>
                   <q-td

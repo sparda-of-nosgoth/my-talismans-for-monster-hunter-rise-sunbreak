@@ -1,26 +1,26 @@
-import { Skill } from 'src/models/skill';
-import { Slots, slotsList } from 'src/models/slots';
+import { getSkillById, Skill } from 'src/models/skill';
+import { getSlotsById, Slots } from 'src/models/slots';
 
 export interface TalismanConstructor {
-  skill1?: Skill | null
-  skill1Level?: number
-  skill2?: Skill | null
-  skill2Level?: number
-  slots?: Slots
+  primarySkillId?: string
+  primarySkillLevel?: number
+  secondarySkillId?: string | null
+  secondarySkillLevel?: number
+  slotsId?: string
   forMelding?: boolean
   favorite?: boolean
 }
 
 export class Talisman {
-  skill1: Skill | null;
+  primarySkillId: string | null;
 
-  skill1Level: number;
+  primarySkillLevel: number;
 
-  skill2: Skill | null;
+  secondarySkillId: string | null;
 
-  skill2Level: number | null;
+  secondarySkillLevel: number | null;
 
-  slots: Slots;
+  slotsId: string;
 
   forMelding: boolean;
 
@@ -29,16 +29,40 @@ export class Talisman {
   weight: number;
 
   constructor({
-    skill1, skill1Level, skill2, skill2Level, slots, forMelding, favorite,
+    primarySkillId, primarySkillLevel, secondarySkillId, secondarySkillLevel, slotsId, forMelding, favorite,
   }: TalismanConstructor) {
-    this.skill1 = skill1 ?? null;
-    this.skill1Level = skill1Level ?? 1;
-    this.skill2 = skill2 ?? null;
-    this.skill2Level = skill2Level ?? null;
-    this.slots = slots ?? slotsList[0];
+    this.primarySkillId = primarySkillId ?? null;
+    this.primarySkillLevel = primarySkillLevel ?? 1;
+    this.secondarySkillId = secondarySkillId ?? null;
+    this.secondarySkillLevel = secondarySkillLevel ?? null;
+    this.slotsId = slotsId ?? '0-0-0';
     this.favorite = favorite ?? false;
     this.forMelding = forMelding ?? false;
     this.weight = 0;
+  }
+
+  get primarySkill(): Skill | null {
+    return getSkillById(this.primarySkillId ?? '') ?? null;
+  }
+
+  set primarySkill(primarySkill: Skill | null) {
+    this.primarySkillId = primarySkill ? primarySkill.id : null;
+  }
+
+  get secondarySkill(): Skill | null {
+    return getSkillById(this.secondarySkillId ?? '') ?? null;
+  }
+
+  set secondarySkill(secondarySkill: Skill | null) {
+    this.secondarySkillId = secondarySkill ? secondarySkill.id : null;
+  }
+
+  get slots(): Slots | null {
+    return getSlotsById(this.slotsId) ?? null;
+  }
+
+  set slots(slots: Slots | null) {
+    this.slotsId = slots ? slots.id : '0-0-0';
   }
 
   resetWeight(): Talisman {
@@ -55,10 +79,10 @@ export class Talisman {
 }
 
 export interface TemporaryTalisman {
-  skill1: string | null
-  skill1Level: number
-  skill2: string | null
-  skill2Level: number
+  primarySkillName: string | null
+  primarySkillLevel: number
+  secondarySkillName: string | null
+  secondarySkillLevel: number
   slot1: number
   slot2: number
   slot3: number

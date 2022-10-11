@@ -69,19 +69,19 @@ export function useMeldingFilter(talismans: Talisman[], options: MeldingFilterOp
   /**
    * If skills type are opposite, like SkillTypeInterface::BATTLE_SWORDSMAN and SkillTypeInterface::BATTLE_GUNNER,
    * we return a negative weight
-   * @param skill1 mandatory Skill, can't be null
-   * @param skill2 secondary Skill, can be null if you're unlucky
+   * @param primarySkill mandatory Skill, can't be null
+   * @param secondarySkill secondary Skill, can be null if you're unlucky
    */
-  function getSkillsTypeWeight(skill1: Skill, skill2: Skill | null): number {
-    // If this skill2 is empty, comparison is not useful.
-    if (!skill2) {
+  function getSkillsTypeWeight(primarySkill: Skill, secondarySkill: Skill | null): number {
+    // If this secondarySkill is empty, comparison is not useful.
+    if (!secondarySkill) {
       return 0;
     }
 
-    // If skill1 type is 'battle-gunner' and skill2 is 'battle-swordsman'
-    // or if skill1 type is 'battle-swordsman' and skill2 type is 'battle-gunner'
-    if ((skill1.type === 'battle-gunner' && skill2.type === 'battle-swordsman')
-      || (skill1.type === 'battle-swordsman' && skill2.type === 'battle-gunner')) {
+    // If primarySkill type is 'battle-gunner' and secondarySkill is 'battle-swordsman'
+    // or if primarySkill type is 'battle-swordsman' and secondarySkill type is 'battle-gunner'
+    if ((primarySkill.type === 'battle-gunner' && secondarySkill.type === 'battle-swordsman')
+      || (primarySkill.type === 'battle-swordsman' && secondarySkill.type === 'battle-gunner')) {
       return -200;
     }
 
@@ -159,7 +159,7 @@ export function useMeldingFilter(talismans: Talisman[], options: MeldingFilterOp
    * @param talismanToCompare currently compared talisman
    */
   function hasSkillInCommon(skill: Skill, talismanToCompare: Talisman): boolean {
-    return _indexOf([talismanToCompare.skill1?.id, talismanToCompare.skill2?.id], skill.id) > -1;
+    return _indexOf([talismanToCompare.primarySkillId, talismanToCompare.secondarySkillId], skill.id) > -1;
   }
 
   /**
@@ -221,15 +221,17 @@ export function useMeldingFilter(talismans: Talisman[], options: MeldingFilterOp
     }
 
     // Applying skill 1 weight.
-    talisman.updateWeight(getSkillWeight(talisman.skill1, talisman.skill1Level));
+    talisman.updateWeight(getSkillWeight(talisman.primarySkill, talisman.primarySkillLevel));
     // Applying skill 2 weight.
-    talisman.updateWeight(getSkillWeight(talisman.skill2, talisman.skill2Level));
+    talisman.updateWeight(getSkillWeight(talisman.secondarySkill, talisman.secondarySkillLevel));
     // Applying skill type weight.
-    talisman.updateWeight(getSkillsTypeWeight(<Skill>talisman.skill1, talisman.skill2));
+    talisman.updateWeight(getSkillsTypeWeight(<Skill>talisman.primarySkill, talisman.secondarySkill));
     // Applying slots weight, for each talisman's slots.
-    talisman.updateWeight(getSlot1Weight(talisman.slots.slot1));
-    talisman.updateWeight(getSlot2Weight(talisman.slots.slot2));
-    talisman.updateWeight(getSlot3Weight(talisman.slots.slot3));
+    if (talisman.slots) {
+      talisman.updateWeight(getSlot1Weight(talisman.slots.slot1));
+      talisman.updateWeight(getSlot2Weight(talisman.slots.slot2));
+      talisman.updateWeight(getSlot3Weight(talisman.slots.slot3));
+    }
 
     return talisman;
   }
@@ -240,9 +242,9 @@ export function useMeldingFilter(talismans: Talisman[], options: MeldingFilterOp
    */
   function calculateCommonSkillWeight(talisman: Talisman): Talisman {
     // Applying commons skills weight for talisman's skill 1.
-    talisman.updateWeight(getCommonSkillsWeight(talisman.skill1, talisman.weight));
+    talisman.updateWeight(getCommonSkillsWeight(talisman.primarySkill, talisman.weight));
     // Applying commons skills weight for talisman's skill 2.
-    talisman.updateWeight(getCommonSkillsWeight(talisman.skill2, talisman.weight));
+    talisman.updateWeight(getCommonSkillsWeight(talisman.secondarySkill, talisman.weight));
 
     return talisman;
   }

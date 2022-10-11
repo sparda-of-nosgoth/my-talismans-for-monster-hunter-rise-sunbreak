@@ -1,7 +1,8 @@
-export interface SkillType {
+interface SkillType {
   id: string
 }
-export const skillTypeList: SkillType[] = [
+
+const skillTypeList: SkillType[] = [
   { id: 'quest' },
   { id: 'item' },
   { id: 'stats-offensive' },
@@ -12,3 +13,7 @@ export const skillTypeList: SkillType[] = [
   { id: 'battle-gunner' },
   { id: 'set-bonus' },
 ];
+
+export type { SkillType };
+
+export { skillTypeList };

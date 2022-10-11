@@ -10,8 +10,6 @@ import { remoteSaveSpreadsheetId } from 'boot/config';
 import { googleCredentials } from 'boot/google-api';
 import { Talisman } from 'src/models/talisman';
 import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 import _now from 'lodash/now';
 
 installQuasarPlugin();
@@ -25,8 +23,6 @@ describe('utils/remote-storage', () => {
   config.global.plugins = [...config.global.plugins, i18n];
 
   setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
 
   afterEach(() => {
     googleCredentials.private_key = 'VITE_GOOGLE_CREDENTIALS_PRIVATE_KEY';
@@ -97,23 +93,23 @@ describe('utils/remote-storage', () => {
     const values = JSON.stringify({
       talismans: [
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 2,
-          slots: getSlotsById('2-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 2,
+          slotsId: '2-0-0',
           favorite: true,
         }),
         new Talisman({
-          skill1: getSkillById('blast-resistance'),
-          skill1Level: 2,
-          slots: getSlotsById('1-1-0'),
+          primarySkillId: 'blast-resistance',
+          primarySkillLevel: 2,
+          slotsId: '1-1-0',
           forMelding: true,
         }),
         new Talisman({
-          skill1: getSkillById('bombardier'),
-          skill1Level: 2,
-          skill2: getSkillById('paralysis-resistance'),
-          skill2Level: 1,
-          slots: getSlotsById('1-0-0'),
+          primarySkillId: 'bombardier',
+          primarySkillLevel: 2,
+          secondarySkillId: 'paralysis-resistance',
+          secondarySkillLevel: 1,
+          slotsId: '1-0-0',
           favorite: true,
         }),
       ],
@@ -132,23 +128,23 @@ describe('utils/remote-storage', () => {
     const values = JSON.stringify({
       talismans: [
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 2,
-          slots: getSlotsById('2-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 2,
+          slotsId: '2-0-0',
           favorite: false,
         }),
         new Talisman({
-          skill1: getSkillById('blast-resistance'),
-          skill1Level: 2,
-          slots: getSlotsById('1-1-0'),
+          primarySkillId: 'blast-resistance',
+          primarySkillLevel: 2,
+          slotsId: '1-1-0',
           forMelding: true,
         }),
         new Talisman({
-          skill1: getSkillById('bombardier'),
-          skill1Level: 2,
-          skill2: getSkillById('paralysis-resistance'),
-          skill2Level: 1,
-          slots: getSlotsById('1-0-0'),
+          primarySkillId: 'bombardier',
+          primarySkillLevel: 2,
+          secondarySkillId: 'paralysis-resistance',
+          secondarySkillLevel: 1,
+          slotsId: '1-0-0',
           favorite: true,
         }),
       ],

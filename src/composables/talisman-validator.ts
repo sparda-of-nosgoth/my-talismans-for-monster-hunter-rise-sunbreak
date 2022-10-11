@@ -3,24 +3,23 @@ import {
 } from 'vue';
 import _cloneDeep from 'lodash/cloneDeep';
 import { Talisman, TemporaryTalisman } from 'src/models/talisman';
-import { useSlotsStore } from 'stores/slots';
-import { useSkillStore } from 'stores/skills';
-import { Skill } from 'src/models/skill';
+import { getSkillByName, Skill } from 'src/models/skill';
+import { getSlotsById } from 'src/models/slots';
 
 export interface TalismanValidator {
-  skill1: {
+  primarySkill: {
     isEmpty: boolean
     notFound: boolean
   },
-  skill1Level: {
+  primarySkillLevel: {
     isEmpty: boolean
     exceedsMaximum: boolean
   },
-  skill2: {
+  secondarySkill: {
     isEmpty: boolean
     notFound: boolean
   },
-  skill2Level: {
+  secondarySkillLevel: {
     isEmpty: boolean
     exceedsMaximum: boolean
   },
@@ -30,19 +29,19 @@ export interface TalismanValidator {
 }
 
 const defaultErrors = {
-  skill1: {
+  primarySkill: {
     isEmpty: false,
     notFound: false,
   },
-  skill1Level: {
+  primarySkillLevel: {
     isEmpty: false,
     exceedsMaximum: false,
   },
-  skill2: {
+  secondarySkill: {
     isEmpty: false,
     notFound: false,
   },
-  skill2Level: {
+  secondarySkillLevel: {
     isEmpty: false,
     exceedsMaximum: false,
   },
@@ -52,7 +51,6 @@ const defaultErrors = {
 };
 
 export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
-  const { getSlotsById } = useSlotsStore();
   const isValid = ref(true);
   const errors = ref<TalismanValidator>(defaultErrors);
 
@@ -65,37 +63,37 @@ export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
     const talismanValue = unref(talisman);
     resetRefs();
 
-    if (!talismanValue.skill1) {
-      // Not valid if skill1 is empty or undefined
-      errors.value.skill1.isEmpty = true;
+    if (!talismanValue.primarySkill) {
+      // Not valid if primarySkill is empty or undefined
+      errors.value.primarySkill.isEmpty = true;
       isValid.value = false;
     }
 
-    if (!talismanValue.skill1Level) {
-      // Not valid if skill1Level is empty or undefined
-      errors.value.skill1Level.isEmpty = true;
+    if (!talismanValue.primarySkillLevel) {
+      // Not valid if primarySkillLevel is empty or undefined
+      errors.value.primarySkillLevel.isEmpty = true;
       isValid.value = false;
-    } else if (talismanValue.skill1 && talismanValue.skill1Level > talismanValue.skill1.levelMaximum) {
-      // Not valid if skill1Level is greater than skill1.levelMaximum
-      errors.value.skill1Level.exceedsMaximum = true;
-      isValid.value = false;
-    }
-
-    if (!talismanValue.skill2 && talismanValue.skill2Level) {
-      // Not valid if skill2 is empty or undefined when skill2Level is not empty
-      errors.value.skill2.isEmpty = true;
-      isValid.value = false;
-    } else if (talismanValue.skill2 && !talismanValue.skill2Level) {
-      // Not valid if skill2Level is empty or undefined when skill2 is not empty
-      errors.value.skill2Level.isEmpty = true;
-      isValid.value = false;
-    } else if (talismanValue.skill2 && talismanValue.skill2Level && talismanValue.skill2Level > talismanValue.skill2.levelMaximum) {
-      // Not valid if skill2Level is greater than skill2.levelMaximum
-      errors.value.skill2Level.exceedsMaximum = true;
+    } else if (talismanValue.primarySkill && talismanValue.primarySkillLevel > talismanValue.primarySkill.levelMaximum) {
+      // Not valid if primarySkillLevel is greater than primarySkill.levelMaximum
+      errors.value.primarySkillLevel.exceedsMaximum = true;
       isValid.value = false;
     }
 
-    if (!getSlotsById(`${talismanValue.slots.slot1}-${talismanValue.slots.slot2}-${talismanValue.slots.slot3}`)) {
+    if (!talismanValue.secondarySkill && talismanValue.secondarySkillLevel) {
+      // Not valid if secondarySkill is empty or undefined when secondarySkillLevel is not empty
+      errors.value.secondarySkill.isEmpty = true;
+      isValid.value = false;
+    } else if (talismanValue.secondarySkill && !talismanValue.secondarySkillLevel) {
+      // Not valid if secondarySkillLevel is empty or undefined when secondarySkill is not empty
+      errors.value.secondarySkillLevel.isEmpty = true;
+      isValid.value = false;
+    } else if (talismanValue.secondarySkill && talismanValue.secondarySkillLevel && talismanValue.secondarySkillLevel > talismanValue.secondarySkill.levelMaximum) {
+      // Not valid if secondarySkillLevel is greater than secondarySkill.levelMaximum
+      errors.value.secondarySkillLevel.exceedsMaximum = true;
+      isValid.value = false;
+    }
+
+    if (!talismanValue.slots) {
       // Not valid if slots doesn't exist
       errors.value.slots.notFound = true;
       isValid.value = false;
@@ -112,9 +110,6 @@ export function useTalismanValidator(talisman: Ref<Talisman> | Talisman) {
 }
 
 export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> | TemporaryTalisman) {
-  const { getSkillByName } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
-
   const isValid = ref(true);
   const errors = ref<TalismanValidator>(_cloneDeep(defaultErrors));
 
@@ -125,58 +120,58 @@ export function useTemporaryTalismanValidator(talisman: Ref<TemporaryTalisman> |
 
   function validate() {
     const talismanValue = unref(talisman);
-    const skill1 = ref<Skill|undefined>(undefined);
-    const skill2 = ref<Skill|undefined>(undefined);
+    const primarySkill = ref<Skill|undefined>(undefined);
+    const secondarySkill = ref<Skill|undefined>(undefined);
     resetRefs();
 
-    if (!talismanValue.skill1) {
-      // Not valid if skill1 is empty or undefined
-      errors.value.skill1.isEmpty = true;
+    if (!talismanValue.primarySkillName) {
+      // Not valid if primarySkill is empty or undefined
+      errors.value.primarySkill.isEmpty = true;
       isValid.value = false;
     } else {
-      skill1.value = getSkillByName(talismanValue.skill1);
-      if (!skill1.value) {
-        // Not valid if skill1 is not found during import
-        errors.value.skill1.notFound = true;
+      primarySkill.value = getSkillByName(talismanValue.primarySkillName);
+      if (!primarySkill.value) {
+        // Not valid if primarySkill is not found during import
+        errors.value.primarySkill.notFound = true;
         isValid.value = false;
       }
     }
 
-    if (!talismanValue.skill1Level) {
-      // Not valid if skill1Level is empty or undefined
-      errors.value.skill1Level.isEmpty = true;
+    if (!talismanValue.primarySkillLevel) {
+      // Not valid if primarySkillLevel is empty or undefined
+      errors.value.primarySkillLevel.isEmpty = true;
       isValid.value = false;
-    } else if (talismanValue.skill1
-      && skill1.value
-      && talismanValue.skill1Level > skill1.value.levelMaximum
+    } else if (talismanValue.primarySkillName
+      && primarySkill.value
+      && talismanValue.primarySkillLevel > primarySkill.value.levelMaximum
     ) {
-      // Not valid if skill1Level is greater than skill1.levelMaximum
-      errors.value.skill1Level.exceedsMaximum = true;
+      // Not valid if primarySkillLevel is greater than primarySkill.levelMaximum
+      errors.value.primarySkillLevel.exceedsMaximum = true;
       isValid.value = false;
     }
 
-    if (talismanValue.skill2) {
-      skill2.value = getSkillByName(talismanValue.skill2);
-      if (!skill2.value) {
-        // Not valid if skill2 is not found during import
-        errors.value.skill2.notFound = true;
+    if (talismanValue.secondarySkillName) {
+      secondarySkill.value = getSkillByName(talismanValue.secondarySkillName);
+      if (!secondarySkill.value) {
+        // Not valid if secondarySkill is not found during import
+        errors.value.secondarySkill.notFound = true;
         isValid.value = false;
       }
     }
 
-    if (!talismanValue.skill2 && talismanValue.skill2Level) {
-      // Not valid if skill2 is empty or undefined when skill2Level is not empty
-      errors.value.skill2.isEmpty = true;
+    if (!talismanValue.secondarySkillName && talismanValue.secondarySkillLevel) {
+      // Not valid if secondarySkill is empty or undefined when secondarySkillLevel is not empty
+      errors.value.secondarySkill.isEmpty = true;
       isValid.value = false;
-    } else if (talismanValue.skill2 && !talismanValue.skill2Level) {
-      // Not valid if skill2Level is empty or undefined when skill2 is not empty
-      errors.value.skill2Level.isEmpty = true;
+    } else if (talismanValue.secondarySkillName && !talismanValue.secondarySkillLevel) {
+      // Not valid if secondarySkillLevel is empty or undefined when secondarySkill is not empty
+      errors.value.secondarySkillLevel.isEmpty = true;
       isValid.value = false;
-    } else if (skill2.value
-      && talismanValue.skill2Level > skill2.value.levelMaximum
+    } else if (secondarySkill.value
+      && talismanValue.secondarySkillLevel > secondarySkill.value.levelMaximum
     ) {
-      // Not valid if skill2Level is greater than skill2.levelMaximum
-      errors.value.skill2Level.exceedsMaximum = true;
+      // Not valid if secondarySkillLevel is greater than secondarySkill.levelMaximum
+      errors.value.secondarySkillLevel.exceedsMaximum = true;
       isValid.value = false;
     }
 

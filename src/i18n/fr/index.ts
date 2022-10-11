@@ -72,19 +72,19 @@ export default {
     },
     import: {
       errors: {
-        skill1: {
+        primary_skill: {
           not_found: 'Le talent principal n\'existe pas pour le talisman suivant : | Le talent principal n\'existe pas pour les talismans suivants :',
           is_empty: 'Le talent principal ne peut être vide pour le talisman suivant : | Le talent principal ne peut être vide pour les talismans suivants :',
         },
-        skill2: {
-          not_found: 'Le talent secondaire n\'existe pas pour le talisman suivant : | Le talent secondaire n\'existe pas pour les talismans suivants :',
-          is_empty: 'Le talent secondaire ne peut être vide (son niveau étant renseigné) pour le talisman suivant :',
-        },
-        skill1Level: {
+        primarySkillLevel: {
           is_empty: 'Le niveau du talent principal ne peut être vide ou zéro pour le talisman suivant : | Le niveau du talent principal ne peut être vide ou zéro pour les talismans suivants :',
           exceeds_maximum: 'Le niveau du talent principal est supérieur au niveau maximum pour ce talent pour le talisman suivant : | Le niveau du talent principal est supérieur au niveau maximum pour ce talent pour les talismans suivants :',
         },
-        skill2Level: {
+        secondary_skill: {
+          not_found: 'Le talent secondaire n\'existe pas pour le talisman suivant : | Le talent secondaire n\'existe pas pour les talismans suivants :',
+          is_empty: 'Le talent secondaire ne peut être vide (son niveau étant renseigné) pour le talisman suivant :',
+        },
+        secondarySkillLevel: {
           is_empty: 'Le niveau du talent secondaire ne peut être vide ou zéro pour le talisman suivant : | Le niveau du talent secondaire ne peut être vide ou zéro pour les talismans suivants :',
           exceeds_maximum: 'Le niveau du talent secondaire est supérieur au niveau maximum pour ce talent pour le talisman suivant : | Le niveau du talent secondaire est supérieur au niveau maximum pour ce talent pour les talismans suivants :',
         },
@@ -101,10 +101,10 @@ export default {
     talisman: {
       form: {
         label: 'Ajouter un talisman',
-        skill1: {
+        primary_skill: {
           label: 'Talent principal',
         },
-        skill2: {
+        secondary_skill: {
           label: 'Talent secondaire',
         },
         slots: {
@@ -121,8 +121,8 @@ export default {
       },
       list: {
         header: {
-          skill1: 'Talent principal',
-          skill2: 'Talent secondaire',
+          primary_skill: 'Talent principal',
+          secondary_skill: 'Talent secondaire',
           slots: 'Emplacements',
         },
         label: 'Mes talismans',
@@ -130,19 +130,19 @@ export default {
         search: 'Rechercher',
       },
       validation: {
-        skill1: {
+        primary_skill: {
           not_found: 'Le talent principal n\'existe pas.',
           is_empty: 'Le talent principal ne peut être vide.',
         },
-        skill1Level: {
+        primarySkillLevel: {
           is_empty: 'Le niveau du talent principal ne peut être vide ou zéro.',
           exceeds_maximum: 'Le niveau du talent principal ({level}) est supérieur au niveau maximum pour ce talent ({level_maximum}).',
         },
-        skill2: {
+        secondary_skill: {
           not_found: 'Le talent secondaire n\'existe pas.',
           is_empty: 'Le talent secondaire ne peut être vide, son niveau étant renseigné.',
         },
-        skill2Level: {
+        secondarySkillLevel: {
           is_empty: 'Le niveau du talent secondaire ne peut être vide ou zéro.',
           exceeds_maximum: 'Le niveau du talent secondaire ({level}) est supérieur au niveau maximum pour ce talent ({level_maximum}).',
         },

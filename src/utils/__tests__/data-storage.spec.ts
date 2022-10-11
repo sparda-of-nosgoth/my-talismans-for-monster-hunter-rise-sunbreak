@@ -9,8 +9,6 @@ import { i18n } from 'boot/i18n';
 import { createPinia, setActivePinia } from 'pinia';
 import { useSettingsStore } from 'stores/settings';
 import { initSettingsStorage, initTalismansStorage } from 'src/utils/data-storage';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 import { useTalismanStore } from 'stores/talismans';
 import { Talisman } from 'src/models/talisman';
 import _now from 'lodash/now';
@@ -40,8 +38,6 @@ describe('utils/data-storage', () => {
   config.global.plugins = [...config.global.plugins, i18n];
 
   setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
   const settings = useSettingsStore();
   const talismanStore = useTalismanStore();
 
@@ -124,31 +120,31 @@ describe('utils/data-storage', () => {
   describe('talismans storage', () => {
     const allTalismans = [
       new Talisman({
-        skill1: getSkillById('weakness-exploit'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'weakness-exploit',
+        primarySkillLevel: 2,
+        slotsId: '2-1-0',
       }),
       new Talisman({
-        skill1: getSkillById('attack-boost'),
-        skill1Level: 2,
-        skill2: getSkillById('slugger'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'attack-boost',
+        primarySkillLevel: 2,
+        secondarySkillId: 'slugger',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
       }),
       new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 1,
-        skill2: getSkillById('weakness-exploit'),
-        skill2Level: 1,
-        slots: getSlotsById('0-0-0'),
+        primarySkillId: 'speed-sharpening',
+        primarySkillLevel: 1,
+        secondarySkillId: 'weakness-exploit',
+        secondarySkillLevel: 1,
+        slotsId: '0-0-0',
         favorite: true,
       }),
       new Talisman({
-        skill1: getSkillById('master-mounter'),
-        skill1Level: 1,
-        skill2: getSkillById('slugger'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'master-mounter',
+        primarySkillLevel: 1,
+        secondarySkillId: 'slugger',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
         forMelding: true,
       }),
     ];
@@ -178,9 +174,9 @@ describe('utils/data-storage', () => {
       localforage.__setMockData__('');
       await initTalismansStorage();
       const newTalisman = new Talisman({
-        skill1: getSkillById('weakness-exploit'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'weakness-exploit',
+        primarySkillLevel: 2,
+        slotsId: '2-1-0',
       });
       talismanStore.addTalisman(newTalisman);
       expect(localforage.setItem).toHaveBeenLastCalledWith('mhrs-talismans', JSON.stringify({ talismans: [newTalisman], updatedAt: _now() }));
@@ -196,9 +192,9 @@ describe('utils/data-storage', () => {
       settings.remoteSave.enabled = true;
       await initTalismansStorage();
       const newTalisman = new Talisman({
-        skill1: getSkillById('weakness-exploit'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'weakness-exploit',
+        primarySkillLevel: 2,
+        slotsId: '2-1-0',
       });
       talismanStore.addTalisman(newTalisman);
       expect(updateTalismansFromRemoteStorage).toHaveBeenCalled();

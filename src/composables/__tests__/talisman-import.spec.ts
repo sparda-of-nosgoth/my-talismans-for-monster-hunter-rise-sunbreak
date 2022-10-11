@@ -4,9 +4,6 @@ import {
 } from '@jest/globals';
 import { useTalismanImport } from 'src/composables/talisman-import';
 import { ref } from 'vue';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 import { Talisman } from 'src/models/talisman';
 
 jest
@@ -15,10 +12,6 @@ jest
 jest.mock('boot/i18n');
 
 describe('composables/talisman-import', () => {
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
-
   describe('with a ref', () => {
     const csv = ref('');
     const { talismansToImport, errorsFromImport } = useTalismanImport(csv);
@@ -34,14 +27,14 @@ describe('composables/talisman-import', () => {
     it('import an empty string', () => {
       expect(talismansToImport.value).toStrictEqual([]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [],
-        skill1NotFound: [],
-        skill1LevelIsEmpty: [],
-        skill1LevelExceedsMaximum: [],
-        skill2IsEmpty: [],
-        skill2NotFound: [],
-        skill2LevelIsEmpty: [],
-        skill2LevelExceedsMaximum: [],
+        primarySkillIsEmpty: [],
+        primarySkillNotFound: [],
+        primarySkillLevelIsEmpty: [],
+        primarySkillLevelExceedsMaximum: [],
+        secondarySkillIsEmpty: [],
+        secondarySkillNotFound: [],
+        secondarySkillLevelIsEmpty: [],
+        secondarySkillLevelExceedsMaximum: [],
         slotsNotFound: [],
       });
     });
@@ -53,34 +46,34 @@ describe('composables/talisman-import', () => {
         + 'Agitator,2,,,2,1,0');
       expect(talismansToImport.value).toStrictEqual([
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 1,
-          skill2: getSkillById('weakness-exploit'),
-          skill2Level: 1,
-          slots: getSlotsById('0-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 1,
+          secondarySkillId: 'weakness-exploit',
+          secondarySkillLevel: 1,
+          slotsId: '0-0-0',
         }),
         new Talisman({
-          skill1: getSkillById('master-mounter'),
-          skill1Level: 1,
-          skill2: getSkillById('slugger'),
-          skill2Level: 1,
-          slots: getSlotsById('1-1-0'),
+          primarySkillId: 'master-mounter',
+          primarySkillLevel: 1,
+          secondarySkillId: 'slugger',
+          secondarySkillLevel: 1,
+          slotsId: '1-1-0',
         }),
         new Talisman({
-          skill1: getSkillById('agitator'),
-          skill1Level: 2,
-          slots: getSlotsById('2-1-0'),
+          primarySkillId: 'agitator',
+          primarySkillLevel: 2,
+          slotsId: '2-1-0',
         }),
       ]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [],
-        skill1NotFound: [],
-        skill1LevelIsEmpty: [],
-        skill1LevelExceedsMaximum: [],
-        skill2IsEmpty: [],
-        skill2NotFound: [],
-        skill2LevelIsEmpty: [],
-        skill2LevelExceedsMaximum: [],
+        primarySkillIsEmpty: [],
+        primarySkillNotFound: [],
+        primarySkillLevelIsEmpty: [],
+        primarySkillLevelExceedsMaximum: [],
+        secondarySkillIsEmpty: [],
+        secondarySkillNotFound: [],
+        secondarySkillLevelIsEmpty: [],
+        secondarySkillLevelExceedsMaximum: [],
         slotsNotFound: [],
       });
     });
@@ -98,32 +91,32 @@ describe('composables/talisman-import', () => {
         + 'Agitator,2,,,4,4,4');
       expect(talismansToImport.value).toStrictEqual([]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [{
-          skill1: null, skill1Level: 1, skill2: 'Weakness Exploit', skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        primarySkillIsEmpty: [{
+          primarySkillName: null, primarySkillLevel: 1, secondarySkillName: 'Weakness Exploit', secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill1NotFound: [{
-          skill1: 'Speed', skill1Level: 1, skill2: 'Weakness Exploit', skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        primarySkillNotFound: [{
+          primarySkillName: 'Speed', primarySkillLevel: 1, secondarySkillName: 'Weakness Exploit', secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill1LevelIsEmpty: [{
-          skill1: 'Master Mounter', skill1Level: null, skill2: 'Slugger', skill2Level: 1, slot1: 1, slot2: 1, slot3: 0,
+        primarySkillLevelIsEmpty: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: null, secondarySkillName: 'Slugger', secondarySkillLevel: 1, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill1LevelExceedsMaximum: [{
-          skill1: 'Master Mounter', skill1Level: 8, skill2: 'Slugger', skill2Level: 1, slot1: 1, slot2: 1, slot3: 0,
+        primarySkillLevelExceedsMaximum: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: 8, secondarySkillName: 'Slugger', secondarySkillLevel: 1, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill2IsEmpty: [{
-          skill1: 'Speed Sharpening', skill1Level: 1, skill2: null, skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        secondarySkillIsEmpty: [{
+          primarySkillName: 'Speed Sharpening', primarySkillLevel: 1, secondarySkillName: null, secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill2NotFound: [{
-          skill1: 'Speed Sharpening', skill1Level: 1, skill2: 'Exploit', skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        secondarySkillNotFound: [{
+          primarySkillName: 'Speed Sharpening', primarySkillLevel: 1, secondarySkillName: 'Exploit', secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill2LevelIsEmpty: [{
-          skill1: 'Master Mounter', skill1Level: 1, skill2: 'Slugger', skill2Level: null, slot1: 1, slot2: 1, slot3: 0,
+        secondarySkillLevelIsEmpty: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: 1, secondarySkillName: 'Slugger', secondarySkillLevel: null, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill2LevelExceedsMaximum: [{
-          skill1: 'Speed Sharpening', skill1Level: 1, skill2: 'Weakness Exploit', skill2Level: 4, slot1: 0, slot2: 0, slot3: 0,
+        secondarySkillLevelExceedsMaximum: [{
+          primarySkillName: 'Speed Sharpening', primarySkillLevel: 1, secondarySkillName: 'Weakness Exploit', secondarySkillLevel: 4, slot1: 0, slot2: 0, slot3: 0,
         }],
         slotsNotFound: [{
-          skill1: 'Agitator', skill1Level: 2, skill2: null, skill2Level: null, slot1: 4, slot2: 4, slot3: 4,
+          primarySkillName: 'Agitator', primarySkillLevel: 2, secondarySkillName: null, secondarySkillLevel: null, slot1: 4, slot2: 4, slot3: 4,
         }],
       });
     });
@@ -135,25 +128,25 @@ describe('composables/talisman-import', () => {
         + 'Agitator,2,,,4,4,4');
       expect(talismansToImport.value).toStrictEqual([
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 1,
-          skill2: getSkillById('weakness-exploit'),
-          skill2Level: 1,
-          slots: getSlotsById('0-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 1,
+          secondarySkillId: 'weakness-exploit',
+          secondarySkillLevel: 1,
+          slotsId: '0-0-0',
         })]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [],
-        skill1NotFound: [],
-        skill1LevelIsEmpty: [],
-        skill1LevelExceedsMaximum: [],
-        skill2IsEmpty: [],
-        skill2NotFound: [],
-        skill2LevelIsEmpty: [{
-          skill1: 'Master Mounter', skill1Level: 1, skill2: 'Slugger', skill2Level: null, slot1: 1, slot2: 1, slot3: 0,
+        primarySkillIsEmpty: [],
+        primarySkillNotFound: [],
+        primarySkillLevelIsEmpty: [],
+        primarySkillLevelExceedsMaximum: [],
+        secondarySkillIsEmpty: [],
+        secondarySkillNotFound: [],
+        secondarySkillLevelIsEmpty: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: 1, secondarySkillName: 'Slugger', secondarySkillLevel: null, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill2LevelExceedsMaximum: [],
+        secondarySkillLevelExceedsMaximum: [],
         slotsNotFound: [{
-          skill1: 'Agitator', skill1Level: 2, skill2: null, skill2Level: null, slot1: 4, slot2: 4, slot3: 4,
+          primarySkillName: 'Agitator', primarySkillLevel: 2, secondarySkillName: null, secondarySkillLevel: null, slot1: 4, slot2: 4, slot3: 4,
         }],
       });
     });
@@ -164,14 +157,14 @@ describe('composables/talisman-import', () => {
       const { talismansToImport, errorsFromImport } = useTalismanImport('');
       expect(talismansToImport.value).toStrictEqual([]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [],
-        skill1NotFound: [],
-        skill1LevelIsEmpty: [],
-        skill1LevelExceedsMaximum: [],
-        skill2IsEmpty: [],
-        skill2NotFound: [],
-        skill2LevelIsEmpty: [],
-        skill2LevelExceedsMaximum: [],
+        primarySkillIsEmpty: [],
+        primarySkillNotFound: [],
+        primarySkillLevelIsEmpty: [],
+        primarySkillLevelExceedsMaximum: [],
+        secondarySkillIsEmpty: [],
+        secondarySkillNotFound: [],
+        secondarySkillLevelIsEmpty: [],
+        secondarySkillLevelExceedsMaximum: [],
         slotsNotFound: [],
       });
     });
@@ -183,34 +176,34 @@ describe('composables/talisman-import', () => {
         + 'Agitator,2,,,2,1,0');
       expect(talismansToImport.value).toStrictEqual([
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 1,
-          skill2: getSkillById('weakness-exploit'),
-          skill2Level: 1,
-          slots: getSlotsById('0-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 1,
+          secondarySkillId: 'weakness-exploit',
+          secondarySkillLevel: 1,
+          slotsId: '0-0-0',
         }),
         new Talisman({
-          skill1: getSkillById('master-mounter'),
-          skill1Level: 1,
-          skill2: getSkillById('slugger'),
-          skill2Level: 1,
-          slots: getSlotsById('1-1-0'),
+          primarySkillId: 'master-mounter',
+          primarySkillLevel: 1,
+          secondarySkillId: 'slugger',
+          secondarySkillLevel: 1,
+          slotsId: '1-1-0',
         }),
         new Talisman({
-          skill1: getSkillById('agitator'),
-          skill1Level: 2,
-          slots: getSlotsById('2-1-0'),
+          primarySkillId: 'agitator',
+          primarySkillLevel: 2,
+          slotsId: '2-1-0',
         }),
       ]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [],
-        skill1NotFound: [],
-        skill1LevelIsEmpty: [],
-        skill1LevelExceedsMaximum: [],
-        skill2IsEmpty: [],
-        skill2NotFound: [],
-        skill2LevelIsEmpty: [],
-        skill2LevelExceedsMaximum: [],
+        primarySkillIsEmpty: [],
+        primarySkillNotFound: [],
+        primarySkillLevelIsEmpty: [],
+        primarySkillLevelExceedsMaximum: [],
+        secondarySkillIsEmpty: [],
+        secondarySkillNotFound: [],
+        secondarySkillLevelIsEmpty: [],
+        secondarySkillLevelExceedsMaximum: [],
         slotsNotFound: [],
       });
     });
@@ -228,32 +221,32 @@ describe('composables/talisman-import', () => {
         + 'Agitator,2,,,4,4,4');
       expect(talismansToImport.value).toStrictEqual([]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [{
-          skill1: null, skill1Level: 1, skill2: 'Weakness Exploit', skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        primarySkillIsEmpty: [{
+          primarySkillName: null, primarySkillLevel: 1, secondarySkillName: 'Weakness Exploit', secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill1NotFound: [{
-          skill1: 'Speed', skill1Level: 1, skill2: 'Weakness Exploit', skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        primarySkillNotFound: [{
+          primarySkillName: 'Speed', primarySkillLevel: 1, secondarySkillName: 'Weakness Exploit', secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill1LevelIsEmpty: [{
-          skill1: 'Master Mounter', skill1Level: null, skill2: 'Slugger', skill2Level: 1, slot1: 1, slot2: 1, slot3: 0,
+        primarySkillLevelIsEmpty: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: null, secondarySkillName: 'Slugger', secondarySkillLevel: 1, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill1LevelExceedsMaximum: [{
-          skill1: 'Master Mounter', skill1Level: 8, skill2: 'Slugger', skill2Level: 1, slot1: 1, slot2: 1, slot3: 0,
+        primarySkillLevelExceedsMaximum: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: 8, secondarySkillName: 'Slugger', secondarySkillLevel: 1, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill2IsEmpty: [{
-          skill1: 'Speed Sharpening', skill1Level: 1, skill2: null, skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        secondarySkillIsEmpty: [{
+          primarySkillName: 'Speed Sharpening', primarySkillLevel: 1, secondarySkillName: null, secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill2NotFound: [{
-          skill1: 'Speed Sharpening', skill1Level: 1, skill2: 'Exploit', skill2Level: 1, slot1: 0, slot2: 0, slot3: 0,
+        secondarySkillNotFound: [{
+          primarySkillName: 'Speed Sharpening', primarySkillLevel: 1, secondarySkillName: 'Exploit', secondarySkillLevel: 1, slot1: 0, slot2: 0, slot3: 0,
         }],
-        skill2LevelIsEmpty: [{
-          skill1: 'Master Mounter', skill1Level: 1, skill2: 'Slugger', skill2Level: null, slot1: 1, slot2: 1, slot3: 0,
+        secondarySkillLevelIsEmpty: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: 1, secondarySkillName: 'Slugger', secondarySkillLevel: null, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill2LevelExceedsMaximum: [{
-          skill1: 'Speed Sharpening', skill1Level: 1, skill2: 'Weakness Exploit', skill2Level: 4, slot1: 0, slot2: 0, slot3: 0,
+        secondarySkillLevelExceedsMaximum: [{
+          primarySkillName: 'Speed Sharpening', primarySkillLevel: 1, secondarySkillName: 'Weakness Exploit', secondarySkillLevel: 4, slot1: 0, slot2: 0, slot3: 0,
         }],
         slotsNotFound: [{
-          skill1: 'Agitator', skill1Level: 2, skill2: null, skill2Level: null, slot1: 4, slot2: 4, slot3: 4,
+          primarySkillName: 'Agitator', primarySkillLevel: 2, secondarySkillName: null, secondarySkillLevel: null, slot1: 4, slot2: 4, slot3: 4,
         }],
       });
     });
@@ -265,25 +258,25 @@ describe('composables/talisman-import', () => {
         + 'Agitator,2,,,4,4,4');
       expect(talismansToImport.value).toStrictEqual([
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 1,
-          skill2: getSkillById('weakness-exploit'),
-          skill2Level: 1,
-          slots: getSlotsById('0-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 1,
+          secondarySkillId: 'weakness-exploit',
+          secondarySkillLevel: 1,
+          slotsId: '0-0-0',
         })]);
       expect(errorsFromImport.value).toStrictEqual({
-        skill1IsEmpty: [],
-        skill1NotFound: [],
-        skill1LevelIsEmpty: [],
-        skill1LevelExceedsMaximum: [],
-        skill2IsEmpty: [],
-        skill2NotFound: [],
-        skill2LevelIsEmpty: [{
-          skill1: 'Master Mounter', skill1Level: 1, skill2: 'Slugger', skill2Level: null, slot1: 1, slot2: 1, slot3: 0,
+        primarySkillIsEmpty: [],
+        primarySkillNotFound: [],
+        primarySkillLevelIsEmpty: [],
+        primarySkillLevelExceedsMaximum: [],
+        secondarySkillIsEmpty: [],
+        secondarySkillNotFound: [],
+        secondarySkillLevelIsEmpty: [{
+          primarySkillName: 'Master Mounter', primarySkillLevel: 1, secondarySkillName: 'Slugger', secondarySkillLevel: null, slot1: 1, slot2: 1, slot3: 0,
         }],
-        skill2LevelExceedsMaximum: [],
+        secondarySkillLevelExceedsMaximum: [],
         slotsNotFound: [{
-          skill1: 'Agitator', skill1Level: 2, skill2: null, skill2Level: null, slot1: 4, slot2: 4, slot3: 4,
+          primarySkillName: 'Agitator', primarySkillLevel: 2, secondarySkillName: null, secondarySkillLevel: null, slot1: 4, slot2: 4, slot3: 4,
         }],
       });
     });

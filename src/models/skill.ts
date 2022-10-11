@@ -1,6 +1,11 @@
 import { Decoration } from 'src/models/decoration';
+import _find from 'lodash/find';
+import { searchInLocales, translate } from 'src/utils/translation';
+import { SkillType } from 'src/models/skill-type';
+import _filter from 'lodash/filter';
+import _sortBy from 'lodash/sortBy';
 
-export interface Skill {
+interface Skill {
   id: string
   type: string
   levelMaximum: number
@@ -11,7 +16,7 @@ export interface Skill {
 /**
  * List of all Skill
  */
-export const skillList: Skill[] = [
+const skillList: Skill[] = [
   {
     id: 'affinity-sliding',
     type: 'quest',
@@ -499,10 +504,10 @@ export const skillList: Skill[] = [
     levelMaximum: 7,
     foundOnTalismans: true,
     decorations: [
-      { id: 'defense-jewel-1', requiredSlot: 1, skillPoints: 1 },
-      { id: 'defense-jewel-2', requiredSlot: 2, skillPoints: 2 },
-      { id: 'defense-jewel-3', requiredSlot: 3, skillPoints: 3 },
-      { id: 'defense-jewel-4', requiredSlot: 4, skillPoints: 5 },
+      { id: 'defense-jewel+1', requiredSlot: 1, skillPoints: 1 },
+      { id: 'defense-jewel+2', requiredSlot: 2, skillPoints: 2 },
+      { id: 'defense-jewel+3', requiredSlot: 3, skillPoints: 3 },
+      { id: 'defense-jewel+5', requiredSlot: 4, skillPoints: 5 },
     ],
   },
   {
@@ -1133,13 +1138,6 @@ export const skillList: Skill[] = [
     ],
   },
   {
-    id: 'chain-crit',
-    type: 'battle',
-    levelMaximum: 3,
-    foundOnTalismans: true,
-    decorations: [],
-  },
-  {
     id: 'coalescence',
     type: 'battle',
     levelMaximum: 3,
@@ -1301,3 +1299,20 @@ export const skillList: Skill[] = [
     decorations: [],
   },
 ];
+
+// To get one skill by his id
+const getSkillById = (id: string): Skill | undefined => _find(skillList, { id });
+// To get one skill by his translated name
+const getSkillByName = (skillName: string): Skill | undefined => _find(skillList, (skill: Skill) => searchInLocales(skill.id, skillName));
+// To filter skillList by SkillType
+const filterByType = (skillType: SkillType): Skill[] | undefined => _filter(skillList, { type: skillType.id });
+// Sorted skillList by translated names
+const sortedSkills = _sortBy(skillList, [(skill) => translate(skill.id)]);
+// SkillList found on talisman only, sorted by translated names
+const sortedSkillsFoundOnTalismanOnly = _sortBy(_filter(skillList, { foundOnTalismans: true }), [(skill) => translate(skill.id)]);
+
+export type { Skill };
+
+export {
+  getSkillById, getSkillByName, filterByType, sortedSkills, sortedSkillsFoundOnTalismanOnly,
+};

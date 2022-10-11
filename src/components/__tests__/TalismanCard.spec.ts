@@ -9,8 +9,6 @@ import { config, mount } from '@vue/test-utils';
 import TalismanCard from 'components/TalismanCard.vue';
 import { i18n } from 'boot/i18n';
 import { createTestingPinia } from '@pinia/testing';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
 import { Talisman } from 'src/models/talisman';
 import TalismanDeleteButton from 'components/TalismanDeleteButton.vue';
 import TalismanActionToggles from 'components/TalismanActionToggles.vue';
@@ -23,15 +21,12 @@ describe('components/TalismanCard', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
 
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-
   it('sets the correct default data', () => {
     const talisman = new Talisman({
-      skill1: getSkillById('speed-sharpening'),
-      skill1Level: 1,
-      skill2: getSkillById('weakness-exploit'),
-      skill2Level: 1,
+      primarySkillId: 'speed-sharpening',
+      primarySkillLevel: 1,
+      secondarySkillId: 'weakness-exploit',
+      secondarySkillLevel: 1,
     });
 
     const { vm } = mount(TalismanCard, {
@@ -46,10 +41,10 @@ describe('components/TalismanCard', () => {
 
   it('when readonly is active, toggles are disabled and delete button is hidden', async () => {
     const talisman = new Talisman({
-      skill1: getSkillById('speed-sharpening'),
-      skill1Level: 1,
-      skill2: getSkillById('weakness-exploit'),
-      skill2Level: 1,
+      primarySkillId: 'speed-sharpening',
+      primarySkillLevel: 1,
+      secondarySkillId: 'weakness-exploit',
+      secondarySkillLevel: 1,
     });
 
     const wrapper = mount(TalismanCard, {
