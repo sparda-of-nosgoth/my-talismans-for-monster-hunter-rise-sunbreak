@@ -102,8 +102,7 @@ describe('utils/remote-storage', () => {
     await initRemoteStorage('test_account@gmail.com');
     await expect(getTalismansFromRemoteStorage())
       .resolves
-      // TODO: see to use toStrictEqual instead
-      .toEqual({
+      .toStrictEqual({
         talismans: [
           new Talisman({
             skill1: getSkillById('speed-sharpening'),
@@ -175,8 +174,7 @@ describe('utils/remote-storage', () => {
   it('synchronizing data with remote storage data where there is no local data', async () => {
     await initRemoteStorage('test_account@gmail.com');
     await synchronizeData();
-    // TODO: see to use toStrictEqual instead
-    expect(talismanStore.talismans).toEqual([
+    expect(talismanStore.talismans).toStrictEqual([
       new Talisman({
         skill1: getSkillById('speed-sharpening'),
         skill1Level: 2,
@@ -220,8 +218,7 @@ describe('utils/remote-storage', () => {
       sheetId: '123456789',
     };
     await synchronizeData();
-    // TODO: see to use toStrictEqual instead
-    expect(talismanStore.talismans).toEqual([
+    expect(talismanStore.talismans).toStrictEqual([
       new Talisman({
         skill1: getSkillById('speed-sharpening'),
         skill1Level: 2,

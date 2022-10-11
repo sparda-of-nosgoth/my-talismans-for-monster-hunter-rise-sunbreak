@@ -9,6 +9,8 @@ import { useTalismanStore } from 'stores/talismans';
 import localforage from 'localforage';
 import { Dialog } from 'quasar';
 import SettingsRemoteSaveDiffDialog from 'components/SettingsRemoteSaveConflictDialog.vue';
+import { Talisman } from 'src/models/talisman';
+import _map from 'lodash/map';
 
 const TALISMANS_INDEX = 'mhrs-talismans';
 
@@ -23,7 +25,11 @@ export async function getTalismansFromRemoteStorage(): Promise<TalismansStorage>
     const [[, data]] = await googleSheetsApi.getSheetValues(remoteSave.sheetId);
 
     return new Promise((resolve) => {
-      resolve(JSON.parse(data));
+      const remoteStorage = JSON.parse(data);
+      resolve({
+        talismans: _map(remoteStorage.talismans, (talisman) => new Talisman(talisman)),
+        updatedAt: remoteStorage.updatedAt,
+      });
     });
   } catch {
     return new Promise((resolve) => {

@@ -8,6 +8,7 @@ import {
   synchronizeData,
   updateTalismansFromRemoteStorage,
 } from 'src/utils/remote-storage';
+import _map from 'lodash/map';
 
 export interface TalismansStorage {
   talismans: Talisman[],
@@ -46,7 +47,7 @@ export async function initTalismansStorage() {
   // Load local save for Talisman's list
   const localStorage = JSON.parse(await localforage.getItem<string>('mhrs-talismans') || '{ "talismans": [] }');
   // Convert parsed string to Talismans
-  talismanStore.talismans = localStorage.talismans;
+  talismanStore.talismans = _map(localStorage.talismans, (talisman) => new Talisman(talisman));
 
   // If Remote Save is enabled, we sync data
   if (settings.remoteSave.enabled) {

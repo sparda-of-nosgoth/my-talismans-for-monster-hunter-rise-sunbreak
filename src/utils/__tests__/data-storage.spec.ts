@@ -168,8 +168,7 @@ describe('utils/data-storage', () => {
       // eslint-disable-next-line no-underscore-dangle
       localforage.__setMockData__(JSON.stringify({ talismans: allTalismans, updatedAt: _now() }));
       await initTalismansStorage();
-      // TODO: see to use toStrictEqual instead
-      expect(talismanStore.talismans).toEqual(allTalismans);
+      expect(talismanStore.talismans).toStrictEqual(allTalismans);
     });
 
     it('when store update his data with an action, data is stored in cache', async () => {
