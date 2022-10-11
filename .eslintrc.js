@@ -22,7 +22,7 @@ module.exports = {
   // Rules order is important, please avoid shuffling them
   extends: [
     // Base ESLint recommended rules
-    // 'eslint:recommended',
+    'eslint:recommended',
 
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
     // ESLint typescript rules
@@ -62,7 +62,6 @@ module.exports = {
 
   // add your custom rules here
   rules: {
-
     'no-param-reassign': 'off',
     'no-void': 'off',
     'no-nested-ternary': 'off',
@@ -81,6 +80,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
+    'import/order': ["error", {"groups": ["index", "sibling", "parent", "internal", "external", "builtin", "object", "type"]}],
 
     'prefer-promise-reject-errors': 'off',
 

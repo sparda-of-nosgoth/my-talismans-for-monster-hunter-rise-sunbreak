@@ -10,11 +10,6 @@ import {
 } from 'src/utils/remote-storage';
 import _map from 'lodash/map';
 
-export interface TalismansStorage {
-  talismans: Talisman[],
-  updatedAt: number | null,
-}
-
 export async function initSettingsStorage() {
   const settings = useSettingsStore();
 

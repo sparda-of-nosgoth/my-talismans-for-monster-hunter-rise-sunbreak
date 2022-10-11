@@ -2,7 +2,6 @@ import { GoogleSheets } from 'src/utils/google-sheets';
 import _filter from 'lodash/filter';
 import _isEmpty from 'lodash/isEmpty';
 import { useSettingsStore } from 'stores/settings';
-import { TalismansStorage } from 'src/utils/data-storage';
 import { googleCredentials } from 'boot/google-api';
 import { remoteSaveSpreadsheetId } from 'boot/config';
 import { useTalismanStore } from 'stores/talismans';
@@ -11,6 +10,7 @@ import { Dialog } from 'quasar';
 import SettingsRemoteSaveDiffDialog from 'components/SettingsRemoteSaveConflictDialog.vue';
 import { Talisman } from 'src/models/talisman';
 import _map from 'lodash/map';
+import { TalismansStorage } from 'src/models/storage';
 
 const TALISMANS_INDEX = 'mhrs-talismans';
 

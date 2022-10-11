@@ -1,3 +1,4 @@
+import routes from './routes';
 import { route } from 'quasar/wrappers';
 import {
   createMemoryHistory,
@@ -5,7 +6,6 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
-import routes from './routes';
 
 /*
  * If not building with SSR mode, you can

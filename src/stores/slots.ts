@@ -1,7 +1,7 @@
+import { slotsList } from '../models/slots';
 import { defineStore } from 'pinia';
 import _find from 'lodash/find';
 import _cloneDeep from 'lodash/cloneDeep';
-import { slotsList } from '../models/slots';
 
 export const useSlotsStore = defineStore('slots', {
   state: () => ({

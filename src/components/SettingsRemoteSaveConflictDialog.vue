@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar';
-import { TalismansStorage } from 'src/utils/data-storage';
 import { computed } from 'vue';
 import _isEqual from 'lodash/isEqual';
 import _differenceWith from 'lodash/differenceWith';
 import TalismanActionToggles from 'components/TalismanActionToggles.vue';
 import TalismanSlots from 'components/TalismanSlots.vue';
 import TalismanCard from 'components/TalismanCard.vue';
+import { TalismansStorage } from 'src/models/storage';
 
 const props = defineProps<{
   remoteStorage: TalismansStorage
