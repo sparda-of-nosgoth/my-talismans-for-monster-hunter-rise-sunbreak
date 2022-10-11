@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added Sunbreak TU2 Skills and Decorations.
+
 ### Fixed
 
 - Fixed English translations.
 - Fixed Talisman's data conversion with data storage, both local and remote.
+- Fixed Decoration data.
 
 ## [1.0.0] - 2022-09-24
 
