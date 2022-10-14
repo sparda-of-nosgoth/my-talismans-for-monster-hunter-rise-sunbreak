@@ -51,7 +51,6 @@ function onSubmit() {
               :options="filteredSkills"
               :option-label="(skill) => $t(skill.id)"
               :label="$t('manager.talisman.form.primary_skill.label')"
-              class="q-pa-sm"
               lazy-rules
               :rules="[
                 () => !errors.primarySkill.isEmpty || $t('manager.talisman.validation.primary_skill.is_empty'),
@@ -75,7 +74,6 @@ function onSubmit() {
               :options="filteredSkills"
               :option-label="(skill) => $t(skill.id)"
               :label="$t('manager.talisman.form.secondary_skill.label')"
-              class="q-pa-sm"
               lazy-rules
               :rules="[
                 () => !errors.secondarySkill.notFound || $t('manager.talisman.validation.secondary_skill.not_found'),

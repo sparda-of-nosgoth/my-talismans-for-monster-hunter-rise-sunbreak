@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed English translations.
+- Fixed errors display on Talisman form.
 - Fixed Talisman's data conversion with data storage, both local and remote.
 - Fixed Decoration data.
 
