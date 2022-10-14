@@ -1,11 +1,13 @@
-export interface Slots {
+import _find from 'lodash/find';
+
+interface Slots {
   id: string
   slot1: number
   slot2: number
   slot3: number
 }
 
-export const slotsList: Slots[] = [
+const slotsList: Slots[] = [
   {
     id: '0-0-0',
     slot1: 0,
@@ -97,3 +99,14 @@ export const slotsList: Slots[] = [
     slot3: 0,
   },
 ];
+
+// To get one slots by his id
+const getSlotsById = (id: string) => _find(slotsList, { id });
+// To get one slots by slot1, slot2 and slot3
+const getSlotsBySlot = (slot1: number, slot2: number, slot3: number) => _find(slotsList, { slot1, slot2, slot3 });
+
+export type { Slots };
+
+export {
+  getSlotsById, getSlotsBySlot,
+};

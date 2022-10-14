@@ -3,44 +3,37 @@ import {
 } from '@jest/globals';
 import { TalismanFilter, useTalismanFilter } from 'src/composables/talisman-filter';
 import { Talisman } from 'src/models/talisman';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 
 jest.mock('boot/i18n');
 
 describe('composables/talisman', () => {
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
-
   const allTalismans = [
     new Talisman({
-      skill1: getSkillById('weakness-exploit'),
-      skill1Level: 2,
-      slots: getSlotsById('2-1-0'),
+      primarySkillId: 'weakness-exploit',
+      primarySkillLevel: 2,
+      slotsId: '2-1-0',
     }),
     new Talisman({
-      skill1: getSkillById('attack-boost'),
-      skill1Level: 2,
-      skill2: getSkillById('slugger'),
-      skill2Level: 1,
-      slots: getSlotsById('1-1-0'),
+      primarySkillId: 'attack-boost',
+      primarySkillLevel: 2,
+      secondarySkillId: 'slugger',
+      secondarySkillLevel: 1,
+      slotsId: '1-1-0',
     }),
     new Talisman({
-      skill1: getSkillById('speed-sharpening'),
-      skill1Level: 1,
-      skill2: getSkillById('weakness-exploit'),
-      skill2Level: 1,
-      slots: getSlotsById('0-0-0'),
+      primarySkillId: 'speed-sharpening',
+      primarySkillLevel: 1,
+      secondarySkillId: 'weakness-exploit',
+      secondarySkillLevel: 1,
+      slotsId: '0-0-0',
       favorite: true,
     }),
     new Talisman({
-      skill1: getSkillById('master-mounter'),
-      skill1Level: 1,
-      skill2: getSkillById('slugger'),
-      skill2Level: 1,
-      slots: getSlotsById('1-1-0'),
+      primarySkillId: 'master-mounter',
+      primarySkillLevel: 1,
+      secondarySkillId: 'slugger',
+      secondarySkillLevel: 1,
+      slotsId: '1-1-0',
       forMelding: true,
     }),
   ];

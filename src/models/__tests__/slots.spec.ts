@@ -1,16 +1,8 @@
-import {
-  beforeEach, describe, expect, it,
-} from '@jest/globals';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSlotsStore } from 'stores/slots';
+import { describe, expect, it } from '@jest/globals';
+import { getSlotsById, getSlotsBySlot } from 'src/models/slots';
 
-describe('stores/slots', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia());
-  });
-
+describe('models/slots', () => {
   it('can get Slots by id', () => {
-    const { getSlotsById } = useSlotsStore();
     expect(getSlotsById('0-0-0')).toStrictEqual(
       {
         id: '0-0-0', slot1: 0, slot2: 0, slot3: 0,
@@ -32,7 +24,6 @@ describe('stores/slots', () => {
   });
 
   it('can get Slots by each slot', () => {
-    const { getSlotsBySlot } = useSlotsStore();
     expect(getSlotsBySlot(0, 0, 0)).toStrictEqual(
       {
         id: '0-0-0', slot1: 0, slot2: 0, slot3: 0,

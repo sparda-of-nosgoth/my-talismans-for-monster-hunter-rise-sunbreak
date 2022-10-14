@@ -55,36 +55,36 @@ function submitImport() {
       </div>
       <div class="q-pa-md col-sm-12 col-md-6">
         <manager-import-list-error
-          message="manager.import.errors.skill1.not_found"
-          :talismans-in-errors="errorsFromImport.skill1NotFound"
+          message="manager.import.errors.primary_skill.not_found"
+          :talismans-in-errors="errorsFromImport.primarySkillNotFound"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill1.is_empty"
-          :talismans-in-errors="errorsFromImport.skill1IsEmpty"
+          message="manager.import.errors.primary_skill.is_empty"
+          :talismans-in-errors="errorsFromImport.primarySkillIsEmpty"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill1Level.is_empty"
-          :talismans-in-errors="errorsFromImport.skill1LevelIsEmpty"
+          message="manager.import.errors.primarySkillLevel.is_empty"
+          :talismans-in-errors="errorsFromImport.primarySkillLevelIsEmpty"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill1Level.exceeds_maximum"
-          :talismans-in-errors="errorsFromImport.skill1LevelExceedsMaximum"
+          message="manager.import.errors.primarySkillLevel.exceeds_maximum"
+          :talismans-in-errors="errorsFromImport.primarySkillLevelExceedsMaximum"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill2.not_found"
-          :talismans-in-errors="errorsFromImport.skill2NotFound"
+          message="manager.import.errors.secondary_skill.not_found"
+          :talismans-in-errors="errorsFromImport.secondarySkillNotFound"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill2.is_empty"
-          :talismans-in-errors="errorsFromImport.skill2IsEmpty"
+          message="manager.import.errors.secondary_skill.is_empty"
+          :talismans-in-errors="errorsFromImport.secondarySkillIsEmpty"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill2Level.is_empty"
-          :talismans-in-errors="errorsFromImport.skill2LevelIsEmpty"
+          message="manager.import.errors.secondarySkillLevel.is_empty"
+          :talismans-in-errors="errorsFromImport.secondarySkillLevelIsEmpty"
         />
         <manager-import-list-error
-          message="manager.import.errors.skill2Level.exceeds_maximum"
-          :talismans-in-errors="errorsFromImport.skill2LevelExceedsMaximum"
+          message="manager.import.errors.secondarySkillLevel.exceeds_maximum"
+          :talismans-in-errors="errorsFromImport.secondarySkillLevelExceedsMaximum"
         />
         <manager-import-list-error
           message="manager.import.errors.slots.not_found"

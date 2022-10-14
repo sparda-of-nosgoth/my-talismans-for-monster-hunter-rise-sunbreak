@@ -7,10 +7,9 @@ import ManagerTalismanForm from 'components/ManagerTalismanForm.vue';
 import { i18n } from 'boot/i18n';
 import { Talisman } from 'src/models/talisman';
 import { createTestingPinia } from '@pinia/testing';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 import { useTalismanStore } from 'stores/talismans';
+import { getSkillById } from 'src/models/skill';
+import { getSlotsById } from 'src/models/slots';
 
 installQuasarPlugin();
 
@@ -22,10 +21,6 @@ jest.mock('boot/i18n');
 describe('components/ManagerTalismanForm', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
-
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
 
   it('sets the correct default data', () => {
     const { vm } = shallowMount(ManagerTalismanForm, {
@@ -58,27 +53,6 @@ describe('components/ManagerTalismanForm', () => {
     ]);
   });
 
-  it('watch each slot to update Talisman Slots id value', async () => {
-    const wrapper = mount(ManagerTalismanForm, {
-      global: {
-        plugins: [createTestingPinia({ stubActions: false })],
-      },
-    });
-    const { vm } = wrapper;
-
-    expect(vm.talisman).toStrictEqual(new Talisman({}));
-    vm.talisman.slots.slot1 = 3;
-    await vm.$nextTick();
-    expect(vm.talisman).toStrictEqual(new Talisman({
-      slots: {
-        id: '3-0-0',
-        slot1: 3,
-        slot2: 0,
-        slot3: 0,
-      },
-    }));
-  });
-
   it('on submit when a talisman is valid, add talisman to store', async () => {
     const wrapper = mount(ManagerTalismanForm, {
       global: {
@@ -90,37 +64,38 @@ describe('components/ManagerTalismanForm', () => {
 
     expect(talismans).toStrictEqual([]);
     expect(vm.talisman).toStrictEqual(new Talisman({}));
-    vm.talisman = new Talisman({
-      skill1Level: 2,
-      skill2: getSkillById('good-luck'),
-      skill2Level: 1,
-      slots: getSlotsById('3-2-1'),
-    });
-    await vm.$nextTick();
-    expect(vm.false).toBeFalsy();
-    vm.talisman = new Talisman({
-      skill1: getSkillById('charge-master'),
-      skill1Level: 2,
-      skill2: getSkillById('good-luck'),
-      skill2Level: 1,
-      slots: getSlotsById('3-2-1'),
-    });
+    vm.talisman.primarySkill = null;
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.primarySkill = getSkillById('charge-master');
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.primarySkillLevel = 2;
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.secondarySkill = null;
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.secondarySkill = getSkillById('good-luck');
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.secondarySkillLevel = 1;
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.slots = null;
+    expect(vm.isValid).toBeFalsy();
+    vm.talisman.slots = getSlotsById('3-2-1');
+    expect(vm.isValid).toBeFalsy();
     await vm.$nextTick();
     expect(vm.isValid).toBeTruthy();
     expect(vm.talisman).toStrictEqual(new Talisman({
-      skill1: getSkillById('charge-master'),
-      skill1Level: 2,
-      skill2: getSkillById('good-luck'),
-      skill2Level: 1,
-      slots: getSlotsById('3-2-1'),
+      primarySkillId: 'charge-master',
+      primarySkillLevel: 2,
+      secondarySkillId: 'good-luck',
+      secondarySkillLevel: 1,
+      slotsId: '3-2-1',
     }));
     vm.onSubmit();
     expect(talismans).toStrictEqual([new Talisman({
-      skill1: getSkillById('charge-master'),
-      skill1Level: 2,
-      skill2: getSkillById('good-luck'),
-      skill2Level: 1,
-      slots: getSlotsById('3-2-1'),
+      primarySkillId: 'charge-master',
+      primarySkillLevel: 2,
+      secondarySkillId: 'good-luck',
+      secondarySkillLevel: 1,
+      slotsId: '3-2-1',
     })]);
   });
 

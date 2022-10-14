@@ -15,8 +15,6 @@ import { createPinia, setActivePinia } from 'pinia';
 import { googleCredentials } from 'boot/google-api';
 import { Talisman } from 'src/models/talisman';
 import _now from 'lodash/now';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 import { Dialog } from 'quasar';
 import localforage from 'localforage';
 import { useTalismanStore } from 'stores/talismans';
@@ -54,8 +52,6 @@ describe('utils/remote-storage', () => {
   setActivePinia(createPinia());
   const settings = useSettingsStore();
   const talismanStore = useTalismanStore();
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
 
   afterEach(() => {
     googleCredentials.private_key = 'VITE_GOOGLE_CREDENTIALS_PRIVATE_KEY';
@@ -105,23 +101,23 @@ describe('utils/remote-storage', () => {
       .toStrictEqual({
         talismans: [
           new Talisman({
-            skill1: getSkillById('speed-sharpening'),
-            skill1Level: 2,
-            slots: getSlotsById('2-0-0'),
+            primarySkillId: 'speed-sharpening',
+            primarySkillLevel: 2,
+            slotsId: '2-0-0',
             favorite: true,
           }),
           new Talisman({
-            skill1: getSkillById('blast-resistance'),
-            skill1Level: 2,
-            slots: getSlotsById('1-1-0'),
+            primarySkillId: 'blast-resistance',
+            primarySkillLevel: 2,
+            slotsId: '1-1-0',
             forMelding: true,
           }),
           new Talisman({
-            skill1: getSkillById('bombardier'),
-            skill1Level: 2,
-            skill2: getSkillById('paralysis-resistance'),
-            skill2Level: 1,
-            slots: getSlotsById('1-0-0'),
+            primarySkillId: 'bombardier',
+            primarySkillLevel: 2,
+            secondarySkillId: 'paralysis-resistance',
+            secondarySkillLevel: 1,
+            slotsId: '1-0-0',
             favorite: true,
           }),
         ],
@@ -145,23 +141,23 @@ describe('utils/remote-storage', () => {
     await expect(updateTalismansFromRemoteStorage(JSON.stringify({
       talismans: [
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 2,
-          slots: getSlotsById('2-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 2,
+          slotsId: '2-0-0',
           favorite: false,
         }),
         new Talisman({
-          skill1: getSkillById('blast-resistance'),
-          skill1Level: 2,
-          slots: getSlotsById('1-1-0'),
+          primarySkillId: 'blast-resistance',
+          primarySkillLevel: 2,
+          slotsId: '1-1-0',
           forMelding: true,
         }),
         new Talisman({
-          skill1: getSkillById('bombardier'),
-          skill1Level: 2,
-          skill2: getSkillById('paralysis-resistance'),
-          skill2Level: 1,
-          slots: getSlotsById('1-0-0'),
+          primarySkillId: 'bombardier',
+          primarySkillLevel: 2,
+          secondarySkillId: 'paralysis-resistance',
+          secondarySkillLevel: 1,
+          slotsId: '1-0-0',
           favorite: true,
         }),
       ],
@@ -176,23 +172,23 @@ describe('utils/remote-storage', () => {
     await synchronizeData();
     expect(talismanStore.talismans).toStrictEqual([
       new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 2,
-        slots: getSlotsById('2-0-0'),
+        primarySkillId: 'speed-sharpening',
+        primarySkillLevel: 2,
+        slotsId: '2-0-0',
         favorite: true,
       }),
       new Talisman({
-        skill1: getSkillById('blast-resistance'),
-        skill1Level: 2,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'blast-resistance',
+        primarySkillLevel: 2,
+        slotsId: '1-1-0',
         forMelding: true,
       }),
       new Talisman({
-        skill1: getSkillById('bombardier'),
-        skill1Level: 2,
-        skill2: getSkillById('paralysis-resistance'),
-        skill2Level: 1,
-        slots: getSlotsById('1-0-0'),
+        primarySkillId: 'bombardier',
+        primarySkillLevel: 2,
+        secondarySkillId: 'paralysis-resistance',
+        secondarySkillLevel: 1,
+        slotsId: '1-0-0',
         favorite: true,
       }),
     ]);
@@ -205,9 +201,9 @@ describe('utils/remote-storage', () => {
     localforage.__setMockData__(JSON.stringify({
       talismans: [
         new Talisman({
-          skill1: getSkillById('speed-sharpening'),
-          skill1Level: 2,
-          slots: getSlotsById('2-0-0'),
+          primarySkillId: 'speed-sharpening',
+          primarySkillLevel: 2,
+          slotsId: '2-0-0',
           favorite: true,
         })],
       updatedAt: 7,
@@ -220,23 +216,23 @@ describe('utils/remote-storage', () => {
     await synchronizeData();
     expect(talismanStore.talismans).toStrictEqual([
       new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 2,
-        slots: getSlotsById('2-0-0'),
+        primarySkillId: 'speed-sharpening',
+        primarySkillLevel: 2,
+        slotsId: '2-0-0',
         favorite: true,
       }),
       new Talisman({
-        skill1: getSkillById('blast-resistance'),
-        skill1Level: 2,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'blast-resistance',
+        primarySkillLevel: 2,
+        slotsId: '1-1-0',
         forMelding: true,
       }),
       new Talisman({
-        skill1: getSkillById('bombardier'),
-        skill1Level: 2,
-        skill2: getSkillById('paralysis-resistance'),
-        skill2Level: 1,
-        slots: getSlotsById('1-0-0'),
+        primarySkillId: 'bombardier',
+        primarySkillLevel: 2,
+        secondarySkillId: 'paralysis-resistance',
+        secondarySkillLevel: 1,
+        slotsId: '1-0-0',
         favorite: true,
       }),
     ]);

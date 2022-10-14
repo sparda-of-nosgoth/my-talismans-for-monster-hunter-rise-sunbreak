@@ -16,18 +16,18 @@ export interface TalismanFilter {
 }
 
 /**
- * Comparison function to find terms in skill1 or skill2 name of a talisman
+ * Comparison function to find terms in primarySkill or secondarySkill name of a talisman
  * Mostly used on Talisman's filter
  * @param talisman Talisman used for comparison
  * @param term Term to find
  */
 function compareTalismanBySkill(talisman: Talisman, term: string): boolean {
   // Always search into current locale translations
-  return _lowercase(translate(talisman.skill1?.id)).includes(_lowercase(term))
-    || _lowercase(translate(talisman.skill2?.id)).includes(_lowercase(term));
+  return _lowercase(translate(talisman.primarySkill?.id)).includes(_lowercase(term))
+    || _lowercase(translate(talisman.secondarySkill?.id)).includes(_lowercase(term));
   // // Always search into english translations (Disabled) TODO: maybe return has an option
-  // || _lowercase(translateInEn(talisman.skill1?.id)).includes(_lowercase(terms))
-  // || _lowercase(translateInEn(talisman.skill2?.id)).includes(_lowercase(terms));
+  // || _lowercase(translateInEn(talisman.primarySkill?.id)).includes(_lowercase(terms))
+  // || _lowercase(translateInEn(talisman.secondarySkill?.id)).includes(_lowercase(terms));
 }
 
 /**

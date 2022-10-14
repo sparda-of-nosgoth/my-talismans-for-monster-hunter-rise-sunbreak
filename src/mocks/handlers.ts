@@ -72,43 +72,31 @@ export const handlers = [
                   [['mhrs-talismans', JSON.stringify({
                     talismans: [
                       {
-                        skill1: {
-                          id: 'speed-sharpening', type: 'battle-swordsman', levelMaximum: 3, foundOnTalismans: true, decorations: [{ id: 'grinder-jewel-2', requiredSlot: 1, skillPoints: 1 }, { id: 'grinder-jewel-4', requiredSlot: 4, skillPoints: 3 }],
-                        },
-                        skill1Level: 2,
-                        skill2: null,
-                        skill2Level: null,
-                        slots: {
-                          id: '2-0-0', slot1: 2, slot2: 0, slot3: 0,
-                        },
+                        primarySkillId: 'speed-sharpening',
+                        primarySkillLevel: 2,
+                        secondarySkillId: null,
+                        secondarySkillLevel: null,
+                        slotsId: '2-0-0',
                         forMelding: false,
                         favorite: true,
                         weight: 0,
-                      }, {
-                        skill1: {
-                          id: 'blast-resistance', type: 'stats-defensive', levelMaximum: 3, foundOnTalismans: true, decorations: [{ id: 'antiblast-jewel-1', requiredSlot: 1, skillPoints: 1 }],
-                        },
-                        skill1Level: 2,
-                        skill2: null,
-                        skill2Level: null,
-                        slots: {
-                          id: '1-1-0', slot1: 1, slot2: 1, slot3: 0,
-                        },
+                      },
+                      {
+                        primarySkillId: 'blast-resistance',
+                        primarySkillLevel: 2,
+                        secondarySkillId: null,
+                        secondarySkillLevel: null,
+                        slotsId: '1-1-0',
                         forMelding: true,
                         favorite: false,
                         weight: 0,
-                      }, {
-                        skill1: {
-                          id: 'bombardier', type: 'item', levelMaximum: 3, foundOnTalismans: true, decorations: [{ id: 'bomber-jewel-1', requiredSlot: 1, skillPoints: 1 }, { id: 'bomber-jewel-4', requiredSlot: 4, skillPoints: 3 }],
-                        },
-                        skill1Level: 2,
-                        skill2: {
-                          id: 'paralysis-resistance', type: 'stats-defensive', levelMaximum: 3, foundOnTalismans: true, decorations: [{ id: 'antipara-jewel-1', requiredSlot: 1, skillPoints: 1 }],
-                        },
-                        skill2Level: 1,
-                        slots: {
-                          id: '1-0-0', slot1: 1, slot2: 0, slot3: 0,
-                        },
+                      },
+                      {
+                        primarySkillId: 'bombardier',
+                        primarySkillLevel: 2,
+                        secondarySkillId: 'paralysis-resistance',
+                        secondarySkillLevel: 1,
+                        slotsId: '1-0-0',
                         forMelding: false,
                         favorite: true,
                         weight: 0,

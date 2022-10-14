@@ -3,9 +3,6 @@ import {
 } from '@jest/globals';
 import { useTalismanExport } from 'src/composables/talisman-export';
 import { Talisman } from 'src/models/talisman';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
-import { createPinia, setActivePinia } from 'pinia';
 
 jest
   .setSystemTime(new Date('2022-07-26').getTime());
@@ -13,10 +10,6 @@ jest
 jest.mock('boot/i18n');
 
 describe('composables/talisman-export', () => {
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
-
   it('export an empty talisman list', () => {
     const { exportedTalismans } = useTalismanExport([]);
     expect(exportedTalismans.value).toBe('');
@@ -25,27 +18,27 @@ describe('composables/talisman-export', () => {
   it('export a talismans list', () => {
     const { exportedTalismans } = useTalismanExport([
       new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 1,
-        skill2: getSkillById('weakness-exploit'),
-        skill2Level: 1,
+        primarySkillId: 'speed-sharpening',
+        primarySkillLevel: 1,
+        secondarySkillId: 'weakness-exploit',
+        secondarySkillLevel: 1,
       }),
       new Talisman({
-        skill1: getSkillById('master-mounter'),
-        skill1Level: 1,
-        skill2: getSkillById('slugger'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'master-mounter',
+        primarySkillLevel: 1,
+        secondarySkillId: 'slugger',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
       }),
       new Talisman({
-        skill1: getSkillById('agitator'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'agitator',
+        primarySkillLevel: 2,
+        slotsId: '2-1-0',
       }),
       new Talisman({
-        skill1Level: 2,
-        skill2Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillLevel: 2,
+        secondarySkillLevel: 2,
+        slotsId: '2-1-0',
       }),
     ]);
 

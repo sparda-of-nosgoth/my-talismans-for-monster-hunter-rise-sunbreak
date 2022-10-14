@@ -4,9 +4,6 @@ import {
 } from '@jest/globals';
 import { useMeldingFilter } from 'src/composables/talisman-filter-melding';
 import { Talisman } from 'src/models/talisman';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 
 jest
   .setSystemTime(new Date('2022-07-26').getTime());
@@ -14,114 +11,110 @@ jest
 jest.mock('boot/i18n');
 
 describe('composables/talisman-filter-melding', () => {
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
-
   let talismans: Talisman[] = [];
 
   beforeEach(() => {
     talismans = [
-      // #1: To melt, no skill2, no slot, useless
+      // #1: To melt, no secondarySkill, no slot, useless
       new Talisman({
-        skill1: getSkillById('evade-extender'),
-        skill1Level: 2,
+        primarySkillId: 'evade-extender',
+        primarySkillLevel: 2,
       }),
       // #2: To melt, good, but we had a better talisman with those skills #3
       new Talisman({
-        skill1: getSkillById('evade-extender'),
-        skill1Level: 1,
-        skill2: getSkillById('evade-window'),
-        skill2Level: 2,
-        slots: getSlotsById('2-2-0'),
+        primarySkillId: 'evade-extender',
+        primarySkillLevel: 1,
+        secondarySkillId: 'evade-window',
+        secondarySkillLevel: 2,
+        slotsId: '2-2-0',
       }),
       // #3: To keep, very good one
       new Talisman({
-        skill1: getSkillById('evade-extender'),
-        skill1Level: 2,
-        skill2: getSkillById('evade-window'),
-        skill2Level: 2,
-        slots: getSlotsById('3-2-1'),
+        primarySkillId: 'evade-extender',
+        primarySkillLevel: 2,
+        secondarySkillId: 'evade-window',
+        secondarySkillLevel: 2,
+        slotsId: '3-2-1',
       }),
-      // #4: To melt, good skill1, but no skill2
+      // #4: To melt, good primarySkill, but no secondarySkill
       new Talisman({
-        skill1: getSkillById('weakness-exploit'),
-        skill1Level: 2,
-        slots: getSlotsById('2-2-0'),
+        primarySkillId: 'weakness-exploit',
+        primarySkillLevel: 2,
+        slotsId: '2-2-0',
       }),
       // #5: To keep, good one
       new Talisman({
-        skill1: getSkillById('weakness-exploit'),
-        skill1Level: 1,
-        skill2: getSkillById('attack-boost'),
-        skill2Level: 1,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'weakness-exploit',
+        primarySkillLevel: 1,
+        secondarySkillId: 'attack-boost',
+        secondarySkillLevel: 1,
+        slotsId: '2-1-0',
       }),
       // #6: To melt, not good, skills mixed between swordsman and gunner
       new Talisman({
-        skill1: getSkillById('razor-sharp'),
-        skill1Level: 1,
-        skill2: getSkillById('ammo-up'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'razor-sharp',
+        primarySkillLevel: 1,
+        secondarySkillId: 'ammo-up',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
       }),
       // #7: To melt, not good, skills mixed between swordsman and gunner
       new Talisman({
-        skill1: getSkillById('ammo-up'),
-        skill1Level: 1,
-        skill2: getSkillById('razor-sharp'),
-        skill2Level: 2,
-        slots: getSlotsById('2-1-1'),
+        primarySkillId: 'ammo-up',
+        primarySkillLevel: 1,
+        secondarySkillId: 'razor-sharp',
+        secondarySkillLevel: 2,
+        slotsId: '2-1-1',
       }),
       // #8: To melt, can be better
       new Talisman({
-        skill1: getSkillById('fire-attack'),
-        skill1Level: 1,
-        skill2: getSkillById('ice-attack'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'fire-attack',
+        primarySkillLevel: 1,
+        secondarySkillId: 'ice-attack',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
       }),
       // #9: To melt, good, but we had better
       new Talisman({
-        skill1: getSkillById('fire-attack'),
-        skill1Level: 2,
-        skill2: getSkillById('ice-attack'),
-        skill2Level: 1,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'fire-attack',
+        primarySkillLevel: 2,
+        secondarySkillId: 'ice-attack',
+        secondarySkillLevel: 1,
+        slotsId: '2-1-0',
       }),
       // #10: To keep if skipFavorite = true, else to melt because we had better
       new Talisman({
-        skill1: getSkillById('fire-attack'),
-        skill1Level: 2,
-        skill2: getSkillById('ice-attack'),
-        skill2Level: 2,
-        slots: getSlotsById('2-0-0'),
+        primarySkillId: 'fire-attack',
+        primarySkillLevel: 2,
+        secondarySkillId: 'ice-attack',
+        secondarySkillLevel: 2,
+        slotsId: '2-0-0',
         favorite: true,
       }),
       // #11: To keep, very good one
       new Talisman({
-        skill1: getSkillById('fire-attack'),
-        skill1Level: 3,
-        skill2: getSkillById('ice-attack'),
-        skill2Level: 2,
-        slots: getSlotsById('1-1-1'),
+        primarySkillId: 'fire-attack',
+        primarySkillLevel: 3,
+        secondarySkillId: 'ice-attack',
+        secondarySkillLevel: 2,
+        slotsId: '1-1-1',
       }),
       // #12: To melt, tagged has forMelding
       new Talisman({
-        skill1: getSkillById('botanist'),
-        skill1Level: 2,
-        skill2: getSkillById('jump-master'),
-        skill2Level: 1,
-        slots: getSlotsById('2-1-1'),
+        primarySkillId: 'botanist',
+        primarySkillLevel: 2,
+        secondarySkillId: 'jump-master',
+        secondarySkillLevel: 1,
+        slotsId: '2-1-1',
         forMelding: true,
       }),
       // #13: To keep, good one
       new Talisman({
-        skill1: getSkillById('evade-extender'),
-        skill1Level: 3,
-        skill2: getSkillById('razor-sharp'),
-        skill2Level: 1,
-        slots: getSlotsById('2-2-0'),
+        primarySkillId: 'evade-extender',
+        primarySkillLevel: 3,
+        secondarySkillId: 'razor-sharp',
+        secondarySkillLevel: 1,
+        slotsId: '2-2-0',
       }),
     ];
   });

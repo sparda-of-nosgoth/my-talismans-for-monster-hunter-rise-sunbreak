@@ -6,36 +6,34 @@ import { useTemporaryTalismanValidator } from 'src/composables/talisman-validato
 import _each from 'lodash/each';
 import _cloneDeep from 'lodash/cloneDeep';
 import { Talisman, TalismanConstructor, TemporaryTalisman } from 'src/models/talisman';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
+import { getSkillByName } from 'src/models/skill';
+import { getSlotsBySlot } from 'src/models/slots';
 
 export interface ImportErrors {
-  skill1IsEmpty: TemporaryTalisman[]
-  skill1NotFound: TemporaryTalisman[]
-  skill1LevelIsEmpty: TemporaryTalisman[]
-  skill1LevelExceedsMaximum: TemporaryTalisman[]
-  skill2IsEmpty: TemporaryTalisman[]
-  skill2NotFound: TemporaryTalisman[]
-  skill2LevelIsEmpty: TemporaryTalisman[]
-  skill2LevelExceedsMaximum: TemporaryTalisman[]
+  primarySkillIsEmpty: TemporaryTalisman[]
+  primarySkillNotFound: TemporaryTalisman[]
+  primarySkillLevelIsEmpty: TemporaryTalisman[]
+  primarySkillLevelExceedsMaximum: TemporaryTalisman[]
+  secondarySkillIsEmpty: TemporaryTalisman[]
+  secondarySkillNotFound: TemporaryTalisman[]
+  secondarySkillLevelIsEmpty: TemporaryTalisman[]
+  secondarySkillLevelExceedsMaximum: TemporaryTalisman[]
   slotsNotFound: TemporaryTalisman[]
 }
 
 const defaultImportErrors = {
-  skill1IsEmpty: [],
-  skill1NotFound: [],
-  skill1LevelIsEmpty: [],
-  skill1LevelExceedsMaximum: [],
-  skill2IsEmpty: [],
-  skill2NotFound: [],
-  skill2LevelIsEmpty: [],
-  skill2LevelExceedsMaximum: [],
+  primarySkillIsEmpty: [],
+  primarySkillNotFound: [],
+  primarySkillLevelIsEmpty: [],
+  primarySkillLevelExceedsMaximum: [],
+  secondarySkillIsEmpty: [],
+  secondarySkillNotFound: [],
+  secondarySkillLevelIsEmpty: [],
+  secondarySkillLevelExceedsMaximum: [],
   slotsNotFound: [],
 };
 
 export function useTalismanImport(csvData: Ref<string> | string) {
-  const { getSkillByName } = useSkillStore();
-  const { getSlotsBySlot } = useSlotsStore();
   const errorsFromImport = ref<ImportErrors>(defaultImportErrors);
   const talismansToImport = ref<Talisman[]>([]);
 
@@ -46,21 +44,21 @@ export function useTalismanImport(csvData: Ref<string> | string) {
 
   function createTalisman(importedTalisman: TemporaryTalisman): Talisman {
     const values: TalismanConstructor = {};
-    if (importedTalisman.skill1) {
-      values.skill1 = getSkillByName(importedTalisman.skill1);
+    if (importedTalisman.primarySkillName) {
+      values.primarySkillId = getSkillByName(importedTalisman.primarySkillName)?.id;
     }
-    if (importedTalisman.skill1Level) {
-      values.skill1Level = importedTalisman.skill1Level;
+    if (importedTalisman.primarySkillLevel) {
+      values.primarySkillLevel = importedTalisman.primarySkillLevel;
     }
-    if (importedTalisman.skill2) {
-      values.skill2 = getSkillByName(importedTalisman.skill2);
+    if (importedTalisman.secondarySkillName) {
+      values.secondarySkillId = getSkillByName(importedTalisman.secondarySkillName)?.id;
     }
-    if (importedTalisman.skill2Level) {
-      values.skill2Level = importedTalisman.skill2Level;
+    if (importedTalisman.secondarySkillLevel) {
+      values.secondarySkillLevel = importedTalisman.secondarySkillLevel;
     }
     const slots = getSlotsBySlot(importedTalisman.slot1, importedTalisman.slot2, importedTalisman.slot3);
     if (slots) {
-      values.slots = slots;
+      values.slotsId = slots.id;
     }
     return new Talisman(values);
   }
@@ -68,7 +66,7 @@ export function useTalismanImport(csvData: Ref<string> | string) {
   function importTalismans() {
     const csv = unref(csvData);
     resetRefs();
-    const header = 'skill1,skill1Level,skill2,skill2Level,slot1,slot2,slot3\n';
+    const header = 'primarySkillName,primarySkillLevel,secondarySkillName,secondarySkillLevel,slot1,slot2,slot3\n';
     const result = parse<TemporaryTalisman>(header + csv, {
       dynamicTyping: true,
       header: true,
@@ -84,31 +82,31 @@ export function useTalismanImport(csvData: Ref<string> | string) {
         talismansToImport.value.push(createTalisman(temporaryTalisman));
       } else {
         const {
-          skill1, skill1Level, skill2, skill2Level, slots,
+          primarySkill, primarySkillLevel, secondarySkill, secondarySkillLevel, slots,
         } = errors.value;
-        if (skill1.isEmpty) {
-          errorsFromImport.value.skill1IsEmpty.push(temporaryTalisman);
+        if (primarySkill.isEmpty) {
+          errorsFromImport.value.primarySkillIsEmpty.push(temporaryTalisman);
         }
-        if (skill1.notFound) {
-          errorsFromImport.value.skill1NotFound.push(temporaryTalisman);
+        if (primarySkill.notFound) {
+          errorsFromImport.value.primarySkillNotFound.push(temporaryTalisman);
         }
-        if (skill1Level.isEmpty) {
-          errorsFromImport.value.skill1LevelIsEmpty.push(temporaryTalisman);
+        if (primarySkillLevel.isEmpty) {
+          errorsFromImport.value.primarySkillLevelIsEmpty.push(temporaryTalisman);
         }
-        if (skill1Level.exceedsMaximum) {
-          errorsFromImport.value.skill1LevelExceedsMaximum.push(temporaryTalisman);
+        if (primarySkillLevel.exceedsMaximum) {
+          errorsFromImport.value.primarySkillLevelExceedsMaximum.push(temporaryTalisman);
         }
-        if (skill2.isEmpty) {
-          errorsFromImport.value.skill2IsEmpty.push(temporaryTalisman);
+        if (secondarySkill.isEmpty) {
+          errorsFromImport.value.secondarySkillIsEmpty.push(temporaryTalisman);
         }
-        if (skill2.notFound) {
-          errorsFromImport.value.skill2NotFound.push(temporaryTalisman);
+        if (secondarySkill.notFound) {
+          errorsFromImport.value.secondarySkillNotFound.push(temporaryTalisman);
         }
-        if (skill2Level.isEmpty) {
-          errorsFromImport.value.skill2LevelIsEmpty.push(temporaryTalisman);
+        if (secondarySkillLevel.isEmpty) {
+          errorsFromImport.value.secondarySkillLevelIsEmpty.push(temporaryTalisman);
         }
-        if (skill2Level.exceedsMaximum) {
-          errorsFromImport.value.skill2LevelExceedsMaximum.push(temporaryTalisman);
+        if (secondarySkillLevel.exceedsMaximum) {
+          errorsFromImport.value.secondarySkillLevelExceedsMaximum.push(temporaryTalisman);
         }
         if (slots.notFound) {
           errorsFromImport.value.slotsNotFound.push(temporaryTalisman);

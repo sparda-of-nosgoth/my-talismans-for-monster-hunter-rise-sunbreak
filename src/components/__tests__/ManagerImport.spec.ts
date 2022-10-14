@@ -9,9 +9,6 @@ import { Notify, QBtn, QInput } from 'quasar';
 import { i18n } from 'boot/i18n';
 import { createTestingPinia } from '@pinia/testing';
 import { Talisman } from 'src/models/talisman';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 
 installQuasarPlugin({ plugins: { Notify } });
 
@@ -38,10 +35,6 @@ jest.mock('quasar', () => {
 describe('components/ManagerImport', () => {
   config.global.mocks.$t = i18n.global.t;
   config.global.plugins = [...config.global.plugins, i18n];
-
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
 
   it('sets the correct default data', () => {
     const { vm } = shallowMount(ManagerImport, {
@@ -190,45 +183,45 @@ describe('components/ManagerImport', () => {
     await submit.trigger('click');
     expect(vm.talismansToImport).toStrictEqual([
       new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 1,
-        skill2: getSkillById('weakness-exploit'),
-        skill2Level: 1,
-        slots: getSlotsById('0-0-0'),
+        primarySkillId: 'speed-sharpening',
+        primarySkillLevel: 1,
+        secondarySkillId: 'weakness-exploit',
+        secondarySkillLevel: 1,
+        slotsId: '0-0-0',
       }),
       new Talisman({
-        skill1: getSkillById('master-mounter'),
-        skill1Level: 1,
-        skill2: getSkillById('slugger'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'master-mounter',
+        primarySkillLevel: 1,
+        secondarySkillId: 'slugger',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
       }),
       new Talisman({
-        skill1: getSkillById('agitator'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'agitator',
+        primarySkillLevel: 2,
+        slotsId: '2-1-0',
       }),
     ]);
     expect(vm.talismanStore.talismans).toHaveLength(3);
     expect(vm.talismanStore.talismans).toStrictEqual([
       new Talisman({
-        skill1: getSkillById('speed-sharpening'),
-        skill1Level: 1,
-        skill2: getSkillById('weakness-exploit'),
-        skill2Level: 1,
-        slots: getSlotsById('0-0-0'),
+        primarySkillId: 'speed-sharpening',
+        primarySkillLevel: 1,
+        secondarySkillId: 'weakness-exploit',
+        secondarySkillLevel: 1,
+        slotsId: '0-0-0',
       }),
       new Talisman({
-        skill1: getSkillById('master-mounter'),
-        skill1Level: 1,
-        skill2: getSkillById('slugger'),
-        skill2Level: 1,
-        slots: getSlotsById('1-1-0'),
+        primarySkillId: 'master-mounter',
+        primarySkillLevel: 1,
+        secondarySkillId: 'slugger',
+        secondarySkillLevel: 1,
+        slotsId: '1-1-0',
       }),
       new Talisman({
-        skill1: getSkillById('agitator'),
-        skill1Level: 2,
-        slots: getSlotsById('2-1-0'),
+        primarySkillId: 'agitator',
+        primarySkillLevel: 2,
+        slotsId: '2-1-0',
       }),
     ]);
   });

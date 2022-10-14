@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { useSkillStore } from 'stores/skills';
-
-const { skillTypes, filterByType } = useSkillStore();
+import { filterByType } from 'src/models/skill';
+import { skillTypeList } from 'src/models/skill-type';
 </script>
 
 <template>
   <q-page class="full-width row wrap justify-center">
     <q-card
-      v-for="skillType in skillTypes"
+      v-for="skillType in skillTypeList"
       :key="skillType.id"
       :name="skillType.id"
       class="q-ma-md col-11 col-md-5 col-lg-3"

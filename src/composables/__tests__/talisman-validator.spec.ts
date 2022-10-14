@@ -6,25 +6,20 @@ import {
   useTemporaryTalismanValidator,
 } from 'src/composables/talisman-validator';
 import { ref } from 'vue';
-import { createPinia, setActivePinia } from 'pinia';
-import { useSkillStore } from 'stores/skills';
-import { useSlotsStore } from 'stores/slots';
 import { Talisman, TemporaryTalisman } from 'src/models/talisman';
-import { Skill } from 'src/models/skill';
-import { Slots } from 'src/models/slots';
 
 interface UpdateTalisman {
-  skill1?: Skill | null
-  skill1Level?: number
-  skill2?: Skill | null
-  skill2Level?: number
-  slots?: Slots
+  primarySkillId?: string
+  primarySkillLevel?: number
+  secondarySkillId?: string | null
+  secondarySkillLevel?: number
+  slotsId?: string
 }
 interface UpdateTemporaryTalisman {
-  skill1?: string;
-  skill1Level?: number;
-  skill2?: string | null;
-  skill2Level?: number | null;
+  primarySkillName?: string;
+  primarySkillLevel?: number;
+  secondarySkillName?: string | null;
+  secondarySkillLevel?: number | null;
   slot1?: number
   slot2?: number
   slot3?: number
@@ -33,32 +28,26 @@ interface UpdateTemporaryTalisman {
 jest.mock('boot/i18n');
 
 describe('composables/talisman-validator', () => {
-  setActivePinia(createPinia());
-  const { getSkillById } = useSkillStore();
-  const { getSlotsById } = useSlotsStore();
-
   describe('useTalismanValidator', () => {
     describe('with ref', () => {
       const talisman = ref<Talisman>(new Talisman({}));
 
       async function updateTalisman({
-        skill1, skill1Level, skill2, skill2Level, slots,
+        primarySkillId, primarySkillLevel, secondarySkillId, secondarySkillLevel, slotsId,
       }: UpdateTalisman) {
-        talisman.value.skill1 = skill1 ?? null;
-        talisman.value.skill1Level = skill1Level ?? 0;
-        talisman.value.skill2 = skill2 ?? null;
-        talisman.value.skill2Level = skill2Level ?? 0;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        talisman.value.slots = slots ?? getSlotsById('0-0-0')!;
+        talisman.value.primarySkillId = primarySkillId ?? null;
+        talisman.value.primarySkillLevel = primarySkillLevel ?? 0;
+        talisman.value.secondarySkillId = secondarySkillId ?? null;
+        talisman.value.secondarySkillLevel = secondarySkillLevel ?? 0;
+        talisman.value.slotsId = slotsId ?? '0-0-0';
       }
 
       beforeEach(() => {
-        talisman.value.skill1 = null;
-        talisman.value.skill1Level = 0;
-        talisman.value.skill2 = null;
-        talisman.value.skill2Level = 0;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        talisman.value.slots = getSlotsById('0-0-0')!;
+        talisman.value.primarySkillId = null;
+        talisman.value.primarySkillLevel = 0;
+        talisman.value.secondarySkillId = null;
+        talisman.value.secondarySkillLevel = 0;
+        talisman.value.slotsId = '0-0-0';
       });
 
       const { isValid, errors } = useTalismanValidator(talisman);
@@ -66,19 +55,19 @@ describe('composables/talisman-validator', () => {
       it('can invalidate empty talisman', () => {
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -88,25 +77,25 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill1Level, skill2, skill2Level', async () => {
+      it('can invalidate talisman with null values for primarySkillLevel, secondarySkill, secondarySkillLevel', async () => {
         await updateTalisman({
-          skill1: getSkillById('capture-master'),
+          primarySkillId: 'capture-master',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -116,26 +105,26 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can validate talisman with null values for skill2, skill2Level', async () => {
+      it('can validate talisman with null values for secondarySkill, secondarySkillLevel', async () => {
         await updateTalisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
         });
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -145,27 +134,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2Level', async () => {
+      it('can invalidate talisman with null values for secondarySkillLevel', async () => {
         await updateTalisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
-          skill2: getSkillById('hunger-resistance'),
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
+          secondarySkillId: 'hunger-resistance',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
@@ -175,27 +164,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2', async () => {
+      it('can invalidate talisman with null values for secondarySkill', async () => {
         await updateTalisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
-          skill2Level: 2,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
+          secondarySkillLevel: 2,
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -205,26 +194,26 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill1Level greater than skill1.levelMaximum', async () => {
+      it('can invalidate talisman which primarySkillLevel greater than primarySkill.levelMaximum', async () => {
         await updateTalisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 2,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 2,
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -234,26 +223,26 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill2Level greater than skill2.levelMaximum', async () => {
+      it('can invalidate talisman which secondarySkillLevel greater than secondarySkill.levelMaximum', async () => {
         await updateTalisman({
-          skill2: getSkillById('hunger-resistance'),
-          skill2Level: 4,
+          secondarySkillId: 'hunger-resistance',
+          secondarySkillLevel: 4,
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
@@ -265,25 +254,23 @@ describe('composables/talisman-validator', () => {
 
       it('can invalidate talisman with unknown slots', async () => {
         await updateTalisman({
-          slots: {
-            id: '4-2-0', slot1: 4, slot2: 2, slot3: 0,
-          },
+          slotsId: '4-2-0',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -295,27 +282,27 @@ describe('composables/talisman-validator', () => {
 
       it('can validate talisman', async () => {
         await updateTalisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
-          skill2: getSkillById('hunger-resistance'),
-          skill2Level: 2,
-          slots: getSlotsById('3-2-1'),
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
+          secondarySkillId: 'hunger-resistance',
+          secondarySkillLevel: 2,
+          slotsId: '3-2-1',
         });
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -329,24 +316,24 @@ describe('composables/talisman-validator', () => {
     describe('without ref', () => {
       it('can invalidate empty talisman', () => {
         const talisman = new Talisman({
-          skill1Level: 0,
+          primarySkillLevel: 0,
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -356,27 +343,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill1Level, skill2, skill2Level', async () => {
+      it('can invalidate talisman with null values for primarySkillLevel, secondarySkill, secondarySkillLevel', async () => {
         const talisman = new Talisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 0,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 0,
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -386,27 +373,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can validate talisman with null values for skill2, skill2Level', async () => {
+      it('can validate talisman with null values for secondarySkill, secondarySkillLevel', async () => {
         const talisman = new Talisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -416,28 +403,28 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2Level', async () => {
+      it('can invalidate talisman with null values for secondarySkillLevel', async () => {
         const talisman = new Talisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
-          skill2: getSkillById('hunger-resistance'),
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
+          secondarySkillId: 'hunger-resistance',
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
@@ -447,28 +434,28 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2', async () => {
+      it('can invalidate talisman with null values for secondarySkill', async () => {
         const talisman = new Talisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
-          skill2Level: 2,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
+          secondarySkillLevel: 2,
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -478,27 +465,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill1Level greater than skill1.levelMaximum', async () => {
+      it('can invalidate talisman which primarySkillLevel greater than primarySkill.levelMaximum', async () => {
         const talisman = new Talisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 2,
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 2,
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -508,28 +495,28 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill2Level greater than skill2.levelMaximum', async () => {
+      it('can invalidate talisman which secondarySkillLevel greater than secondarySkill.levelMaximum', async () => {
         const talisman = new Talisman({
-          skill1Level: 0,
-          skill2: getSkillById('hunger-resistance'),
-          skill2Level: 4,
+          primarySkillLevel: 0,
+          secondarySkillId: 'hunger-resistance',
+          secondarySkillLevel: 4,
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
@@ -541,27 +528,25 @@ describe('composables/talisman-validator', () => {
 
       it('can invalidate talisman with unknown slots', async () => {
         const talisman = new Talisman({
-          skill1Level: 0,
-          slots: {
-            id: '4-4-4', slot1: 4, slot2: 4, slot3: 4,
-          },
+          primarySkillLevel: 0,
+          slotsId: '4-4-4',
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -573,28 +558,28 @@ describe('composables/talisman-validator', () => {
 
       it('can validate talisman', async () => {
         const talisman = new Talisman({
-          skill1: getSkillById('capture-master'),
-          skill1Level: 1,
-          skill2: getSkillById('hunger-resistance'),
-          skill2Level: 2,
-          slots: getSlotsById('3-2-1'),
+          primarySkillId: 'capture-master',
+          primarySkillLevel: 1,
+          secondarySkillId: 'hunger-resistance',
+          secondarySkillLevel: 2,
+          slotsId: '3-2-1',
         });
         const { isValid, errors } = useTalismanValidator(talisman);
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -609,32 +594,32 @@ describe('composables/talisman-validator', () => {
   describe('useTemporaryTalismanValidator', () => {
     describe('with ref', () => {
       const talisman = ref<TemporaryTalisman>({
-        skill1: null,
-        skill1Level: 0,
-        skill2: null,
-        skill2Level: 0,
+        primarySkillName: null,
+        primarySkillLevel: 0,
+        secondarySkillName: null,
+        secondarySkillLevel: 0,
         slot1: 0,
         slot2: 0,
         slot3: 0,
       });
 
       async function updateTalisman({
-        skill1, skill1Level, skill2, skill2Level, slot1, slot2, slot3,
+        primarySkillName, primarySkillLevel, secondarySkillName, secondarySkillLevel, slot1, slot2, slot3,
       }: UpdateTemporaryTalisman) {
-        talisman.value.skill1 = skill1 ?? null;
-        talisman.value.skill1Level = skill1Level ?? 0;
-        talisman.value.skill2 = skill2 ?? null;
-        talisman.value.skill2Level = skill2Level ?? 0;
+        talisman.value.primarySkillName = primarySkillName ?? null;
+        talisman.value.primarySkillLevel = primarySkillLevel ?? 0;
+        talisman.value.secondarySkillName = secondarySkillName ?? null;
+        talisman.value.secondarySkillLevel = secondarySkillLevel ?? 0;
         talisman.value.slot1 = slot1 ?? 0;
         talisman.value.slot2 = slot2 ?? 0;
         talisman.value.slot3 = slot3 ?? 0;
       }
 
       beforeEach(() => {
-        talisman.value.skill1 = null;
-        talisman.value.skill1Level = 0;
-        talisman.value.skill2 = null;
-        talisman.value.skill2Level = 0;
+        talisman.value.primarySkillName = null;
+        talisman.value.primarySkillLevel = 0;
+        talisman.value.secondarySkillName = null;
+        talisman.value.secondarySkillLevel = 0;
         talisman.value.slot1 = 0;
         talisman.value.slot2 = 0;
         talisman.value.slot3 = 0;
@@ -645,19 +630,19 @@ describe('composables/talisman-validator', () => {
       it('can invalidate empty talisman', () => {
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -667,25 +652,25 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill1Level, skill2, skill2Level', async () => {
+      it('can invalidate talisman with null values for primarySkillLevel, secondarySkill, secondarySkillLevel', async () => {
         await updateTalisman({
-          skill1: 'Capture Master',
+          primarySkillName: 'Capture Master',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -695,26 +680,26 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can validate talisman with null values for skill2, skill2Level', async () => {
+      it('can validate talisman with null values for secondarySkill, secondarySkillLevel', async () => {
         await updateTalisman({
-          skill1: 'Capture Master',
-          skill1Level: 1,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
         });
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -724,27 +709,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2', async () => {
+      it('can invalidate talisman with null values for secondarySkill', async () => {
         await updateTalisman({
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2Level: 3,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillLevel: 3,
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -754,27 +739,27 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2Level', async () => {
+      it('can invalidate talisman with null values for secondarySkillLevel', async () => {
         await updateTalisman({
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2: 'Spartiate',
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillName: 'Spartiate',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
@@ -784,26 +769,26 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill1Level greater than skill1.levelMaximum', async () => {
+      it('can invalidate talisman which primarySkillLevel greater than primarySkill.levelMaximum', async () => {
         await updateTalisman({
-          skill1: 'Capture Master',
-          skill1Level: 2,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 2,
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -813,26 +798,26 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill2Level greater than skill2.levelMaximum', async () => {
+      it('can invalidate talisman which secondarySkillLevel greater than secondarySkill.levelMaximum', async () => {
         await updateTalisman({
-          skill2: 'Spartiate',
-          skill2Level: 4,
+          secondarySkillName: 'Spartiate',
+          secondarySkillLevel: 4,
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
@@ -842,25 +827,25 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with unknown skill1', async () => {
+      it('can invalidate talisman with unknown primarySkill', async () => {
         await updateTalisman({
-          skill1: 'unknown-name',
+          primarySkillName: 'unknown-name',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: true,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -870,25 +855,25 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with unknown skill2', async () => {
+      it('can invalidate talisman with unknown secondarySkill', async () => {
         await updateTalisman({
-          skill2: 'unknown-name',
+          secondarySkillName: 'unknown-name',
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: true,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
@@ -906,19 +891,19 @@ describe('composables/talisman-validator', () => {
         });
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -930,29 +915,29 @@ describe('composables/talisman-validator', () => {
 
       it('can validate talisman', async () => {
         await updateTalisman({
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2: 'Spartiate',
-          skill2Level: 2,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillName: 'Spartiate',
+          secondarySkillLevel: 2,
           slot1: 2,
           slot2: 1,
           slot3: 0,
         });
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -966,10 +951,10 @@ describe('composables/talisman-validator', () => {
     describe('without ref', () => {
       it('can invalidate empty talisman', () => {
         const talisman = {
-          skill1: null,
-          skill1Level: 0,
-          skill2: null,
-          skill2Level: 0,
+          primarySkillName: null,
+          primarySkillLevel: 0,
+          secondarySkillName: null,
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -978,19 +963,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1000,12 +985,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill1Level, skill2, skill2Level', async () => {
+      it('can invalidate talisman with null values for primarySkillLevel, secondarySkill, secondarySkillLevel', async () => {
         const talisman = {
-          skill1: 'Capture Master',
-          skill1Level: 0,
-          skill2: null,
-          skill2Level: 0,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 0,
+          secondarySkillName: null,
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1013,19 +998,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1035,12 +1020,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can validate talisman with null values for skill2, skill2Level', async () => {
+      it('can validate talisman with null values for secondarySkill, secondarySkillLevel', async () => {
         const talisman = {
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2: null,
-          skill2Level: 0,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillName: null,
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1048,19 +1033,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1070,12 +1055,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2', async () => {
+      it('can invalidate talisman with null values for secondarySkill', async () => {
         const talisman = {
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2: null,
-          skill2Level: 3,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillName: null,
+          secondarySkillLevel: 3,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1083,19 +1068,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1105,12 +1090,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with null values for skill2Level', async () => {
+      it('can invalidate talisman with null values for secondarySkillLevel', async () => {
         const talisman = {
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2: 'Spartiate',
-          skill2Level: 0,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillName: 'Spartiate',
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1118,19 +1103,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
@@ -1140,12 +1125,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill1Level greater than skill1.levelMaximum', async () => {
+      it('can invalidate talisman which primarySkillLevel greater than primarySkill.levelMaximum', async () => {
         const talisman = {
-          skill1: 'Capture Master',
-          skill1Level: 2,
-          skill2: null,
-          skill2Level: 0,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 2,
+          secondarySkillName: null,
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1153,19 +1138,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1175,12 +1160,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman which skill2Level greater than skill2.levelMaximum', async () => {
+      it('can invalidate talisman which secondarySkillLevel greater than secondarySkill.levelMaximum', async () => {
         const talisman = {
-          skill1: null,
-          skill1Level: 0,
-          skill2: 'Spartiate',
-          skill2Level: 4,
+          primarySkillName: null,
+          primarySkillLevel: 0,
+          secondarySkillName: 'Spartiate',
+          secondarySkillLevel: 4,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1188,19 +1173,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: true,
           },
@@ -1210,12 +1195,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with unknown skill1', async () => {
+      it('can invalidate talisman with unknown primarySkill', async () => {
         const talisman = {
-          skill1: 'unknown-name',
-          skill1Level: 0,
-          skill2: null,
-          skill2Level: 0,
+          primarySkillName: 'unknown-name',
+          primarySkillLevel: 0,
+          secondarySkillName: null,
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1223,19 +1208,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: true,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1245,12 +1230,12 @@ describe('composables/talisman-validator', () => {
         });
       });
 
-      it('can invalidate talisman with unknown skill2', async () => {
+      it('can invalidate talisman with unknown secondarySkill', async () => {
         const talisman = {
-          skill1: null,
-          skill1Level: 0,
-          skill2: 'unknown-name',
-          skill2Level: 0,
+          primarySkillName: null,
+          primarySkillLevel: 0,
+          secondarySkillName: 'unknown-name',
+          secondarySkillLevel: 0,
           slot1: 0,
           slot2: 0,
           slot3: 0,
@@ -1258,19 +1243,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: true,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
@@ -1282,10 +1267,10 @@ describe('composables/talisman-validator', () => {
 
       it('can invalidate talisman with unknown slots', async () => {
         const talisman = {
-          skill1: null,
-          skill1Level: 0,
-          skill2: null,
-          skill2Level: 0,
+          primarySkillName: null,
+          primarySkillLevel: 0,
+          secondarySkillName: null,
+          secondarySkillLevel: 0,
           slot1: 4,
           slot2: 4,
           slot3: 4,
@@ -1293,19 +1278,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeFalsy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: true,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: true,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
@@ -1317,10 +1302,10 @@ describe('composables/talisman-validator', () => {
 
       it('can validate talisman', async () => {
         const talisman = {
-          skill1: 'Capture Master',
-          skill1Level: 1,
-          skill2: 'Spartiate',
-          skill2Level: 2,
+          primarySkillName: 'Capture Master',
+          primarySkillLevel: 1,
+          secondarySkillName: 'Spartiate',
+          secondarySkillLevel: 2,
           slot1: 2,
           slot2: 1,
           slot3: 0,
@@ -1328,19 +1313,19 @@ describe('composables/talisman-validator', () => {
         const { isValid, errors } = useTemporaryTalismanValidator(talisman);
         expect(isValid.value).toBeTruthy();
         expect(errors.value).toStrictEqual({
-          skill1: {
+          primarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill1Level: {
+          primarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },
-          skill2: {
+          secondarySkill: {
             isEmpty: false,
             notFound: false,
           },
-          skill2Level: {
+          secondarySkillLevel: {
             isEmpty: false,
             exceedsMaximum: false,
           },

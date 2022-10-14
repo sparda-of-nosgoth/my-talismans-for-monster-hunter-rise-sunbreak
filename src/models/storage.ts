@@ -1,6 +1,8 @@
 import { Talisman } from 'src/models/talisman';
 
-export interface TalismansStorage {
+interface TalismansStorage {
   talismans: Talisman[],
   updatedAt: number | null,
 }
+
+export type { TalismansStorage };

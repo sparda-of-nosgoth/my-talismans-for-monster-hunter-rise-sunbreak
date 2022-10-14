@@ -72,19 +72,19 @@ export default {
     },
     import: {
       errors: {
-        skill1: {
+        primary_skill: {
           not_found: 'Primary skill doesn\'t exist on the following talisman: | Primary skill doesn\'t exist on the following talismans:',
           is_empty: 'Primary skill can\'t be empty on the following talisman: | Primary skill can\'t be empty on the following talismans:',
         },
-        skill2: {
-          not_found: 'Secondary skill doesn\'t exist on the following talisman: | Secondary skill doesn\'t exist on the following talismans:',
-          is_empty: 'Secondary skill can\'t be empty (his level being filled) on the following talisman:',
-        },
-        skill1Level: {
+        primarySkillLevel: {
           is_empty: 'Primary skill\'s level can\'t be empty or zero on the following talisman: | Primary skill\'s level can\'t be empty or zero on the following talismans:',
           exceeds_maximum: 'Primary skill\'s level is above the level cap for that skill on the following talisman: | Primary skill\'s level is above the level cap for that skill on the following talismans:',
         },
-        skill2Level: {
+        secondary_skill: {
+          not_found: 'Secondary skill doesn\'t exist on the following talisman: | Secondary skill doesn\'t exist on the following talismans:',
+          is_empty: 'Secondary skill can\'t be empty (his level being filled) on the following talisman:',
+        },
+        secondarySkillLevel: {
           is_empty: 'Secondary skill\'s level can\'t be empty or zero on the following talisman: | Secondary skill\'s level can\'t be empty or zero on the following talismans:',
           exceeds_maximum: 'Secondary skill\'s level is above the level cap for that skill on the following talisman: | Secondary skill\'s level is above the level cap for that skill on the following talismans:',
         },
@@ -101,10 +101,10 @@ export default {
     talisman: {
       form: {
         label: 'Add a talisman',
-        skill1: {
+        primary_skill: {
           label: 'Primary skill',
         },
-        skill2: {
+        secondary_skill: {
           label: 'Secondary skill',
         },
         slots: {
@@ -121,8 +121,8 @@ export default {
       },
       list: {
         header: {
-          skill1: 'Primary skill',
-          skill2: 'Secondary skill',
+          primary_skill: 'Primary skill',
+          secondary_skill: 'Secondary skill',
           slots: 'Slots',
         },
         label: 'My talismans',
@@ -130,19 +130,19 @@ export default {
         search: 'Search',
       },
       validation: {
-        skill1: {
+        primary_skill: {
           not_found: 'Primary skill doesn\'t exist.',
           is_empty: 'Primary skill can\'t be empty.',
         },
-        skill1Level: {
+        primarySkillLevel: {
           is_empty: 'Primary skill\'s level can\'t be empty or zero.',
           exceeds_maximum: 'Primary skill\'s level ({level}) is above the level cap for that skill ({level_maximum}).',
         },
-        skill2: {
+        secondary_skill: {
           not_found: 'Secondary skill doesn\'t exist.',
           is_empty: 'Secondary skill can\'t be empty, his level being filled.',
         },
-        skill2Level: {
+        secondarySkillLevel: {
           is_empty: 'Secondary skill\'s level can\'t be empty or zero.',
           exceeds_maximum: 'Secondary skill\'s level ({level}) is above the level cap for that skill ({level_maximum}).',
         },

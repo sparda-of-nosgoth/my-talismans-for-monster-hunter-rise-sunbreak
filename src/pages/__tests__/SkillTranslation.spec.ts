@@ -17,27 +17,6 @@ jest.mock('boot/i18n');
 describe('pages/SkillTranslation', () => {
   config.global.mocks.$t = i18n.global.t;
 
-  it('sets the correct default data', () => {
-    const { vm } = shallowMount(TranslationSkill, {
-      global: {
-        plugins: [createTestingPinia()],
-      },
-    });
-
-    expect(typeof vm.skillTypes).toBe('object');
-    expect(vm.skillTypes).toStrictEqual([
-      { id: 'quest' },
-      { id: 'item' },
-      { id: 'stats-offensive' },
-      { id: 'stats-defensive' },
-      { id: 'survival' },
-      { id: 'battle' },
-      { id: 'battle-swordsman' },
-      { id: 'battle-gunner' },
-      { id: 'set-bonus' },
-    ]);
-  });
-
   it('show skillTypes translation into SkillTypeListTranslations components', async () => {
     const wrapper = mount(TranslationSkill, {
       global: {
@@ -48,10 +27,9 @@ describe('pages/SkillTranslation', () => {
     const { vm } = wrapper;
 
     const cards = wrapper.findAllComponents(QCard);
-    expect(vm.skillTypes).toHaveLength(9);
     expect(cards).toHaveLength(9);
     const items = wrapper.findAllComponents(QItem);
-    expect(items).toHaveLength(132);
+    expect(items).toHaveLength(135);
     // display skillType id, and one skill translation by skill type
     expect(vm.$el.textContent).toContain('Quête');
     expect(vm.$el.textContent).toContain('Affinity Sliding');

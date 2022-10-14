@@ -25,20 +25,20 @@ const columns = computed(() => [
     sortable: false,
   },
   {
-    name: 'skill1',
+    name: 'primary_skill',
     style: 'width: 25em',
     required: true,
-    label: t('manager.talisman.list.header.skill1'),
-    field: 'skill1',
+    label: t('manager.talisman.list.header.primary_skill'),
+    field: 'primarySkill',
     sortable: true,
     sort: (skillA:Skill, skillB:Skill) => t(skillA.id).localeCompare(t(skillB.id)),
   },
   {
-    name: 'skill2',
+    name: 'secondary_skill',
     style: 'width: 25em',
     required: true,
-    label: t('manager.talisman.list.header.skill2'),
-    field: 'skill2',
+    label: t('manager.talisman.list.header.secondary_skill'),
+    field: 'secondarySkill',
     sortable: true,
     sort: (skillA:Skill, skillB:Skill) => t(skillA.id).localeCompare(t(skillB.id)),
   },
@@ -75,7 +75,7 @@ onMounted(() => {
     <q-table
       :grid="$q.screen.xs || $q.screen.sm"
       :rows="talismans"
-      :row-key="row => `${row.skill1?.id}-${row.skill1Level}-${row.skill2?.id}-${row.skill2Level}-${row.slots?.id}`"
+      :row-key="row => `${row.primarySkillId}-${row.primarySkillLevel}-${row.secondarySkillId}-${row.secondarySkillLevel}-${row.slotsId}`"
       :columns="columns"
       :filter="filters"
       :filter-method="filterTable"
@@ -96,19 +96,19 @@ onMounted(() => {
             </div>
           </q-td>
           <q-td
-            key="skill1"
+            key="primary_skill"
             :props="props"
           >
             <span>
-              {{ `${$t(props.row.skill1.id)} ${props.row.skill1Level}` }}
+              {{ `${$t(props.row.primarySkillId)} ${props.row.primarySkillLevel}` }}
             </span>
           </q-td>
           <q-td
-            key="skill2"
+            key="secondary_skill"
             :props="props"
           >
-            <span v-if="props.row.skill2 != null">
-              {{ `${$t(props.row.skill2.id)} ${props.row.skill2Level}` }}
+            <span v-if="props.row.secondarySkillId != null">
+              {{ `${$t(props.row.secondarySkillId)} ${props.row.secondarySkillLevel}` }}
             </span>
           </q-td>
           <q-td
