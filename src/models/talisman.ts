@@ -62,7 +62,7 @@ export class Talisman {
   }
 
   set slots(slots: Slots | null) {
-    this.slotsId = slots ? slots.id : '0-0-0';
+    this.slotsId = slots ? slots.id : '';
   }
 
   resetWeight(): Talisman {

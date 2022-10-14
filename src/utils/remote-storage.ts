@@ -57,6 +57,8 @@ export async function synchronizeData() {
   const talismanStore = useTalismanStore();
 
   const localStorage = JSON.parse(await localforage.getItem<string>('mhrs-talismans') || '{ "talismans": [] }');
+  // Convert parsed string to Talismans
+  localStorage.talismans = _map(localStorage.talismans, (talisman) => new Talisman(talisman));
 
   const remoteStorage = await getTalismansFromRemoteStorage();
 

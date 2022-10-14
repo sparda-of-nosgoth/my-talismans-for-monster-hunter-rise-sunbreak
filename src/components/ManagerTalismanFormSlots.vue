@@ -7,7 +7,7 @@ const props = defineProps<{
   modelValue: Slots
 }>();
 
-const emit = defineEmits<{(e: 'update:modelValue', slots: Slots): void}>();
+const emit = defineEmits<{(e: 'update:modelValue', slots: Slots | undefined): void}>();
 
 const slot1 = ref(props.modelValue.slot1);
 const slot2 = ref(props.modelValue.slot2);
@@ -16,10 +16,7 @@ const slot3 = ref(props.modelValue.slot3);
 watch(
   [() => slot1.value, () => slot2.value, () => slot3.value],
   ([newSlot1, newSlot2, newSlot3]) => {
-    const slots = getSlotsBySlot(newSlot1, newSlot2, newSlot3);
-    if (slots) {
-      emit('update:modelValue', slots);
-    }
+    emit('update:modelValue', getSlotsBySlot(newSlot1, newSlot2, newSlot3));
   },
 );
 </script>
