@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2022-10-15
 
 ### Added
 - Added Sunbreak TU2 Skills and Decorations.
@@ -170,7 +170,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QA, CI, scripts and others.
 - Some unit tests for Talisman export, import and validation.
 
-[unreleased]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/1.0.0...main
+[unreleased]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/1.1.0...main
+[1.1.0]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/1.0.0...1.1.0
 [1.0.0]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.3.0...1.0.0
 [0.3.0]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.2.1...0.3.0
 [0.2.1]: https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/compare/0.2.0...0.2.1
