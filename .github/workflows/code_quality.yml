@@ -1,0 +1,65 @@
+name: Code Quality
+
+on:
+  push:
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+
+      - name: Run install
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install
+
+      - name: Run linter
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: lint:ci
+
+      - name: Archive linter results
+        uses: actions/upload-artifact@v4
+        with:
+          name: linter-report
+          path: eslint-report.xml
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+
+      - name: Run install
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install
+
+      - name: Run unit tests
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: test:unit:ci
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: jest-report.xml
+
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          package-manager: yarn
+          coverage-file: jest-report.xml

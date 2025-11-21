@@ -31,7 +31,7 @@ import SettingsRemoteSave from 'components/SettingsRemoteSave.vue';
     <q-separator />
     <div class="row items-center no-wrap">
       <span class="text-caption">
-        &copy; 2022 <a href="https://gitlab.com/sparda-of-nosgoth">Sparda of Nosgoth</a>
+        &copy; 2022 <a href="https://github.com/sparda-of-nosgoth">Sparda of Nosgoth</a>
       </span>
       <q-space />
       <app-version />
