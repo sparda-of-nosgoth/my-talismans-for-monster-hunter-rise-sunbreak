@@ -4,7 +4,7 @@ import { useSlotIcon } from 'src/composables/slot-icon';
 
 defineProps<{
   talisman: Talisman
-}>();
+}>()
 </script>
 
 <template>

@@ -8,8 +8,8 @@ export function useSkillFilter(skills: Skill[]) {
   const filteredSkills = ref<Skill[]>(skills);
 
   function filterSkillByName(needle: string): void {
-    if (needle === '') {
-      filteredSkills.value = skills;
+    if (needle === ''){
+      filteredSkills.value = skills
     } else {
       filteredSkills.value = _filter(skills, (skill: Skill) => _lowercase(translate(skill.id)).indexOf(_lowercase(needle)) > -1);
     }

@@ -11,7 +11,7 @@
     "build:debug": "quasar build --debug",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "lint:fix": "eslint --ext .js,.ts,.vue ./ --fix",
-    "lint:ci": "eslint --ext .js,.ts,.vue --format junit ./ > eslint-report.xml",
+    "lint:ci": "eslint --ext .js,.ts,.vue --format json ./ > eslint-report.json",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "test:unit:ui": "majestic",
     "test:unit": "jest --updateSnapshot  --verbose",

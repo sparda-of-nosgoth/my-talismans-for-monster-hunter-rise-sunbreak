@@ -27,17 +27,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Use Node.js ${{ matrix.node-version }}
+
+      - name: Use Node.js 18.20
         uses: actions/setup-node@v4
         with:
-          node-version: 16.15
+          node-version: 18.20
           cache: 'npm'
+
       - name: Install
         uses: borales/actions-yarn@v5
         with:
           cmd: install
+
       - name: Build app
         uses: borales/actions-yarn@v5
         with:
@@ -48,15 +52,18 @@ jobs:
           VITE_GOOGLE_CREDENTIALS_PRIVATE_KEY: ${{ vars.GOOGLE_CREDENTIALS_PRIVATE_KEY }}
           VITE_GOOGLE_CREDENTIALS_TOKEN_URI: ${{ vars.GOOGLE_CREDENTIALS_TOKEN_URI }}
           VITE_REMOTE_SAVE_SPREADSHEET_ID: ${{ vars.REMOTE_SAVE_SPREADSHEET_ID }}
+
       - name: Prepare artifact
         run: |
           rm -rf public
           mkdir public
           cp -r dist/spa/* public
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './public'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
