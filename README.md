@@ -1,10 +1,8 @@
 # My Talismans for Monster Hunter Rise Sunbreak
 
-[![Latest Release](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/badges/release.svg)](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/releases)
-[![pipeline status](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/badges/main/pipeline.svg)](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/commits/main)
-[![coverage](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/badges/main/coverage.svg?job=test-jest)](https://gitlab.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/tree/main)
+[![GitHub Release](https://img.shields.io/github/v/release/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak)](https://github.com/sparda-of-nosgoth/my-talismans-for-monster-hunter-rise-sunbreak/-/releases)
 
-This repository generates [Talismans Manager](https://sparda-of-nosgoth.gitlab.io/my-talismans-for-monster-hunter-rise-sunbreak).
+This repository generates [Talismans Manager](https://sparda-of-nosgoth.github.io/my-talismans-for-monster-hunter-rise-sunbreak).
 
 ## Usage
 A tool for Monster Hunter Rise, and his expansion Sunbreak, you can use it to :

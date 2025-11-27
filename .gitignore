@@ -36,4 +36,6 @@ yarn-error.log*
 
 # CI files
 /.coverage
+*-report.json
 *-report.xml
+
